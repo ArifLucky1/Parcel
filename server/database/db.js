@@ -1,8 +1,8 @@
-import pkg, { Client } from "pg";
-const { client } = pkg;
+import pkg from "pg";
+const { Client } = pkg;
 
 const database = new Client({
-  user: process.env.DB_USER,
+  user: "postgres",
   host: process.env.DB_HOST,
   database: process.env.DB_NAME,
   password: "PostgreSQL",
@@ -18,3 +18,5 @@ try {
 }
 
 export default database;
+
+
