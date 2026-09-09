@@ -1,4 +1,4 @@
-import { JsonWebTokenError } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 class ErrorHandler extends Error {
   constructor(message, statusCode) {
