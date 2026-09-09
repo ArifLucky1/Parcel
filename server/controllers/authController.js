@@ -1,7 +1,8 @@
 import ErrorHandler from "../middlewares/errorMiddleware.js";
 import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import database from "../database/db.js";
-import bcypt from "bcryptjs";
+import bcypt from "bcrypt";
+import { sendToken } from "../utils/jwtToken.js";
 
 export const register = catchAsyncErrors(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -23,6 +24,7 @@ export const register = catchAsyncErrors(async (req, res, next) => {
     "INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *",
     [name, email, hashedPassword],
   );
+  sendToken(user.rows[0], 201, "User registered Successfully", res);
 });
 
 export const login = catchAsyncErrors(async (req, res, next) => {});
