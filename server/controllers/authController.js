@@ -45,6 +45,8 @@ export const login = catchAsyncErrors(async (req, res, next) => {
     sendToken(user.rows[0], 200, "Logged In", res);
 });
 
-export const getUser = catchAsyncErrors(async (req, res, next) => {});
+export const getUser = catchAsyncErrors(async (req, res, next) => {
+    
+});
 
 export const logout = catchAsyncErrors(async (req, res, next) => {});
