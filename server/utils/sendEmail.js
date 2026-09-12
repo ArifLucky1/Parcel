@@ -15,7 +15,7 @@ export const sendEmail = async({ email, subject, message }) => {
         from: process.env.SMTP_MAIL,
         to: email,
         subject,
-        html: message
-    }
+        html: message,
+    };
     await transporter.sendMail(mailOptions); 
-}
+};

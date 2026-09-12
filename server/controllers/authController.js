@@ -74,7 +74,7 @@ export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
   const { frontendUrl } = req.query;
   let userResult = await database.query(
     `SELECT * FROM users WHERE email = $1`,
-    [email],
+    [email]
   );
   if (userResult.rows.length === 0) {
     return next(new ErrorHandler("User not found with this email.", 404));
@@ -86,7 +86,7 @@ export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
   await database.query(
     `UPDATE users SET reset_password_token = $1, reset_password_expire = to_timestamp($2)
     WHERE email = $3`,
-    [hashedToken, resetPasswordExpiretime / 1000, email],
+    [hashedToken, resetPasswordExpiretime / 1000, email]
   );
   const resetPasswordUrl = `${frontendUrl}/password/reset/${resetToken}`;
 
@@ -96,7 +96,7 @@ export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
     await sendEmail({
       email: user.email,
       subject: "Ecommerce Password Recovery",
-      message
+      message,
     });
     res.status(200).json({
       success: true,
