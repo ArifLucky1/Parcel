@@ -6,6 +6,7 @@ import { sendToken } from "../utils/jwtToken.js";
 import { generateResetPasswordToken } from "../utils/generateResetPasswordToken.js";
 import { generateEmailTemplate } from "../utils/generateForgotPasswordEmailTemplate.js";
 import { sendEmail } from "../utils/sendEmail.js";
+import crypto from 'crypto'
 
 export const register = catchAsyncErrors(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -109,5 +110,19 @@ export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
       [email]
     )
     return next(new ErrorHandler("Email could not be sent.", 500));
+  }
+});
+
+export const resetPassword = catchAsyncErrors(async (req, res, next) => {
+  const {token} = req.params;
+  const resetPasswordToken = crypto.createHash("sha256").update(token).digest("hex");
+  const user = await database.query("SELECT * FROM user WHERE reset_password_token = $1 AND reset_password_expire > NOW()", 
+    [resetPasswordToken]
+  );
+  if(user.rows.length === 0) {
+    return next(new ErrorHandler("Invalid or expired reset token.", 400));
+  }
+  if(req.body.password !== req.body.confirmPassword){
+    
   }
 });
