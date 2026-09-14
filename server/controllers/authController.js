@@ -126,7 +126,7 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
     .update(token)
     .digest("hex");
   const user = await database.query(
-    "SELECT * FROM user WHERE reset_password_token = $1 AND reset_password_expire > NOW()",
+    "SELECT * FROM users WHERE reset_password_token = $1 AND reset_password_expire > NOW()",
     [resetPasswordToken],
   );
   if (user.rows.length === 0) {
@@ -137,10 +137,10 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
   }
 
   if (
-    req.body.password.length < 8 ||
-    req.body.password.length > 16 ||
-    req.body.confirmPassword.length < 8 ||
-    req.body.confirmPassword.length > 16
+    req.body.password?.length < 8 ||
+    req.body.password?.length > 16 ||
+    req.body.confirmPassword?.length < 8 ||
+    req.body.confirmPassword?.length > 16
   ) {
     return next(
       new ErrorHandler("Password must be between 8 and 16 characters.", 400),
