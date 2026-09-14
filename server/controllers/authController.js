@@ -14,12 +14,9 @@ export const register = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Please provide all required fields.", 400));
   }
 
-  if (
-    req.body.password.length < 8 ||
-    req.body.password.length > 16
-  ) {
+  if (req.body.password.length < 8 || req.body.password.length > 16) {
     return next(
-      new ErrorHandler("Password must be between 8 and 16 characters.", 400) 
+      new ErrorHandler("Password must be between 8 and 16 characters.", 400),
     );
   }
 
@@ -146,7 +143,14 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
     req.body.confirmPassword.length > 16
   ) {
     return next(
-      new ErrorHandler("Password must be between 8 and 16 characters.", 400) 
+      new ErrorHandler("Password must be between 8 and 16 characters.", 400),
     );
   }
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+  const updatedUser = await database.query(
+    `UPDATE users SET password = $1, reset_password_token = NULL, reset_password_expire = NULL WHERE id = $2 RETURNING * `,
+    [hashedPassword, user.rows[0].id],
+  );
+  sendToken(updateUser.rows[0], 200, "Password reset successfully", res);
 });
