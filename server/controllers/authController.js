@@ -163,7 +163,7 @@ export const updatePassword = catchAsyncErrors(async (req, res, next) => {
   }
   const isPasswordMatch = await bcrypt.compare(
     currentPassword,
-    req.user.password
+    req.user.password,
   );
   if (!isPasswordMatch) {
     return next(new ErrorHandler("Current password is incorrect.", 401));
@@ -179,7 +179,7 @@ export const updatePassword = catchAsyncErrors(async (req, res, next) => {
     confirmNewPassword.length > 16
   ) {
     return next(
-      new ErrorHandler("Password must be between 8 and 16 characters.", 400)
+      new ErrorHandler("Password must be between 8 and 16 characters.", 400),
     );
   }
 
@@ -194,4 +194,12 @@ export const updatePassword = catchAsyncErrors(async (req, res, next) => {
     success: true,
     message: "Password updated successfully.",
   });
+});
+
+export const updateProfile = catchAsyncErrors(async(req, res, next) => {
+  const {name, email} = req.body;
+  if(!name || !email){
+    return next(new ErrorHandler("Please provide all required fields,", 400))
+  }
+
 });
