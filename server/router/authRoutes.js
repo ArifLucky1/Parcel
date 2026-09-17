@@ -23,4 +23,5 @@ router.put("/password/update", isAuthenticated, updatePassword);
 router.put("/profile/update", isAuthenticated, updateProfile);
 
 
+
 export default router;
