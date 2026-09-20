@@ -13,6 +13,17 @@ export const createProduct = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
+  if(!currencyResponse.ok){
+    return next(
+      new ErrorHandler("Unable to fetch currency exchange rate.", 500)
+    );
+  }
+
+  const currencyData = await currencyResponse.json();
+  const usdToInr = currencyData.rates.INR;
+
+  const priceInINR = Number(price) * usdToInr;
+
   let uploadedImages = [];
   if (req.files && req.files.images) {
     const images = Array.isArray(req.files.images)
@@ -20,7 +31,8 @@ export const createProduct = catchAsyncErrors(async (req, res, next) => {
       : [req.files.images];
 
     for (const image of images) {
-      const result = await cloudinary.uploader.upload(image.tempFilepath, {
+      const result = await cloudinary.uploader.upload(image.tempFilepath,
+      {
         folder: "Ecommerce_Product_Images",
         width: 1000,
         crop: "scale",
@@ -39,7 +51,7 @@ export const createProduct = catchAsyncErrors(async (req, res, next) => {
     [
       name,
       description,
-      price,
+      priceInINR,
       category,
       stock,
       JSON.stringify(uploadedImages),
