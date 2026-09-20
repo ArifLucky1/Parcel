@@ -12,7 +12,7 @@ export const createProduct = catchAsyncErrors(async (req, res, next) => {
       new ErrorHandler("Please provide complete product details.", 400),
     );
   }
-
+  
   if(!currencyResponse.ok){
     return next(
       new ErrorHandler("Unable to fetch currency exchange rate.", 500)
