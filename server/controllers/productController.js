@@ -2,6 +2,7 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/errorMiddleware.js";
 import { v2 as cloudinary } from "cloudinary";
 import database from "../database/db.js";
+import axios from "axios";
 
 export const createProduct = catchAsyncErrors(async (req, res, next) => {
   const { name, description, price, category, stock } = req.body;
@@ -12,17 +13,12 @@ export const createProduct = catchAsyncErrors(async (req, res, next) => {
       new ErrorHandler("Please provide complete product details.", 400),
     );
   }
-  
-  if(!currencyResponse.ok){
-    return next(
-      new ErrorHandler("Unable to fetch currency exchange rate.", 500)
-    );
-  }
 
-  const currencyData = await currencyResponse.json();
-  const usdToInr = currencyData.rates.INR;
+const { data } = await axios.get("https://api.frankfurter.app/latest?from=USD&to=INR");
+  const usdToInr = data.rates.INR;
 
-  const priceInINR = Number(price) * usdToInr;
+  const priceInInr = Number(price) * usdToInr;
+
 
   let uploadedImages = [];
   if (req.files && req.files.images) {
@@ -51,7 +47,7 @@ export const createProduct = catchAsyncErrors(async (req, res, next) => {
     [
       name,
       description,
-      priceInINR,
+      priceInInr,
       category,
       stock,
       JSON.stringify(uploadedImages),
