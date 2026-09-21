@@ -80,5 +80,9 @@ export const fetchAllProducts = catchAsyncErrors(async(req, res, next) => {
           conditions.push(`stock > 5`)
         } else if(availability === "limited"){
           conditions.push(`stock > 0 AND stock <=5`)
+        } else if(availability === "out-of-stock"){
+          conditions.push(`stock = 0`);
         }
+
+         
 })
