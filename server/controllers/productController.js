@@ -1,6 +1,6 @@
 import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/errorMiddleware.js";
-import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary } from "cloudinary"; 
 import database from "../database/db.js";
 import axios from "axios";
 
@@ -27,8 +27,7 @@ const { data } = await axios.get("https://api.frankfurter.app/latest?from=USD&to
       : [req.files.images];
 
     for (const image of images) {
-      const result = await cloudinary.uploader.upload(image.tempFilepath,
-      {
+      const result = await cloudinary.uploader.upload(image.tempFilePath, {
         folder: "Ecommerce_Product_Images",
         width: 1000,
         crop: "scale",
