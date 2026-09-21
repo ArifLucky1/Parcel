@@ -113,4 +113,20 @@ export const fetchAllProducts = catchAsyncErrors(async(req, res, next) => {
           values.push(`%${search}%`);
           index++;
         }
+
+        const whereClause = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
+
+        // Get count of Filtered products
+        const totalProductsResult = await database.query(`SELECT COUNT (*) FROM products p ${whereClause}`, values);
+        
+        
+        const totalProducts = parseInt(totalProductsResult.rows[0].count);
+
+        paginationPlaceholders.limit = `$${index}`;
+        values.push(limit);
+        index++;
+
+        paginationPlaceholders.offset = `$${index}`;
+        values.push(offset);
+        index++;
 })
