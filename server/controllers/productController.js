@@ -1,6 +1,6 @@
 import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/errorMiddleware.js";
-import { v2 as cloudinary } from "cloudinary"; 
+import { v2 as cloudinary } from "cloudinary";
 import database from "../database/db.js";
 import axios from "axios";
 
@@ -14,11 +14,12 @@ export const createProduct = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
-const { data } = await axios.get("https://api.frankfurter.app/latest?from=USD&to=INR");
+  const { data } = await axios.get(
+    "https://api.frankfurter.app/latest?from=USD&to=INR",
+  );
   const usdToInr = data.rates.INR;
 
   const priceInInr = Number(price) * usdToInr;
-
 
   let uploadedImages = [];
   if (req.files && req.files.images) {
@@ -57,76 +58,130 @@ const { data } = await axios.get("https://api.frankfurter.app/latest?from=USD&to
   res.status(201).json({
     success: true,
     message: "Product created successfully.",
-    product: product.rows[0]
-
-  })
+    product: product.rows[0],
+  });
 });
 
+export const fetchAllProducts = catchAsyncErrors(async (req, res, next) => {
+  const { availability, price, category, rating, search } = req.query;
 
-export const fetchAllProducts = catchAsyncErrors(async(req, res, next) => {
-  const { availability, price, category, rating, search} = req.query;
+  const page = parseInt(req.query.page) || 1;
+  const limit = 10;
+  const offset = (page - 1) * limit;
 
-    const page = parseInt(req.query.page) || 1;
-    const limit = 10;
-    const offset = (page -1) * limit;
+  const conditions = [];
+  let values = [];
+  let index = 1;
 
-      const conditions = [];
-      let values = [];
-      let index = 1;
+  let paginationPlaceholders = {};
 
-      let paginationPlaceholders = {}
+  if (availability === "in-stock") {
+    conditions.push(`stock > 5`);
+  } else if (availability === "limited") {
+    conditions.push(`stock > 0 AND stock <=5`);
+  } else if (availability === "out-of-stock") {
+    conditions.push(`stock = 0`);
+  }
 
-        if(availability === "in-stock"){
-          conditions.push(`stock > 5`)
-        } else if(availability === "limited"){
-          conditions.push(`stock > 0 AND stock <=5`)
-        } else if(availability === "out-of-stock"){
-          conditions.push(`stock = 0`);
-        }
+  if (price) {
+    const [minPrice, maxPrice] = price.split("-");
+    if (minPrice && maxPrice) {
+      conditions.push(`price BETWEEN $${index} AND $${index + 1}`);
+      values.push(minPrice, maxPrice);
+      index += 2;
+    }
+  }
 
-        
-        if(price){
-          const [minPrice, maxPrice] = price.split("-")
-          if(minPrice && maxPrice){
-            conditions.push(`price BETWEEN $${index} AND $${index + 1}`);
-            values.push(minPrice, maxPrice);
-            index += 2;
-          }
-        }  
-        
-        if(category){
-          conditions.push(`category ILIKE $${index}`);
-          values.push(`%${category}%`);
-          index++;
-        }
+  if (category) {
+    conditions.push(`category ILIKE $${index}`);
+    values.push(`%${category}%`);
+    index++;
+  }
+
+  if (ratings) {
+    conditions.push(`ratings >= $${index} `);
+    values.push(ratings);
+    index++;
+  }
+
+  if (search) {
+    conditions.push(
+      `(p.name ILIKE $${INDEX} OR p.description ILIKE $${index})`,
+    );
+    values.push(`%${search}%`);
+    index++;
+  }
+
+  const whereClause = conditions.length
+    ? `WHERE ${conditions.join(" AND ")}`
+    : "";
+
+  // Get count of Filtered products
+  const totalProductsResult = await database.query(
+    `SELECT COUNT (*) FROM products p ${whereClause}`,
+    values,
+  );
+
+  const totalProducts = parseInt(totalProductsResult.rows[0].count);
+
+  paginationPlaceholders.limit = `$${index}`;
+  values.push(limit);
+  index++;
+
+  paginationPlaceholders.offset = `$${index}`;
+  values.push(offset);
+  index++;
+
+  // Fetch with Reviews
+  const query = `
+    SELECT p.*,
+    COUNT(r.id) AS review_count
+    FROM products p 
+    LEFT JOIN reviews r ON p.id = r.product_id
+    ${whereClause} 
+    GROUP BY p.id
+    ORDER BY p.created_at DESC
+    LIMIT ${paginationPlaceholders.limit}
+    OFFSET ${paginationPlaceholders.offset}
+    `;
+
+    const result = await database.query(query, values);
+
+    // Query for fetching new Products
+    const newProductsQuery = `
+    SELECT p.*,
+    COUNT(r.id) AS review_count
+    FROM products p
+    LEFT JOIN reviews r ON p.id = r.product_id
+    WHERE p.created_at >= NOW() - INTERVAL '30 days'
+    GROUP BY p.id,
+    ORDER BY p.created_at DESC
+    LIMIT 8
+    `
+
+    const newProductsresult = await database.query(newProductsQuery)
 
 
-        if(ratings){
-          conditions.push(`ratings >= $${index} `)
-          values.push(ratings);
-          index++;
-        }
 
+    // Query for fetching Top Rating (rating >= 4.5)Products
+    const topRatedQuery = `
+    SELECT p.*,
+    COUNT(r.id) AS review_count
+    FROM products p
+    LEFT JOIN reviews r ON p.id = r.product_id
+    WHERE p.ratings >= 4.5
+    GROUP BY p.id,
+    ORDER BY p.created_at DESC
+    LIMIT 8
+    `
 
-        if(search){
-          conditions.push(`(p.name ILIKE $${INDEX} OR p.description ILIKE $${index})`);
-          values.push(`%${search}%`);
-          index++;
-        }
+    const topRatedResults = await database.query(topRatedQuery)
 
-        const whereClause = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
-
-        // Get count of Filtered products
-        const totalProductsResult = await database.query(`SELECT COUNT (*) FROM products p ${whereClause}`, values);
-        
-        
-        const totalProducts = parseInt(totalProductsResult.rows[0].count);
-
-        paginationPlaceholders.limit = `$${index}`;
-        values.push(limit);
-        index++;
-
-        paginationPlaceholders.offset = `$${index}`;
-        values.push(offset);
-        index++;
-})
+    res.status(200).json({
+      success: true,
+      products: result.rows,
+      totalProducts,
+      newProducts: newProductsresult.rows,
+      topRatedProducts: topRatedResults.rows,
+    })
+});
