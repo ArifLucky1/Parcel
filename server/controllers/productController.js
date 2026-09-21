@@ -96,7 +96,14 @@ export const fetchAllProducts = catchAsyncErrors(async(req, res, next) => {
         
         if(category){
           conditions.push(`category ILIKE $${index}`);
-          values.push(`%${category}%`)
+          values.push(`%${category}%`);
+          index++;
+        }
+
+
+        if(ratings){
+          conditions.push(`ratings >= $${index} `)
+          values.push(ratings);
           index++;
         }
 })
