@@ -61,3 +61,24 @@ const { data } = await axios.get("https://api.frankfurter.app/latest?from=USD&to
 
   })
 });
+
+
+export const fetchAllProducts = catchAsyncErrors(async(req, res, next) => {
+  const { availability, price, category, rating, search} = req.query;
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = 10;
+    const offset = (page -1) * limit;
+
+      const conditions = [];
+      let values = [];
+      let index = 1;
+
+      let paginationPlaceholders = {}
+
+        if(availability === "in-stock"){
+          conditions.push(`stock > 5`)
+        } else if(availability === "limited"){
+          conditions.push(`stock > 0 AND stock <=5`)
+        }
+})
