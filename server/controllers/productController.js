@@ -63,7 +63,7 @@ export const createProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const fetchAllProducts = catchAsyncErrors(async (req, res, next) => {
-  const { availability, price, category, rating, search } = req.query;
+  const { availability, price, category, ratings, search } = req.query;
 
   const page = parseInt(req.query.page) || 1;
   const limit = 10;
@@ -99,14 +99,14 @@ export const fetchAllProducts = catchAsyncErrors(async (req, res, next) => {
   }
 
   if (ratings) {
-    conditions.push(`ratings >= $${index} `);
+    conditions.push(`ratings >= $${index}`);
     values.push(ratings);
     index++;
   }
 
   if (search) {
     conditions.push(
-      `(p.name ILIKE $${INDEX} OR p.description ILIKE $${index})`,
+      `(p.name ILIKE $${index} OR p.description ILIKE $${index})`,
     );
     values.push(`%${search}%`);
     index++;
@@ -118,8 +118,8 @@ export const fetchAllProducts = catchAsyncErrors(async (req, res, next) => {
 
   // Get count of Filtered products
   const totalProductsResult = await database.query(
-    `SELECT COUNT (*) FROM products p ${whereClause}`,
-    values,
+    `SELECT COUNT(*) FROM products p ${whereClause}`,
+    values
   );
 
   const totalProducts = parseInt(totalProductsResult.rows[0].count);
@@ -154,12 +154,12 @@ export const fetchAllProducts = catchAsyncErrors(async (req, res, next) => {
     FROM products p
     LEFT JOIN reviews r ON p.id = r.product_id
     WHERE p.created_at >= NOW() - INTERVAL '30 days'
-    GROUP BY p.id,
+    GROUP BY p.id
     ORDER BY p.created_at DESC
     LIMIT 8
     `;
 
-  const newProductsresult = await database.query(newProductsQuery);
+  const newProductsResult = await database.query(newProductsQuery);
 
   // Query for fetching Top Rating (rating >= 4.5)Products
   const topRatedQuery = `
@@ -168,18 +168,18 @@ export const fetchAllProducts = catchAsyncErrors(async (req, res, next) => {
     FROM products p
     LEFT JOIN reviews r ON p.id = r.product_id
     WHERE p.ratings >= 4.5
-    GROUP BY p.id,
-    ORDER BY p.created_at DESC
+    GROUP BY p.id
+    ORDER BY p.ratings DESC, p.created_at DESC
     LIMIT 8
     `;
 
-  const topRatedResults = await database.query(topRatedQuery);
+  const topRatedResult = await database.query(topRatedQuery);
 
   res.status(200).json({
     success: true,
     products: result.rows,
     totalProducts,
-    newProducts: newProductsresult.rows,
-    topRatedProducts: topRatedResults.rows,
+    newProducts: newProductsResult.rows,
+    topRatedProducts: topRatedResult.rows,
   });
 });
