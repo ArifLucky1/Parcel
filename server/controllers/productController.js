@@ -145,10 +145,10 @@ export const fetchAllProducts = catchAsyncErrors(async (req, res, next) => {
     OFFSET ${paginationPlaceholders.offset}
     `;
 
-    const result = await database.query(query, values);
+  const result = await database.query(query, values);
 
-    // Query for fetching new Products
-    const newProductsQuery = `
+  // Query for fetching new Products
+  const newProductsQuery = `
     SELECT p.*,
     COUNT(r.id) AS review_count
     FROM products p
@@ -157,14 +157,12 @@ export const fetchAllProducts = catchAsyncErrors(async (req, res, next) => {
     GROUP BY p.id,
     ORDER BY p.created_at DESC
     LIMIT 8
-    `
+    `;
 
-    const newProductsresult = await database.query(newProductsQuery)
+  const newProductsresult = await database.query(newProductsQuery);
 
-
-
-    // Query for fetching Top Rating (rating >= 4.5)Products
-    const topRatedQuery = `
+  // Query for fetching Top Rating (rating >= 4.5)Products
+  const topRatedQuery = `
     SELECT p.*,
     COUNT(r.id) AS review_count
     FROM products p
@@ -173,15 +171,15 @@ export const fetchAllProducts = catchAsyncErrors(async (req, res, next) => {
     GROUP BY p.id,
     ORDER BY p.created_at DESC
     LIMIT 8
-    `
+    `;
 
-    const topRatedResults = await database.query(topRatedQuery)
+  const topRatedResults = await database.query(topRatedQuery);
 
-    res.status(200).json({
-      success: true,
-      products: result.rows,
-      totalProducts,
-      newProducts: newProductsresult.rows,
-      topRatedProducts: topRatedResults.rows,
-    })
+  res.status(200).json({
+    success: true,
+    products: result.rows,
+    totalProducts,
+    newProducts: newProductsresult.rows,
+    topRatedProducts: topRatedResults.rows,
+  });
 });
