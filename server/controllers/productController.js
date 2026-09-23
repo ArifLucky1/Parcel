@@ -119,7 +119,7 @@ export const fetchAllProducts = catchAsyncErrors(async (req, res, next) => {
   // Get count of Filtered products
   const totalProductsResult = await database.query(
     `SELECT COUNT(*) FROM products p ${whereClause}`,
-    values
+    values,
   );
 
   const totalProducts = parseInt(totalProductsResult.rows[0].count);
@@ -184,29 +184,30 @@ export const fetchAllProducts = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
-export const updateProduct = catchAsyncErrors(async(req, res, next) => {
+export const updateProduct = catchAsyncErrors(async (req, res, next) => {
   const { productId } = req.params;
   const { name, description, price, category, stock } = req.body;
-  
-  if(!name || !description || !price || !category || !stock){
+
+  if (!name || !description || !price || !category || !stock) {
     return next(
-      new ErrorHandler("Please provide complete product details.", 400)
+      new ErrorHandler("Please provide complete product details.", 400),
     );
   }
-  const product = await database.query("SELECT * FROM products WHERE id = $1", [productId]);
-  if(product.rows.length === 0){
+  const product = await database.query("SELECT * FROM products WHERE id = $1", [
+    productId,
+  ]);
+  if (product.rows.length === 0) {
     return next(new ErrorHandler("Product not found.", 404));
   }
 
   const result = await database.query(
     `UPDATE products SET name = $1, description = $2, price = $3, category = $4, stock = $5 WHERE id = $6 RETURNING *`,
-    [name, description, price / 96, category, stock, productId]
-  );
+    [name, description, price / 96, category, stock, productId],
+   );
 
   res.status(200).json({
     success: true,
     message: "Product updated successfully.",
-    updatedProduct: result.rows[0]
+    updatedProduct: result.rows[0],
   });
 });
