@@ -204,3 +204,36 @@ export const updateProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+export const deleteProduct = catchAsyncErrors(async (req, res, next) => {
+  const { productId } = req.params;
+
+  const product = await database.query("SELECT * FROM products WHERE id = $1", [
+    productId,
+  ]);
+  if (product.rows.length === 0) {
+    return next(new ErrorHandler("Product not found.", 404));
+  }
+
+  const images = product.rows[0].images;
+
+  const deleteResult = await database.query(
+    "DELETE FROM products WHERE id = $1 RETURNING *",
+    [productId]
+  );
+
+  if(deleteResult.rows.length === 0){
+    return next(new ErrorHandler("Failed to delete product.", 500));
+  }
+
+  // Delete images from Cloudinary
+  if(images && images.length > 0){
+    for(const image of images){
+      await cloudinary.uploader.destroy(image.public_id);
+    }
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Product deleted successfully."
+  })
+});
