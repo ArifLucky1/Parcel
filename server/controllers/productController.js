@@ -256,7 +256,7 @@ export const fetchSingleProduct = catchAsyncErrors(async (req, res, next) => {
         COALESCE(
         json_agg(
         json_build_object(
-          'review_id, r.id,
+          'review_id', r.id,
           'rating', r.rating,
           'comment', r.comment,
           'reviewer', json_build_object(
@@ -276,4 +276,10 @@ export const fetchSingleProduct = catchAsyncErrors(async (req, res, next) => {
           GROUP BY p.id
       `, [productId]
   );
+
+  res.status(200).json({
+    success: true,
+    message: "Product fetched successfully.",
+    product: result.rows[0]
+  }) 
 });
