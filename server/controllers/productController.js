@@ -2,6 +2,7 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/errorMiddleware.js";
 import { v2 as cloudinary } from "cloudinary";
 import database from "../database/db.js";
+import axios from 'axios';
 
 export const createProduct = catchAsyncErrors(async (req, res, next) => {
   const { name, description, price, category, stock } = req.body;
@@ -12,6 +13,15 @@ export const createProduct = catchAsyncErrors(async (req, res, next) => {
       new ErrorHandler("Please provide complete product details.", 400),
     );
   }
+
+    const { data } = await axios.get(
+      "https://api.frankfurter.app/latest?from=USD&to=INR"
+    )
+
+    const usdToInr = data.rates.INR;
+
+    const priceInINR = Number(price) * usdToInr;
+
 
   let uploadedImages = [];
   if (req.files && req.files.images) {
@@ -39,7 +49,7 @@ export const createProduct = catchAsyncErrors(async (req, res, next) => {
     [
       name,
       description,
-      price / 96,
+      priceInINR,
       category,
       stock,
       JSON.stringify(uploadedImages),
@@ -194,7 +204,7 @@ export const updateProduct = catchAsyncErrors(async (req, res, next) => {
 
   const result = await database.query(
     `UPDATE products SET name = $1, description = $2, price = $3, category = $4, stock = $5 WHERE id = $6 RETURNING *`,
-    [name, description, price / 96, category, stock, productId],
+    [name, description, price, category, stock, productId],
   );
 
   res.status(200).json({
