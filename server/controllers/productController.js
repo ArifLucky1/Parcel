@@ -2,7 +2,7 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/errorMiddleware.js";
 import { v2 as cloudinary } from "cloudinary";
 import database from "../database/db.js";
-import axios from 'axios';
+import axios from "axios";
 
 export const createProduct = catchAsyncErrors(async (req, res, next) => {
   const { name, description, price, category, stock } = req.body;
@@ -14,14 +14,13 @@ export const createProduct = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
-    const { data } = await axios.get(
-      "https://api.frankfurter.app/latest?from=USD&to=INR"
-    )
+  const { data } = await axios.get(
+    "https://api.frankfurter.app/latest?from=USD&to=INR",
+  );
 
-    const usdToInr = data.rates.INR;
+  const usdToInr = data.rates.INR;
 
-    const priceInINR = Number(price) * usdToInr;
-
+  const priceInINR = Number(price) * usdToInr;
 
   let uploadedImages = [];
   if (req.files && req.files.images) {
@@ -228,22 +227,53 @@ export const deleteProduct = catchAsyncErrors(async (req, res, next) => {
 
   const deleteResult = await database.query(
     "DELETE FROM products WHERE id = $1 RETURNING *",
-    [productId]
+    [productId],
   );
 
-  if(deleteResult.rows.length === 0){
+  if (deleteResult.rows.length === 0) {
     return next(new ErrorHandler("Failed to delete product.", 500));
   }
 
   // Delete images from Cloudinary
-  if(images && images.length > 0){
-    for(const image of images){
+  if (images && images.length > 0) {
+    for (const image of images) {
       await cloudinary.uploader.destroy(image.public_id);
     }
   }
 
   res.status(200).json({
     success: true,
-    message: "Product deleted successfully."
-  })
+    message: "Product deleted successfully.",
+  });
+});
+
+export const fetchSingleProduct = catchAsyncErrors(async (req, res, next) => {
+  const { productId } = req.params;
+
+  const result = await database.query(
+    `
+        SELECT P.*,
+        COALESCE(
+        json_agg(
+        json_build_object(
+          'review_id, r.id,
+          'rating', r.rating,
+          'comment', r.comment,
+          'reviewer', json_build_object(
+              'id', u.id,
+              'name', u.name,
+              'avatra', u.avatar
+              )
+        )
+        ) FILTER (WHERE r.id IS NOT NULL),'[]'
+
+        
+        ) AS reviews
+          FROM products p
+          LEFT JOIN reviews r ON p.id = r.product_id
+          LEFT JOIN user u ON r.user_id = u.id
+          WHERE p.id = $1
+          GROUP BY p.id
+      `, [productId]
+  );
 });
