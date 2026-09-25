@@ -262,16 +262,12 @@ export const fetchSingleProduct = catchAsyncErrors(async (req, res, next) => {
           'reviewer', json_build_object(
               'id', u.id,
               'name', u.name,
-              'avatra', u.avatar
-              )
-        )
-        ) FILTER (WHERE r.id IS NOT NULL),'[]'
-
-        
-        ) AS reviews
+              'avatar', u.avatar
+              ))
+        ) FILTER (WHERE r.id IS NOT NULL),'[]') AS reviews
           FROM products p
           LEFT JOIN reviews r ON p.id = r.product_id
-          LEFT JOIN user u ON r.user_id = u.id
+          LEFT JOIN users u ON r.user_id = u.id
           WHERE p.id = $1
           GROUP BY p.id
       `, [productId]
