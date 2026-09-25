@@ -279,3 +279,35 @@ export const fetchSingleProduct = catchAsyncErrors(async (req, res, next) => {
     product: result.rows[0]
   }) 
 });
+
+export const postProductReview = catchAsyncErrors(async (req, res, next) => {
+  const { productId } = req.params;
+  const { ratings, comment } = req.body;
+  
+  if(!ratings || !comment){
+    return next(new ErrorHandler("Please provide rating and comment.", 400));
+  }
+
+    const purchasedCheckQuery = `
+      SELECT oi.product_id
+      FROM order_items oi
+      JOIN orders o ON o.id = oi.order_id
+      JOIN payments p ON p.order_id = o.id
+      WHERE o.buyer_id = $1
+      AND oi.product_id = $2
+      AND p.payment_status = 'paid'
+      LIMIT 1
+      `;
+
+      const { rows } = await database.query(purchasedCheckQuery, [
+        req.user.id,
+        productId
+      ]);
+
+      if(rows.length === 0 ){
+        return res.status(403).json({
+          success: false,
+          message: "You can only review a product you've purchased."
+        })
+      }
+})
