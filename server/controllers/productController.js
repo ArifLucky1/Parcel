@@ -282,7 +282,7 @@ export const fetchSingleProduct = catchAsyncErrors(async (req, res, next) => {
 
 export const postProductReview = catchAsyncErrors(async (req, res, next) => {
   const { productId } = req.params;
-  const { ratings, comment } = req.body;
+  const { rating, comment } = req.body;
   
   if(!ratings || !comment){
     return next(new ErrorHandler("Please provide rating and comment.", 400));
@@ -309,5 +309,24 @@ export const postProductReview = catchAsyncErrors(async (req, res, next) => {
           success: false,
           message: "You can only review a product you've purchased."
         })
+      }
+
+      const product = await database.query("SELECT * FROM products WHERE id = $1", [productId]);
+
+      if(product.rows.length === 0){
+        return next(new ErrorHandler("Product not found.", 404))
+      }
+
+      const isAlreadyReviewed = await database.query(
+        `
+          SELECT * FROM reviews WHERE product_id = $1 AND user_id = $2
+        `, [productId, req.user.id]
+      )
+
+      let review;
+      if(isAlreadyReviewed.rows.length > 0){
+        review = await database.query("UPDATE reviews SET rating = $1, comment = $2 WHERE product_id = $3 AND user_id = $4 RETURNING *",
+          [rating, comment, productId, req.user.id]
+        )
       }
 })
