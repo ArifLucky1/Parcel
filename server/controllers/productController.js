@@ -3,6 +3,7 @@ import ErrorHandler from "../middlewares/errorMiddleware.js";
 import { v2 as cloudinary } from "cloudinary";
 import database from "../database/db.js";
 import axios from "axios";
+import { response } from "express";
 
 export const createProduct = catchAsyncErrors(async (req, res, next) => {
   const { name, description, price, category, stock } = req.body;
@@ -333,4 +334,21 @@ export const postProductReview = catchAsyncErrors(async (req, res, next) => {
           [productId, req.user.id, rating, comment]
         )
       }
+
+      const allReviews = await database.query(`
+        SELECT AVG(rating) AS avg_rating FROM reviews WHERE product_id = $1`, [productId])
+
+        const newAvgRating = allReviews.rows[0].avg_rating;
+
+        const updatedProduct = await database.query(
+          `
+          UPDATE products SET ratings = $1 WHERE id = $2 RETURNING *`, [newAvgRating, productId]
+        )
+
+        res.status(200).json({
+          success: true,
+          message: "Review posted",
+          review: review.rows[0],
+          product: updateProduct.rows[0]
+        })
 })
