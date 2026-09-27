@@ -402,7 +402,7 @@ export const fetchAIFilteredProducts = catchAsyncErrors(
     const { userPrompt } = req.body;
 
     if (!userPrompt) {
-      return next(new ErrorHandler("Provide a valid promt.", 400));
+      return next(new ErrorHandler("Provide a valid prompt.", 400));
     }
 
     const filterKeywords = (query) => {
@@ -523,7 +523,7 @@ export const fetchAIFilteredProducts = catchAsyncErrors(
     )
 
     res.status(200).json({
-      success: true,
+      success: success,
       message: "AI filtered products.",
       products
     })

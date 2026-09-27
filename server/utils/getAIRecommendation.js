@@ -1,6 +1,6 @@
 export async function getAIRecommendation(req, res, userPrompt, products){
     const API_KEY = process.env.GEMENI_API_KEY;
-    const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${API_KEY}`
+    const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${API_KEY}`;
 
     try{
         const gemeniPrompt = `
@@ -10,22 +10,23 @@ export async function getAIRecommendation(req, res, userPrompt, products){
             Based on the following user request, fillter and suggest the best matching products:
             "${userPrompt}"
 
-            Only return the matching products in JSON formate.
+            Only return the matching products in JSON format.
         `;
 
         const response = await fetch(URL, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
-                contents: [{parts: [{text: gemeniPrompt}] }]
+                contents: [{ parts: [{text: gemeniPrompt}] }]
             })
         })
 
         const data = await response.json();
+        console.log(data);
 
-        const aiResponseText = data?.candidates?.[0]?.content?.parts?.text?.trim() || ""
+        const aiResponseText = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
 
-        const cleanedText = aiResponseText.replace(/```json|```/g, ``).trim()
+        const cleanedText = aiResponseText.replace(/```json|```/g, ``).trim();
 
         if(!cleanedText){
             return res.status(500).json({
@@ -34,12 +35,22 @@ export async function getAIRecommendation(req, res, userPrompt, products){
             });
         }
 
-        
-    } catch{
-
+        let parsedProducts;
+        try{
+            parsedProducts = JSON.parse(cleanedText);
+        }catch (error){
+            return res.status(500).json({
+                success: false,
+                message: "Failed to parse AI response"
+            })
+        }
+        return { success: true, products: parsedProducts };
+    } catch (error){
+        res.status(500).json({
+            success: false,
+            message: "Internal server error."
+        })
     }
-
-
 }
 
 

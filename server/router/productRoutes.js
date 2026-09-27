@@ -1,7 +1,7 @@
 import express from "express";
 
 import { authorizedRoles, isAuthenticated } from "../middlewares/authMiddleware.js";
-import { createProduct, deleteProduct, deleteReview, fetchAllProducts, fetchSingleProduct, postProductReview, updateProduct } from "../controllers/productController.js";
+import { createProduct, deleteProduct, deleteReview, fetchAIFilteredProducts, fetchAllProducts, fetchSingleProduct, postProductReview, updateProduct } from "../controllers/productController.js";
 
 
 const router = express.Router();
@@ -13,6 +13,7 @@ router.put("/admin/update/:productId", isAuthenticated, authorizedRoles("Admin")
 router.delete("/admin/delete/:productId", isAuthenticated, authorizedRoles("Admin"), deleteProduct);
 router.get("/singleProduct/:productId", fetchSingleProduct);
 router.put("/post-new/review/:productId", isAuthenticated, postProductReview);
-router.delete("/delete/review/:productId", isAuthenticated, deleteReview)
+router.delete("/delete/review/:productId", isAuthenticated, deleteReview);
+router.post("/ai-search", isAuthenticated, fetchAIFilteredProducts);
 
 export default router;
