@@ -4,6 +4,7 @@ import { v2 as cloudinary } from "cloudinary";
 import database from "../database/db.js";
 import axios from "axios";
 import { response } from "express";
+import { getAIRecommendation } from "../utils/getAIRecommendation.js";
 
 export const createProduct = catchAsyncErrors(async (req, res, next) => {
   const { name, description, price, category, stock } = req.body;
