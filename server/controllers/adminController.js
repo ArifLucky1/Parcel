@@ -74,5 +74,19 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
 
       const totalUsersCount = parseInt(totalUserCountQuery.rows[0].count) || 0; 
 
+    // Order Status Counts
+        const orderStatusCountQuery = await database.query(`
+            SELECT order_status, COUNT(*) FROM orders GROUP BY order_status`);
+        
+        const orderStatusCounts = {
+            Processing: 0,
+            Shipped: 0,
+            Delivered: 0,
+            Cancelled: 0
+        };
+        orderStatusCountQuery.rows.forEach((row)=>{
+            orderStatusCounts[row.order_status] = parseInt(row.count);
+        });
 
+    
 })
