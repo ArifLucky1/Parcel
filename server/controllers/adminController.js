@@ -88,5 +88,20 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
             orderStatusCounts[row.order_status] = parseInt(row.count);
         });
 
+    // Today's Revenue
+        const todayRevenueQuery = await database.query(`
+            SELECT SUM(total_price) FROM orders WHERE created_at::date = $1`,
+        [todayDate]);
+        const todayRevenue = parseFloat(todayRevenueQuery.rows[0].sum) || 0;
+        
+        
+    // Yesterday's Revenue
+        const yesterdayRevenueQuery = await database.query(`
+            SELECT SUM(total_price) FROM orders WHERE created_at::date = $1`,
+        [yesterdatDate]);
+        const yesterdayRevenue = parseFloat(todayRevenueQuery.rows[0].sum) || 0;
     
-})
+    
+    // Monthly Sales For Line Chart 
+
+})  
