@@ -1,9 +1,9 @@
-export async function getAIRecommendation(req, res, userPrompt, products){
-    const API_KEY = process.env.GEMENI_API_KEY;
-    const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${API_KEY}`;
+export async function getAIRecommendation(userPrompt, products) {
+  const API_KEY = process.env.GEMINI_API_KEY;
+  const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${API_KEY}`;
 
-    try{
-        const gemeniPrompt = `
+  try {
+    const geminiPrompt = `
             Here is a list of available products:
             ${JSON.stringify(products, null, 2)}
 
@@ -13,44 +13,42 @@ export async function getAIRecommendation(req, res, userPrompt, products){
             Only return the matching products in JSON format.
         `;
 
-        const response = await fetch(URL, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                contents: [{ parts: [{text: gemeniPrompt}] }]
-            })
-        })
+    const response = await fetch(URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: geminiPrompt }] }],
+      }),
+    });
 
-        const data = await response.json();
-        console.log(data);
+    const data = await response.json();
+    console.log("GEMINI RESPONSE:", JSON.stringify(data, null, 2));
+    const aiResponseText =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
 
-        const aiResponseText = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
+    const cleanedText = aiResponseText.replace(/```json|```/g, ``).trim();
 
-        const cleanedText = aiResponseText.replace(/```json|```/g, ``).trim();
-
-        if(!cleanedText){
-            return res.status(500).json({
-                success: false,
-                message: "AI response is empty or invalid."
-            });
-        }
-
-        let parsedProducts;
-        try{
-            parsedProducts = JSON.parse(cleanedText);
-        }catch (error){
-            return res.status(500).json({
-                success: false,
-                message: "Failed to parse AI response"
-            })
-        }
-        return { success: true, products: parsedProducts };
-    } catch (error){
-        res.status(500).json({
-            success: false,
-            message: "Internal server error."
-        })
+    if (!cleanedText) {
+      return {
+        success: false,
+        message: "AI response is empty or invalid.",
+      };
     }
+
+    let parsedProducts;
+    try {
+      parsedProducts = JSON.parse(cleanedText);
+    } catch (error) {
+      return {
+        success: false,
+        message: "Failed to parse AI response",
+      };
+    }
+    return { success: true, products: parsedProducts };
+  } catch (error) {
+    return{
+      success: false,
+      message: "Internal server error.",
+    };
+  }
 }
-
-
