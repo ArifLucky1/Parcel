@@ -51,5 +51,28 @@ export const deleteUser = catchAsyncErrors(async (req, res, next) =>{
 
 
 export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
+    const today = new Date();
+    const todayDate = today.toISOString().split("T")[0];
+    const yesterday = new Date(today);
+
+    yesterday.setDate(today.getDate() -1);
+    const yesterdatDate = yesterday.toISOString().split("T")[0];
+
+    const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    const previousMonthStart = new Date(today.getFullYear(), today.getMonth() -1, 1);
+
+    const previousMonthEnd = new Date(today.getFullYear(), today.getMonth(), 0);
+
+    const totalRevenueAllTimeQuery = await database.query(`
+        SELECT SUM(total_price) FROM orders`);
+        const totalRevenueAllTime = parseFloat(totalRevenueAllTimeQuery.rows[0].sum) || 0;
+
+    // Total Users
+      const totalUserCountQuery = await database.query(`
+        SELECT COUNT(*) FROM users WHERE role = 'User'`);
+
+      const totalUsersCount = parseInt(totalUserCountQuery.rows[0].count) || 0; 
+
 
 })
