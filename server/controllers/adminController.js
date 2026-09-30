@@ -116,4 +116,22 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
             month: row.month,
             totalSales: parseFloat(row.totalSales) || 0
         }))
+
+    // Top 5 Most Sold Products
+        const topSellingProductsQuery = await database.query(`
+            SELECT p.name,
+            p.images->0->>'url' AS image,
+            p.category,
+            p.ratings,
+            SUM(oi.quantity) AS total_sold
+            FROM order_items oi
+            JOIN products p ON p.id = oi.product_id
+            GROUP BY p.name, p.image, p.category, p.ratings
+            ORDER BY total_sold DESC
+            LIMIT 5
+            `);
+
+        const topSellingProducts = topSellingProductsQuery.rows;
+         
+
 })  
