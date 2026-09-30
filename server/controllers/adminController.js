@@ -132,6 +132,13 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
             `);
 
         const topSellingProducts = topSellingProductsQuery.rows;
-         
+    
+
+    // Total Sales of Current Month
+        const currentMonthSalesQuery = await database.query(`
+            SELECT SUM(total_price) AS total
+            FROM orders
+            WHERE created_at >= $1
+            `, [currentMonthStart])
 
 })  
