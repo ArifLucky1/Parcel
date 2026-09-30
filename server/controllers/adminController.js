@@ -103,5 +103,17 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
     
     
     // Monthly Sales For Line Chart 
+        const monthlySalesQuery = await database.query(`
+            SELECT TO_CHAR(created_at, 'Mon YYYY') AS month,
+            DATE_TRUNC('month', created_at) as date,
+            SUM(total_price) as totalSales
+            FROM orders
+            GROUP BY month, data
+            ORDER BY date ASC
+            `);
 
+        const monthlySales = monthlySalesQuery.rows.map(row=>({
+            month: row.month,
+            totalSales: parseFloat(row.totalSales) || 0
+        }))
 })  
