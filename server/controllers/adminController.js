@@ -184,5 +184,23 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
         );
 
         const newUsersThisMonth = parseInt(newUsersThisMonthQuery.rows[0].count) || 0;
+
+
+    // FINAL RESPONSE
+    res.status(200).json({
+        success: true,
+        message: "Dashboard Stats Fetch Successfully.",
+        totalRevenueAllTime,
+        todayRevenue,
+        yesterdayRevenue,
+        totalUsersCount,
+        orderStatusCounts,
+        monthlySales,
+        currentMonthSales,
+        topSellingProducts,
+        lowStockProducts,
+        revenueGrowth,
+        newUsersThisMonth
+    });
 });
   
