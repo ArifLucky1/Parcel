@@ -174,4 +174,15 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
             const growthRate = ((currentMonthSales - lastMonthRevenue) / lastMonthRevenue) * 100;
             revenueGrowth = `${growthRate >= 0 ? "+" : ""} ${growthRate.toFixed(2)}%`;
         }
-});  
+
+    
+    // New Users This Month
+        const newUsersThisMonthQuery = await database.query(
+            `
+            SELECT COUNT(*) FROM users WHERE created_at >= $1
+            `, [currentMonthStart]
+        );
+
+        const newUsersThisMonth = parseInt(newUsersThisMonthQuery.rows[0].count) || 0;
+});
+  
