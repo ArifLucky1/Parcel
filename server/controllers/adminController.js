@@ -138,7 +138,18 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
         const currentMonthSalesQuery = await database.query(`
             SELECT SUM(total_price) AS total
             FROM orders
-            WHERE created_at >= $1
+            WHERE created_at >= $1 AND (CURRENT_DATE + INTERVAL '30 day')
             `, [currentMonthStart])
+        
+        const currentMonthSales = parseFloat(currentMonthSalesQuery.rows[0].total) || 0;
 
-})  
+    
+    // Product with stock less than or equal to 5
+        const lowStockProductsQuery = await database.query(
+            `
+            SELECT name, stock FROM products WHERE stock <= 5
+            `
+        )
+
+        const lowStockProducts = lowStockProductsQuery.rows;
+});  
