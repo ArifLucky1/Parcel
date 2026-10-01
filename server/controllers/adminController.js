@@ -60,6 +60,8 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
 
     const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
 
+    const currentMonthEnd = new Date(today.getFullYear(), today.getMonth(), 0);
+
     const previousMonthStart = new Date(today.getFullYear(), today.getMonth() -1, 1);
 
     const previousMonthEnd = new Date(today.getFullYear(), today.getMonth(), 0);
@@ -138,7 +140,7 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
         const currentMonthSalesQuery = await database.query(`
             SELECT SUM(total_price) AS total
             FROM orders
-            WHERE created_at >= $1 AND (CURRENT_DATE + INTERVAL '30 day')
+            WHERE created_at BETWEEN $1 AND $2
             `, [currentMonthStart])
         
         const currentMonthSales = parseFloat(currentMonthSalesQuery.rows[0].total) || 0;
