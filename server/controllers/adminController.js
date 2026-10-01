@@ -141,7 +141,7 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
             SELECT SUM(total_price) AS total
             FROM orders
             WHERE created_at BETWEEN $1 AND $2
-            `, [currentMonthStart])
+            `, [currentMonthStart, currentMonthEnd])
         
         const currentMonthSales = parseFloat(currentMonthSalesQuery.rows[0].total) || 0;
 
@@ -154,4 +154,24 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
         )
 
         const lowStockProducts = lowStockProductsQuery.rows;
+
+
+    // Revenue Growth Rate (%)
+        const lastMonthRevenueQuery = await database.query(
+            `
+            SELECT SUM(total_price) AS total
+            FROM orders
+            WHERE created_at BETWEEN $1 AND $2
+            `,
+            [previousMonthStart, previousMonthEnd]
+        );
+
+        const lastMonthRevenue = parseFloat(lastMonthRevenueQuery.rows[0].total) || 0;
+
+        let revenueGrowth = "0%";
+
+        if(lastMonthRevenue > 0){
+            const growthRate = ((currentMonthSales - lastMonthRevenue) / lastMonthRevenue) * 100;
+            revenueGrowth = `${growthRate >= 0 ? "+" : ""} ${growthRate.toFixed(2)}%`;
+        }
 });  
