@@ -56,7 +56,7 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
     const yesterday = new Date(today);
 
     yesterday.setDate(today.getDate() -1);
-    const yesterdatDate = yesterday.toISOString().split("T")[0];
+    const yesterdayDate = yesterday.toISOString().split("T")[0];
 
     const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
 
@@ -100,7 +100,7 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
     // Yesterday's Revenue
         const yesterdayRevenueQuery = await database.query(`
             SELECT SUM(total_price) FROM orders WHERE created_at::date = $1`,
-        [yesterdatDate]);
+        [yesterdayDate]);
         const yesterdayRevenue = parseFloat(todayRevenueQuery.rows[0].sum) || 0;
     
     
@@ -110,7 +110,7 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
             DATE_TRUNC('month', created_at) as date,
             SUM(total_price) as totalSales
             FROM orders
-            GROUP BY month, data
+            GROUP BY month, date
             ORDER BY date ASC
             `);
 
