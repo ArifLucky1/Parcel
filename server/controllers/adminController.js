@@ -128,7 +128,7 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
             SUM(oi.quantity) AS total_sold
             FROM order_items oi
             JOIN products p ON p.id = oi.product_id
-            GROUP BY p.name, p.image, p.category, p.ratings
+            GROUP BY p.name, p.images, p.category, p.ratings
             ORDER BY total_sold DESC
             LIMIT 5
             `);
