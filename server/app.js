@@ -21,6 +21,26 @@ app.use(cors({
 })
 );
 
+app.post(
+    "/api/v1/payment/webhook",
+    express.raw({ type: "application/json" }),
+    async (req, res) => {
+        const sig = req.header["stripe-signature"];
+        let event;
+        try{
+            event = Stripe.webhooks.constructEvent(
+                req.body,
+                sig,
+                process.env.STRIPE_WEBHOOK_SECRET
+            );
+        } catch (error){
+            return res.status(400).send(`Webhook Error: ${error.message || error}`);
+        }
+    }
+)
+
+
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

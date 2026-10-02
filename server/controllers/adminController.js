@@ -179,7 +179,7 @@ export const dashboardStats = catchAsyncErrors(async (req, res, next) =>{
     // New Users This Month
         const newUsersThisMonthQuery = await database.query(
             `
-            SELECT COUNT(*) FROM users WHERE created_at >= $1
+            SELECT COUNT(*) FROM users WHERE created_at >= $1 AND role = 'User'
             `, [currentMonthStart]
         );
 
