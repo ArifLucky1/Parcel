@@ -14,19 +14,32 @@ export const placeNewOrder = catchAsyncErrors(async (req, res, next) => {
     phone,
     orderedItems,
   } = req.body;
-  if (!full_name || !state || !city || !country || !address || !pincode || !phone) {
-    return next(new ErrorHandler("Please provide complete shipping details.", 400));
+  if (
+    !full_name ||
+    !state ||
+    !city ||
+    !country ||
+    !address ||
+    !pincode ||
+    !phone
+  ) {
+    return next(
+      new ErrorHandler("Please provide complete shipping details.", 400),
+    );
   }
 
-  const items = Array.isArray(orderedItems) ? orderedItems : JSON.stringify(orderedItems);
+  const items = Array.isArray(orderedItems)
+    ? orderedItems
+    : JSON.stringify(orderedItems);
 
-  if(!items || items.length === 0){
-    return next(new ErrorHandler("No items in cart.", 400))
+  if (!items || items.length === 0) {
+    return next(new ErrorHandler("No items in cart.", 400));
   }
 
-  const productsIds = items.map(item => item.product.id)
-  const {rows: products} = await database.query(`SELECT id, price, stock, name, FROM products WHERE id = ANY($1::uuid[])`, 
-    [productsIds]
+  const productsIds = items.map((item) => item.product.id);
+  const { rows: products } = await database.query(
+    `SELECT id, price, stock, name, FROM products WHERE id = ANY($1::uuid[])`,
+    [productsIds],
   );
 
   let total_price = 0;
@@ -34,16 +47,46 @@ export const placeNewOrder = catchAsyncErrors(async (req, res, next) => {
   const placeholders = [];
 
   items.forEach((item, index) => {
-    const product = products.find(p => p.id === item.product.id);
+    const product = products.find((p) => p.id === item.product.id);
 
-    if(!product){
-        return next(new ErrorHandler(`Product not found for ID: ${item.product.id}`, 404))
+    if (!product) {
+      return next(
+        new ErrorHandler(`Product not found for ID: ${item.product.id}`, 404),
+      );
     }
 
-    if(item.quantity > product.stock){
-        return next(new ErrorHandler(`Only ${product.stock} units available for ${product.name}`, 400))
+    if (item.quantity > product.stock) {
+      return next(
+        new ErrorHandler(
+          `Only ${product.stock} units available for ${product.name}`,
+          400,
+        ),
+      );
     }
 
-    
-  })
+    const itemTotal = product.price * item.quantity;
+    total_price += itemTotal;
+
+    values.push(
+      null,
+      product.id,
+      item.quantity,
+      product.price,
+      item.product.images[0].url || "",
+      product.name,
+    );
+
+    const offset = index * 6;
+
+    placeholders.push(
+      `($${offset + 1}, $${offset + 2}, $${offset + 3}, $${offset + 4}, $${offset + 5}, $${offset + 6})`,
+    );
+
+  });
+
+  const tax_price = 0.008;
+    const shipping_price = 2;
+    total_price = Math.round(
+      total_price + total_price * tax_price + shipping_price,
+    );
 });
