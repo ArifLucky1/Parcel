@@ -49,7 +49,7 @@ app.post(
                 const paymentTableUpdateResult = await database.query(`
                     UPDATE payments SET payment_status = $1 WHERE payment_intent_id = $2 RETURNING *`, 
                     [updatedPaymentStatus, paymentIntent_client_secret]);
-                    const orderTableUpdateResult = await database.query(`UPDATE orders SET paid_at = NOW() WHERE id = $1 RETURNING *`,
+                     await database.query(`UPDATE orders SET paid_at = NOW() WHERE id = $1 RETURNING *`,
                         [paymentTableUpdateResult.rows[0].order_id]
                     );
 
