@@ -57,9 +57,19 @@ app.post(
 
                 const {rows: orderedItmes} = await database.query(`
                     SELECT product_id, quantity FROM order_items WHERE order_id = $1
-                    `, [orderId])
-            }catch(error){}
+                    `, [orderId]
+                );
+
+                // For each ordered item, reduce the product stock
+                for(const item of orderedItmes){
+                    await database.query(`UPDATE products SET stock = stock - $1 WHERE id = $2`, 
+                        [item.quantity, item.product_id])
+                }
+            }catch(error){
+                return res.status(500).send(`Error updating paid_at timestamp in orders table.`)
+            }
         }
+        res.status(200).send({ received: true})
     }
 )
 
