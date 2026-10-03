@@ -89,4 +89,19 @@ export const placeNewOrder = catchAsyncErrors(async (req, res, next) => {
     total_price = Math.round(
       total_price + total_price * tax_price + shipping_price,
     );
+
+    const orderResult = await database.query(`
+        INSERT INTO orders (buyer_id, total_price, tax_price, shipping_price) VALUES ($1, $2, $3, $4) RETURNING *
+        `, [req.user.id, total_price, tax_price, shipping_price])
+
+        const orderId = orderResult.rows[0].id;
+
+        for(let i = 0; i<values.length; i+=6){
+            values[i] = orderId;
+        }
+
+        await database.query(`
+               INSERT INTO order_items (order_id, product_id, quantity, price, image, title)
+               VALUES ${placeholders.join(", ")} RETURNING * 
+            `, values)
 });
