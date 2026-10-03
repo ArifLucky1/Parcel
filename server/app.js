@@ -50,7 +50,14 @@ app.post(
                     [updatedPaymentStatus, paymentIntent_client_secret]);
                     const orderTableUpdateResult = await database.query(`UPDATE orders SET paid_id = NOW() WHERE id = $1 RETURNING *`,
                         [paymentTableUpdateResult.rows[0].order_id]
-                    )
+                    );
+
+                // Reduce Stock For Each Product
+                const orderId = paymentTableUpdateResult.rows[0].order_id;
+
+                const {rows: orderedItmes} = await database.query(`
+                    SELECT product_id, quantity FROM order_items WHERE order_id = $1
+                    `, [orderId])
             }catch(error){}
         }
     }
