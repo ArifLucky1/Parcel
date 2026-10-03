@@ -8,6 +8,7 @@ import { errorMiddleware } from './middlewares/errorMiddleware.js';
 import authRouter from './router/authRoutes.js';
 import productRouter from './router/productRoutes.js';
 import adminRouter from './router/adminRoutes.js'
+import database from './database/db.js';
 
 
 const app = express();
@@ -35,6 +36,22 @@ app.post(
             );
         } catch (error){
             return res.status(400).send(`Webhook Error: ${error.message || error}`);
+        }
+
+        // HAndling the Event
+
+        if(event.type === "payment_intent.succeeded"){
+            const paymentIntent_client_secret = event.data.object.client_secret;
+            try{
+                // FINDING AND UPDATED PAYMENT
+                const updatedPaymentStatus = "Paid";
+                const paymentTableUpdateResult = await database.query(`
+                    UPDATE payments SET payment_status = $1 WHERE payment_intent_id = $2 RETURNING *`, 
+                    [updatedPaymentStatus, paymentIntent_client_secret]);
+                    const orderTableUpdateResult = await database.query(`UPDATE orders SET paid_id = NOW() WHERE id = $1 RETURNING *`,
+                        [paymentTableUpdateResult.rows[0].order_id]
+                    )
+            }catch(error){}
         }
     }
 )
