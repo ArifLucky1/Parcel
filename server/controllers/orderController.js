@@ -104,4 +104,10 @@ export const placeNewOrder = catchAsyncErrors(async (req, res, next) => {
                INSERT INTO order_items (order_id, product_id, quantity, price, image, title)
                VALUES ${placeholders.join(", ")} RETURNING * 
             `, values)
+
+
+            await database.query(`
+                INSERT INTO shipping_info (order_id, full_name, state, city, country, address, pincode, phone)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *
+                `, [orderId, full_name, state, city, country, address, pincode, phone]);
 });
