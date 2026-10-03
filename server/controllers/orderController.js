@@ -110,4 +110,20 @@ export const placeNewOrder = catchAsyncErrors(async (req, res, next) => {
                 INSERT INTO shipping_info (order_id, full_name, state, city, country, address, pincode, phone)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *
                 `, [orderId, full_name, state, city, country, address, pincode, phone]);
+
+
+            
+            const paymentResponse = await generatePaymentIntent(orderId, total_price);
+
+            if(!paymentResponse.success){
+                return next(new ErrorHandler("Payment Failed. Try again.", 500))
+            }
+
+            res.status(200).json({
+                success: true,
+                message: "Order placed successfully. Please proceed to payment.",
+                paymentIntent: paymentResponse.clientSecret, 
+                total_price
+            })
+            
 });
