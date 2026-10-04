@@ -38,7 +38,7 @@ export const placeNewOrder = catchAsyncErrors(async (req, res, next) => {
 
   const productsIds = items.map((item) => item.product.id);
   const { rows: products } = await database.query(
-    `SELECT id, price, stock, name, FROM products WHERE id = ANY($1::uuid[])`,
+    `SELECT id, price, stock, name FROM products WHERE id = ANY($1::uuid[])`,
     [productsIds],
   );
 
