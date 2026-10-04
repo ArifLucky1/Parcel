@@ -7,7 +7,8 @@ import { createTables } from './utils/createTables.js';
 import { errorMiddleware } from './middlewares/errorMiddleware.js';
 import authRouter from './router/authRoutes.js';
 import productRouter from './router/productRoutes.js';
-import adminRouter from './router/adminRoutes.js'
+import adminRouter from './router/adminRoutes.js';
+import orderRouter from './router/orderRoutes.js'
 import database from './database/db.js';
 import Stripe from 'stripe';
 
@@ -27,7 +28,7 @@ app.post(
     "/api/v1/payment/webhook",
     express.raw({ type: "application/json" }),
     async (req, res) => {
-        const sig = req.header["stripe-signature"];
+        const sig = req.headers["stripe-signature"];
         let event;
         try{
             event = Stripe.webhooks.constructEvent(
@@ -87,8 +88,9 @@ app.use(fileUpload({
 );
 
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/product", productRouter)
-app.use("/api/v1/admin", adminRouter)
+app.use("/api/v1/product", productRouter);
+app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/order", orderRouter);
 
 
 createTables();
