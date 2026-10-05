@@ -162,6 +162,12 @@ export const fetchSingleOrder = catchAsyncErrors(async (req, res, next) => {
       LEFT JOIN shipping_info s ON o.id = s.order_id
       WHERE o.id = $1
       GROUP BY o.id, s.id;
-      `,
+      `, [orderId]
   );
+
+    res.status(200).json({
+      success: true,
+      message: "Orders fetched.",
+      orders: result.rows[0]
+    })
 });
