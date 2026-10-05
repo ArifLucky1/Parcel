@@ -15,7 +15,7 @@ export async function generatePaymentIntent(orderId, totalPrice) {
 
     await database.query(
       `INSERT INTO payments (order_id, payment_type, payment_status, payment_intent_id) VALUES ($1, $2, $3, $4) RETURNING *`,
-      [orderId, "online", "Pending", paymentIntent.id]
+      [orderId, "Online", "Pending", paymentIntent.id]
     );
 
     return {
