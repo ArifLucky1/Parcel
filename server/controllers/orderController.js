@@ -278,5 +278,9 @@ export const updateOrdersStatus = catchAsyncErrors(async (req, res, next) => {
     success: true,
     messsage: "Order status updated.",
     updatedOrder: updatedOrder.rows[0]
-  })
+  });
+});
+
+export const deleteOrder = catchAsyncErrors(async (req, res, next) => {
+  
 })
