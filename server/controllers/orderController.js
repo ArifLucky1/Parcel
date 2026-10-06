@@ -211,7 +211,7 @@ export const fetchMyOrders = catchAsyncErrors(async (req, res, next) => {
     message: "All your orders are fetched.",
     myOrders: result.rows
   })
-})
+});
 
 
 export const fetchAllOrders = catchAsyncErrors(async (req, res, next) => {
@@ -250,4 +250,8 @@ export const fetchAllOrders = catchAsyncErrors(async (req, res, next) => {
     message: "All orders fetched.",
     orders: result.rows
   })
+});
+
+export const updateOrdersStatus = catchAsyncErrors(async (req, res, next) => {
+  const result = 
 })
