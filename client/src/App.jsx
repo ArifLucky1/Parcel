@@ -24,3 +24,42 @@ import About from "./pages/About";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import { Car } from "lucide-react";
+
+
+const App = () => {
+  return(
+    <>
+      <ThemeProvider>
+        <BrowserRouter>
+          <div className="min-h-screen bg-background">
+            <Navbar />
+            <Sidebar />
+            <SearchOverlay />
+            <CartSidebar />
+            <ProfilePanel />
+            <LoginModal />
+            <Routes>
+              <route path="/" element={<Index />} />
+              <route path="/password/reset/:token" element={<Index />} />
+              <route path="/products" element={<Products />} />
+              <route path="/product/:id" element={<ProductDetail />} />
+              <route path="/cart" element={<Cart />} />
+              <route path="/orders" element={<Orders />} />
+              <route path="/payment" element={<Payment />} />
+              <route path="/about" element={<About />} />
+              <route path="/faq" element={<FAQ />} />
+              <route path="/contact" element={<Contact />} />
+              <route path="*" element={<NotFound />} />
+            </Routes>
+            <Footer />
+          </div>
+          <ToastContainer />
+        </BrowserRouter>
+      </ThemeProvider>
+    </>
+  )
+};
+
+
+export default App;
