@@ -45,7 +45,7 @@ const Footer = () => {
           {/* Brand & Contact */}
           <div className="lg:col-span-1">
             <h2 className="text-2xl font-bold gradient-primary bg-clip-text text-transparent mb-4">
-              ShopMate
+              Parcel 
             </h2>
             <p className="text-muted-foreground mb-6">
               Your trusted partner for online shopping. Discover amazing
@@ -54,7 +54,7 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-muted-foreground">
                 <Mail className="w-5 h-5 text-primary" />
-                <span>support@shopmate.com</span>
+                <span>support@Parcel .com</span>
               </div>
               <div className="flex items-center space-x-3 text-muted-foreground">
                 <Phone className="w-5 h-5 text-primary" />
@@ -167,7 +167,7 @@ const Footer = () => {
 
           <div className="text-center md:text-right">
             <p className="text-muted-foreground text-sm">
-              © 2024 ShopMate. All rights reserved.
+              © 2024 Parcel . All rights reserved.
             </p>
             <p className="text-muted-foreground text-xs mt-1">
               Developed By CodeWithZeeshu

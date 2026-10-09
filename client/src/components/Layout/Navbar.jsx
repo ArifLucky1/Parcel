@@ -3,7 +3,13 @@ import { useTheme } from "../../contexts/ThemeContext";
 import { useDispatch, useSelector } from "react-redux";
 
 const Navbar = () => {
-  return <></>;
+  
+  const {} = useTheme();
+  
+  return 
+  <>
+
+  </>;
 };
 
 export default Navbar;
