@@ -1,6 +1,6 @@
 const animate = require("tailwindcss-animate");
 
-export default  {
+module.exports = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{js,jsx,ts,tsx}",
