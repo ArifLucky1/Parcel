@@ -14,10 +14,10 @@ export const register = createAsyncThunk("auth/register", async(data, thunkAPI) 
     return thunkAPI.rejectWithValue(error.response.data.message);
   }
 });
-export const login = createAsyncThunk("auth/register", async(data, thunkAPI) => {
+export const login = createAsyncThunk("auth/login", async(data, thunkAPI) => {
   try {
     const res = await axiosInstance.post("/auth/login", data);
-    toast.success("res.data.message");
+    toast.success(res.data.message);
     thunkAPI.dispatch(toggleAuthtopup());
     return res.data.user;
   } catch (error) {
@@ -25,7 +25,7 @@ export const login = createAsyncThunk("auth/register", async(data, thunkAPI) => 
     return thunkAPI.rejectWithValue(error.response.data.message);
   }
 });
-export const getUser = createAsyncThunk("auth/register", async(_, thunkAPI) => {
+export const getUser = createAsyncThunk("auth/getUser", async(_, thunkAPI) => {
   try {
     const res = await axiosInstance.get("/auth/me");
     return res.data.user;
@@ -33,10 +33,22 @@ export const getUser = createAsyncThunk("auth/register", async(_, thunkAPI) => {
     return thunkAPI.rejectWithValue(error.response.data.message || "Failed to get user.");
   }
 });
-export const logout = createAsyncThunk("auth/register", async(_, thunkAPI) => {
+export const logout = createAsyncThunk("auth/logout", async(_, thunkAPI) => {
   try {
     const res = await axiosInstance.get("/auth/logout");
     thunkAPI.dispatch(toggleAuthPopup());
+    return null;
+  } catch (error) {
+    toast.error(error.response.data.message);
+    return thunkAPI.rejectWithValue(error.response.data.message);
+  }
+});
+
+
+export const forgotPassword = createAsyncThunk("auth/forgot/password", async(email, thunkAPI) => {
+  try {
+    const res = await axiosInstance.post("/auth/password/forgot?frontendUrl=http://localhost:5173", email);
+    toast.success(res.data.message);
     return null;
   } catch (error) {
     toast.error(error.response.data.message);
