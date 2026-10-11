@@ -33,7 +33,16 @@ export const getUser = createAsyncThunk("auth/register", async(_, thunkAPI) => {
     return thunkAPI.rejectWithValue(error.response.data.message || "Failed to get user.");
   }
 });
-export const logout = createAsyncThunk("auth/register", async(_, thunkAPI) => {});
+export const logout = createAsyncThunk("auth/register", async(_, thunkAPI) => {
+  try {
+    const res = await axiosInstance.get("/auth/logout");
+    thunkAPI.dispatch(toggleAuthPopup());
+    return null;
+  } catch (error) {
+    toast.error(error.response.data.message);
+    return thunkAPI.rejectWithValue(error.response.data.message);
+  }
+});
 
 const authSlice = createSlice({
   name: "auth",
