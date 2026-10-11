@@ -14,7 +14,17 @@ export const register = createAsyncThunk("auth/register", async(data, thunkAPI) 
     return thunkAPI.rejectWithValue(error.response.data.message);
   }
 });
-export const login = createAsyncThunk("auth/register", async(data, thunkAPI) => {});
+export const login = createAsyncThunk("auth/register", async(data, thunkAPI) => {
+  try {
+    const res = await axiosInstance.post("/auth/login", data);
+    toast.success("res.data.message");
+    thunkAPI.dispatch(toggleAuthtopup());
+    return res.data.user;
+  } catch (error) {
+    toast.error(error.response.data.message);
+    return thunkAPI.rejectWithValue(error.response.data.message);
+  }
+});
 export const getUser = createAsyncThunk("auth/register", async(_, thunkAPI) => {});
 export const logout = createAsyncThunk("auth/register", async(_, thunkAPI) => {});
 
