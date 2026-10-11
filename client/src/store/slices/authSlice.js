@@ -25,7 +25,14 @@ export const login = createAsyncThunk("auth/register", async(data, thunkAPI) => 
     return thunkAPI.rejectWithValue(error.response.data.message);
   }
 });
-export const getUser = createAsyncThunk("auth/register", async(_, thunkAPI) => {});
+export const getUser = createAsyncThunk("auth/register", async(_, thunkAPI) => {
+  try {
+    const res = await axiosInstance.get("/auth/me");
+    return res.data.user;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data.message || "Failed to get user.");
+  }
+});
 export const logout = createAsyncThunk("auth/register", async(_, thunkAPI) => {});
 
 const authSlice = createSlice({
