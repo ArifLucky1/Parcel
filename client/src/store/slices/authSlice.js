@@ -130,6 +130,19 @@ const authSlice = createSlice({
     .addCase(login.rejected, (state) => {
       state.isLoggingIn = false;
     })
+
+    .addCase(getUser.pending, (state, action) => {
+      state.isCheckingAuth = true;
+      state.authUser = null
+    })
+    .addCase(getUser.fulfilled, (state, action) => {
+      state.isCheckingAuth = false;
+      state.authUser = action.payload;
+    })
+    .addCase(getUser.rejected, (state, action) => {
+      state.isCheckingAuth = false;
+      state.authUser = null;
+    })
   },
 });
 
