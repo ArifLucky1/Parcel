@@ -56,6 +56,19 @@ export const forgotPassword = createAsyncThunk("auth/forgot/password", async(ema
   }
 });
 
+
+export const resetPassword = createAsyncThunk("auth/password/reset", async({token, password, confirmPassword}, thunkAPI) => {
+  try {
+    const res = await axiosInstance.put(`/auth/password/reset/${token}`, {password, confirmPassword});
+    toast.success(res.data.message);
+    return res.data.user;
+  } catch (error) {
+    const message = error.response.data.message || "Something went wrong. Please try again."
+    toast.error(message);
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
