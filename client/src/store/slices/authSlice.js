@@ -181,6 +181,17 @@ const authSlice = createSlice({
     .addCase(updatePassword.rejected, (state) => {
       state.isUpdatingPassword = false;
     })
+
+    .addCase(updateProfile.pending, (state) => {
+      state.isUpdatingProfile = true;
+    })
+    .addCase(updateProfile.fulfilled, (state, action) => {
+      state.isUpdatingProfile = false;
+      state.authUser = action.payload;
+    })
+    .addCase(updateProfile.rejected, (state) => {
+      state.isUpdatingProfile = false;
+    })
   },
 });
 
