@@ -144,12 +144,21 @@ const authSlice = createSlice({
       state.authUser = null;
     })
 
-
     .addCase(logout.fulfilled, (state, action) => {
       state.authUser = {};
     })
     .addCase(logout.rejected, (state, action) => {
       state.authUser = state.authUser;
+    })
+
+    .addCase(forgotPassword.pending, (state) => {
+      state.isRequestingForToken = true;
+    })
+    .addCase(forgotPassword.fulfilled, (state, action) => {
+      state.isRequestingForToken = false;
+    })
+    .addCase(forgotPassword.rejected, (state) => {
+      state.isRequestingForToken = false;
     })
   },
 });
