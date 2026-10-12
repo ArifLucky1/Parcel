@@ -143,6 +143,14 @@ const authSlice = createSlice({
       state.isCheckingAuth = false;
       state.authUser = null;
     })
+
+
+    .addCase(logout.fulfilled, (state, action) => {
+      state.authUser = {};
+    })
+    .addCase(logout.rejected, (state, action) => {
+      state.authUser = state.authUser;
+    })
   },
 });
 
