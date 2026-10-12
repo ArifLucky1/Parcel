@@ -171,6 +171,16 @@ const authSlice = createSlice({
     .addCase(resetPassword.rejected, (state) => {
       state.isUpdatingPassword = false;
     })
+
+    .addCase(updatePassword.pending, (state) => {
+      state.isUpdatingPassword = true;
+    })
+    .addCase(updatePassword.fulfilled, (state, action) => {
+      state.isUpdatingPassword = false;
+    })
+    .addCase(updatePassword.rejected, (state) => {
+      state.isUpdatingPassword = false;
+    })
   },
 });
 
