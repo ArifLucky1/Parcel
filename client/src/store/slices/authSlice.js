@@ -83,7 +83,17 @@ export const updatePassword = createAsyncThunk("auth/password/update", async(dat
 });
 
 
-
+export const updateProfile = createAsyncThunk("auth/me/update", async(data, thunkAPI) => {
+  try {
+    const res = await axiosInstance.put("/auth/profile/update", data);
+    toast.success(res.data.message);
+    return res.data.user;
+  } catch (error) {
+    const message = error.response.data.message;
+    toast.error(message);
+    return thunkAPI.rejectWithValue(message);
+  }
+});
 
 
 const authSlice = createSlice({
