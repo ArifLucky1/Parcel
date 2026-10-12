@@ -107,7 +107,30 @@ const authSlice = createSlice({
     isRequestingForToken: false,
     isCheckingAuth: true,
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+    .addCase(register.pending, (state) => {
+      state.isSigningUp = true;
+    })
+    .addCase(register.fulfilled, (state, action) => {
+      state.isSigningUp = false;
+      state.authUser = action.payload;
+    })
+    .addCase(register.rejected, (state) => {
+      state.isSigningUp = false;
+    })
+
+    .addCase(login.pending, (state) => {
+      state.isLoggingIn = true;
+    })
+    .addCase(login.fulfilled, (state, action) => {
+      state.isLoggingIn = false;
+      state.authUser = action.payload;
+    })
+    .addCase(login.rejected, (state) => {
+      state.isLoggingIn = false;
+    })
+  },
 });
 
 export default authSlice.reducer;
