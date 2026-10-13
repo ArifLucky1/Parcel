@@ -30,8 +30,21 @@ const SearchOverlay = () => {
               <h2 className="text-xl font-semibold text-primary">
                 Search Products
               </h2>
-              <button onClick={()=> dispatch(toggleSearchBar)} className="p-2 rounded-lg glass-card hover:glow-on-hover animate-smooth"></button>
+              <button onClick={()=> dispatch(toggleSearchBar())} className="p-2 rounded-lg glass-card hover:glow-on-hover animate-smooth">
+                <X className="w-5 h-5 text-primary" />
+              </button>
             </div>
+
+          <div className="relative">
+            {/* SEARCH ICON BUTTON */}
+            <button onClick={handleSearch} className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground">
+              <Search className="w-5 h-5 text-primary" />
+            </button>
+
+            <input type="text" placeholder="Search for products..." value={SearchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            className="w-full pl-12 pr-4 py-4 bg-secondary border border-border rounded-lg focus:outline-none text-foreground placeholder-muted-foreground"/>
+          </div> 
+
           </div>
         </div>
       </div>
