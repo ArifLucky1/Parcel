@@ -20,8 +20,11 @@ const cartSlice = createSlice({
       }
     },
 
-
-    
+    removeFromCart(state, action) {
+      state.cart = state.cart.filter(
+        (item) => item.product.id !== action.payload.id,
+      );
+    },
   },
 });
 
