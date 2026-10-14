@@ -25,6 +25,15 @@ const cartSlice = createSlice({
         (item) => item.product.id !== action.payload.id,
       );
     },
+
+    updateCartQuantity(state, action) {
+      const item = state.cart.find(
+        (item) => item.product.id === action.payload.id
+      );
+      if (item) {
+        item.quantity += action.payload.quantity;
+      }
+    },
   },
 });
 
