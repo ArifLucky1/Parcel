@@ -48,6 +48,36 @@ const CartSidebar = () => {
             <X className="w-5 h-5 text-primary" />
           </button>
         </div>
+
+        <div className="p-6">
+          {
+            cart && cart.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">Your cart is empty.</p>
+                <Link to={"/product"} onClick={()=> dispatch(toggleCart())} className="inline-block mt-4 px-6 py-2 gradient-primary-foreground rounded-lg hover:glow-on-hover animate-smooth">Browse Products</Link>
+              </div>
+             ) : (
+              <>
+                {/* CART ITEMS */}
+                <div className="space-y-4 mb-6">
+                  {
+                    cart && cart.map(irem => {
+                      return(
+                        <div key={item.product.id} className="glass-card p-4">
+                          <div className="flex items-center space-x-4">
+                            <img src={item.product.image[0].url} alt={item.product.name} className="w-16 h-16 object-cover rounded-lg"/>
+                            
+                          </div>
+                        </div>
+                      )
+                    })
+                  }
+                </div>
+              </>
+             )
+          }
+        </div>
+
       </div>
     </>
   );
