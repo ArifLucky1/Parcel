@@ -28,7 +28,18 @@ const CartSidebar = () => {
   }
 
   if (!isCartOpen) return null;
-  return <></>;
+  return (
+    <>
+      {/* OVERLAY */}
+      <div
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+        onClick={() => dispatch(toggleSidebar())}
+      />
+
+
+      {/* CART SIDEBAR */}
+    </>
+  );
 };
 
 export default CartSidebar;
