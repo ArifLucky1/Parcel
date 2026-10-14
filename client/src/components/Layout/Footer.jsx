@@ -54,7 +54,7 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-muted-foreground">
                 <Mail className="w-5 h-5 text-primary" />
-                <span>support@Parcel .com</span>
+                <span>support@Parcel.com</span>
               </div>
               <div className="flex items-center space-x-3 text-muted-foreground">
                 <Phone className="w-5 h-5 text-primary" />
@@ -62,7 +62,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3 text-muted-foreground">
                 <MapPin className="w-5 h-5 text-primary" />
-                <span>San Francisco, CA</span>
+                <span>New Delhi, DL</span>
               </div>
             </div>
           </div>
@@ -170,7 +170,7 @@ const Footer = () => {
               © 2024 Parcel . All rights reserved.
             </p>
             <p className="text-muted-foreground text-xs mt-1">
-              Developed By CodeWithZeeshu
+              Developed By Arif
             </p>
           </div>
         </div>

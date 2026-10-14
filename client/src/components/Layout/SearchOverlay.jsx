@@ -42,9 +42,11 @@ const SearchOverlay = () => {
             </button>
 
             <input type="text" placeholder="Search for products..." value={SearchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            className="w-full pl-12 pr-4 py-4 bg-secondary border border-border rounded-lg focus:outline-none text-foreground placeholder-muted-foreground"/>
+            className="w-full pl-12 pr-4 py-4 bg-secondary border border-border rounded-lg focus:outline-none text-foreground placeholder-muted-foreground" autoFocus />
           </div> 
-
+        <div className="mt-6 text-center text-muted-foreground">
+          <p>Start typing to search for products...</p>
+        </div>
           </div>
         </div>
       </div>
