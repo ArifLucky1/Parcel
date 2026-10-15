@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { X, LogOut, Upload, Eye, EyeOff } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { updateProfile } from "../../store/slices/authSlice";
+import { updatePassword, updateProfile } from "../../store/slices/authSlice";
 
 const ProfilePanel = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const ProfilePanel = () => {
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
   const handleLogout = () => {
     dispatch(logout())
@@ -37,7 +37,17 @@ const ProfilePanel = () => {
     formData.append("email", email)
     if(avatar) formData.append("avatar", avatar);
     dispatch(updateProfile(formData));
-  }
+  };
+
+  const handleUpdatePassword = () => {
+    const formData = new FormData();
+    formData.append("currentPassword", currentPassword);
+    formData.append("newPassword", newPassword);
+    formData.append("confirmNewPassword", confirmNewPassword);
+    dispatch(updatePassword());
+  };
+
+  if (!isAuthPopupOpen || !authUser) return null;
 
   return <></>;
 };
