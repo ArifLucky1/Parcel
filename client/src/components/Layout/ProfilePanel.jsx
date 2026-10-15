@@ -113,13 +113,25 @@ const ProfilePanel = () => {
                   className="hidden"
                 />
               </label>
-              <button onClick={handleUpdateProfile} className="flex justify-center items-center space-x-3 p-3 rounded-lg glass-card hove:glow-on-hover animate-smooth group w-full">
-                {
-                  isUpdatingProfile ? ("") : ("")
-                }
+              <button
+                onClick={handleUpdateProfile}
+                className="flex justify-center items-center space-x-3 p-3 rounded-lg glass-card hove:glow-on-hover animate-smooth group w-full"
+              >
+                {isUpdatingProfile ? (
+                  <>
+                    <div
+                      className={`w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin`}
+                    />
+                    <span>Updating Profile...</span>
+                  </>
+                ) : (
+                  "Save Changes"
+                )}
               </button>
             </div>
           )}
+
+          {/* UPDATE PASSWORD UI */}
         </div>
       </div>
     </>
