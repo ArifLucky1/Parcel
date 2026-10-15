@@ -66,7 +66,23 @@ const CartSidebar = () => {
                         <div key={item.product.id} className="glass-card p-4">
                           <div className="flex items-center space-x-4">
                             <img src={item.product.image[0].url} alt={item.product.name} className="w-16 h-16 object-cover rounded-lg"/>
-                            
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-semibold text-foreground truncate">{item.product.name}</h3>
+                              <p className="text-primary font-semibold">${item.product.price}</p>
+                            </div>
+
+                          {/* Quantity Controls */}
+                            <div className="flex items-center space-x-3 mt-2">
+                              <button className="p-1 rounded glass-card hover:glow-on-hover animate-smooth" onClick={() => {
+                                updateQuantity(item.product.id, item.quantity - 1)
+                              }}>
+                                <Minus className="w-4 h-4 text-primary" />
+                              </button>
+                              <span className="w-8 text-center">
+                                {item.quantity}</span>
+                            </div>
+
+
                           </div>
                         </div>
                       )
