@@ -176,6 +176,12 @@ const ProfilePanel = () => {
               </button>
             </div>
 
+            <button onClick={handleLogout} className="my-6 flex items-center space-x-3 p-3 rounded-lg glass-card 
+            hover:glow-on-hover text-destructive hover:text-destructive-foreground group w-full">
+              <LogOut className="w-5 h-5" />
+              <span>Logout</span>
+            </button>
+
         </div>
       </div>
     </>
