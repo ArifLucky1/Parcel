@@ -78,8 +78,19 @@ const CartSidebar = () => {
                               }}>
                                 <Minus className="w-4 h-4 text-primary" />
                               </button>
-                              <span className="w-8 text-center">
+                              <span className="w-8 text-center font-semibold">
                                 {item.quantity}</span>
+                                <button className="p-1 rounded glass-card hover:glow-on-hover animate-smooth" onClick={() => {
+                                updateQuantity(item.product.id, item.quantity + 1)
+                              }}>
+                                <Plus className="w-4 h-4 text-primary" />
+                              </button>
+
+                              <button className="p-1 rounded glass-card hover:glow-on-hover animate-smooth ml-2 text-destructive" onClick={() => {
+                                dispatch(removeFromCart(item.product.id))
+                              }}>
+                                <Trash2 className="w-4 h-4 text-destructive-foreground" />
+                              </button>
                             </div>
 
 
