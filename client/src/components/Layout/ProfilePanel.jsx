@@ -24,6 +24,7 @@ const ProfilePanel = () => {
     }
   }, [authUser]);
 
+  const [showPassword, setShowPassword] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -83,7 +84,7 @@ const ProfilePanel = () => {
             <p className="text-muted-foreground ">{authUser?.email}</p>
           </div>
 
-          {/* PROFILE UPDATE UI */}
+          {/* PROFILE UPDATE FORM */}
           {authUser && (
             <div className="space-y-4 mb-8">
               <h3 className="text-lg font-semibold text-primary">
@@ -131,7 +132,50 @@ const ProfilePanel = () => {
             </div>
           )}
 
-          {/* UPDATE PASSWORD UI */}
+          {/* UPDATE PASSWORD FORM */}
+          <div className="space-y-4 mb-8">
+              <h3 className="text-lg font-semibold text-primary">
+                Update Password
+              </h3>
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Current Password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                className="w-full p-2 rounded border border-border bg-secondary text-foreground"
+              />
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="New Password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="w-full p-2 rounded border border-border bg-secondary text-foreground"
+              />
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Confirm Password"
+                value={confirmNewPassword}
+                onChange={(e) => setConfirmNewPassword(e.target.value)}
+                className="w-full p-2 rounded border border-border bg-secondary text-foreground"
+              />
+              
+              <button
+                onClick={handleUpdatePassword}
+                className="flex justify-center items-center space-x-3 p-3 rounded-lg glass-card hove:glow-on-hover animate-smooth group w-full"
+              >
+                {isUpdatingPassword ? (
+                  <>
+                    <div
+                      className={`w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin`}
+                    />
+                    <span>Updating Password...</span>
+                  </>
+                ) : (
+                  "Update Password"
+                )}
+              </button>
+            </div>
+
         </div>
       </div>
     </>
