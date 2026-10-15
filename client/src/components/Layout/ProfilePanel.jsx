@@ -82,6 +82,44 @@ const ProfilePanel = () => {
             </h3>
             <p className="text-muted-foreground ">{authUser?.email}</p>
           </div>
+
+          {/* PROFILE UPDATE UI */}
+          {authUser && (
+            <div className="space-y-4 mb-8">
+              <h3 className="text-lg font-semibold text-primary">
+                Update Profile
+              </h3>
+              <input
+                type="text"
+                placeholder="Full Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full p-2 rounded border border-border bg-secondary text-foreground"
+              />
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-2 rounded border border-border bg-secondary text-foreground"
+              />
+              <label className="flex items-center gap-2 cursor-pointer text-sm text-muted-foreground">
+                <Upload className="w-4 h-4 text-primary" />
+                <span>Upload Avatar</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setAvatar(e.target.files[0])}
+                  className="hidden"
+                />
+              </label>
+              <button onClick={handleUpdateProfile} className="flex justify-center items-center space-x-3 p-3 rounded-lg glass-card hove:glow-on-hover animate-smooth group w-full">
+                {
+                  isUpdatingProfile ? ("") : ("")
+                }
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>
