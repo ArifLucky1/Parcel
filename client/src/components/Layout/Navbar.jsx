@@ -27,7 +27,7 @@ const Navbar = () => {
           </button>
 
           {/* CENTER LOGO */}
-          <div className="flex-1 flex justify-center ">
+          <div className="flex-1 flex ml-4 items-center ">
             <h1 className="text-2xl font-bold text-primary">Parcel</h1>
             </div>
 

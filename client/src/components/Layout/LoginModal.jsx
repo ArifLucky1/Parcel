@@ -96,6 +96,9 @@ const LoginModal = () => {
                     ? "Forgot password"
                     : "Welcome Back"}
             </h2>
+            <button onClick={() => dispatch(toggleAuthPopup())} className="p-2 rounded-lg glass-card hover:glow-on-hover animate-smooth">
+              <X className="w-5 h-5 text-primary" />
+            </button>
           </div>
         </div>
       </div>
