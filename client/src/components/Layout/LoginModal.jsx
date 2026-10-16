@@ -3,7 +3,11 @@ import { X, Mail, Lock, User } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { toggleAuthPopup } from "../../store/slices/popupSlice";
-import { forgotPassword } from "../../store/slices/authSlice";
+import {
+  forgotPassword,
+  register,
+  resetPassword,
+} from "../../store/slices/authSlice";
 
 const LoginModal = () => {
   const dispatch = useDispatch();
@@ -13,21 +17,20 @@ const LoginModal = () => {
     useSelector((state) => state.auth);
   const { isAuthPopupOpen } = useSelector((state) => state.popup);
 
-  const [mode, setMode] = useState("signin");      // signin | signup | forgot | reset
+  const [mode, setMode] = useState("signin"); // signin | signup | forgot | reset
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
-
 
   // Detect reset password URL and open popup with reset mode
 
   useEffect(() => {
-    if(location.pathname.startsWith("/password/reset/")){
+    if (location.pathname.startsWith("/password/reset/")) {
       setMode("reset");
-      dispatch(toggleAuthPopup())
+      dispatch(toggleAuthPopup());
     }
   }, [location.pathname, dispatch]);
 
@@ -36,21 +39,68 @@ const LoginModal = () => {
 
     const data = new FormData();
 
-    data.append("email", formData.email)
-    data.append("password", formData.password)
+    data.append("email", formData.email);
+    data.append("password", formData.password);
 
-    if(mode === "signup") data.append("name", formData.name);
+    if (mode === "signup") data.append("name", formData.name);
 
-    if(mode === "forgot"){
-      dispatch(forgotPassword({email: formData.email})).then(() => {
+    if (mode === "forgot") {
+      dispatch(forgotPassword({ email: formData.email })).then(() => {
         dispatch(toggleAuthPopup());
         setMode("signin");
       });
-      return
+      return;
     }
-  }
 
-  return <></>;
+    if (mode === "reset") {
+      const token = location.pathname.split("/").pop();
+      dispatch(
+        resetPassword({
+          token,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword,
+        }),
+      );
+      return;
+    }
+    if (mode === "signup") {
+      dispatch(register(data));
+    } else {
+      dispatch(login(data));
+    }
+
+    if (authUser) {
+      setFormData({ name: "", email: "", password: "", confirmPassword: "" });
+    }
+  };
+
+  if (!isAuthPopupOpen || authUser) return null;
+
+  let isLoading = isSigningUp || isLoggingIn || isRequestingForToken;
+
+  return (
+    <>
+      <div className="fixed inset-0 z-50 flex items-center justify-center">
+        {/* OVERLAY */}
+        <div className="absolute inset-0 backdrop-blur-md bg-[hsla(var(--glass-bg))]" />
+
+        <div className="relative z-10 glass-panel w-full max-w-md mx-4 animate-fade-in-up">
+          {/* HEADER */}
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-primary">
+              {mode === "reset"
+                ? "Reset Passsword"
+                : mode === "signup"
+                  ? "Create Account"
+                  : mode === "forgot"
+                    ? "Forgot password"
+                    : "Welcome Back"}
+            </h2>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default LoginModal;
