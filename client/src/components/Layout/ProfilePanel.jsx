@@ -154,10 +154,23 @@ const ProfilePanel = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Confirm Password"
-                value={confirmNewPassword}
+                value={newPassword}
                 onChange={(e) => setConfirmNewPassword(e.target.value)}
                 className="w-full p-2 rounded border border-border bg-secondary text-foreground"
               />
+
+              <button onClick={()=> setShowPassword(!showPassword)} className="text-xs text-muted-foreground flex items-center gap-1">
+                {
+                  showPassword ? (
+                    <EyeOff className="w-4 h-4 text-primary" />
+                  ) : (
+                    <Eye className="w-4 h-4 text-primary" />
+                  )
+                }
+                {
+                  showPassword ? "Hide" : "Show"
+                } Passwords
+              </button>
               
               <button
                 onClick={handleUpdatePassword}
