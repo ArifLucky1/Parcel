@@ -213,6 +213,21 @@ const LoginModal = () => {
               }
             </button>
           </form>
+
+              {/* MODE TOGGLE */}
+              {
+                ["signin", "signup"].includes(mode) && (
+                  <div className="mt-6 text-center">
+                    <button type="button" onClick={() => {setMode(prev => prev === "signup" ? "signup" : "signup")}} 
+                      className="text-primary hover:text-accent animate-smooth">
+                      {
+                        mode === "signup" ? "Already have an account? Sign in" : "Don't have an account? Sign up"
+                      }
+                    </button>
+                  </div>
+                )
+              }
+
         </div>
       </div>
     </>
