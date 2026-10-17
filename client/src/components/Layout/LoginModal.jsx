@@ -173,6 +173,17 @@ const LoginModal = () => {
                 />
               </div>
             )}
+
+            {/* FORGOT PASSWORD TOGGLE BUTTON/LINK */}
+            {
+              mode === "signin" && (
+                <div className="text-right text-sm">
+                  <button type="button" onClick={() => setMode("forgot")} className="text-primary hover:text-accent animate-smooth">
+                    Forgot Password?
+                  </button>
+                </div>
+              )
+            }
           </form>
         </div>
       </div>
