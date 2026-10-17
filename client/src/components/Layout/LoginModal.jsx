@@ -124,7 +124,7 @@ const LoginModal = () => {
             )}
 
             {/* EMAIL - ALWAYS VISIBLE EXCEPT FOR RESET MODE */}
-             {mode !== "reset" && (
+            {mode !== "reset" && (
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
@@ -141,7 +141,7 @@ const LoginModal = () => {
             )}
 
             {/* PASSWORD - ALWAYS VISIBLE EXCEPT FOR FORGOT MODE */}
-             {mode !== "forgot" && (
+            {mode !== "forgot" && (
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
@@ -157,8 +157,8 @@ const LoginModal = () => {
               </div>
             )}
 
-             {/* CONFIRM PASSWORD - ONLY VISIBLE FOR RESET MODE */}
-             {mode === "reset" && (
+            {/* CONFIRM PASSWORD - ONLY VISIBLE FOR RESET MODE */}
+            {mode === "reset" && (
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
@@ -166,7 +166,10 @@ const LoginModal = () => {
                   placeholder="Confirm Password"
                   value={formData.confirmPassword}
                   onChange={(e) => {
-                    setFormData({ ...formData, confirmPassword: e.target.value });
+                    setFormData({
+                      ...formData,
+                      confirmPassword: e.target.value,
+                    });
                   }}
                   className="w-full pl-10 pr-4 py-3 bg-secondary border border-border rounded-lg focus:outline-none"
                   required
@@ -175,15 +178,40 @@ const LoginModal = () => {
             )}
 
             {/* FORGOT PASSWORD TOGGLE BUTTON/LINK */}
-            {
-              mode === "signin" && (
-                <div className="text-right text-sm">
-                  <button type="button" onClick={() => setMode("forgot")} className="text-primary hover:text-accent animate-smooth">
-                    Forgot Password?
-                  </button>
-                </div>
-              )
-            }
+            {mode === "signin" && (
+              <div className="text-right text-sm">
+                <button
+                  type="button"
+                  onClick={() => setMode("forgot")}
+                  className="text-primary hover:text-accent animate-smooth"
+                >
+                  Forgot Password?
+                </button>
+              </div>
+            )}
+
+            {/* SUBMIT BUTTON */}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={`w-full py-3 gradient-primary flex justify-center items-center gap-2 text-primary-foreground rounded-lg font-semibold animate-smooth ${isLoading ? "opacity-70 cursor-not-allowed" : "hover:glow-on-hover"}`}
+            >
+              {
+                isLoading ? (<>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>
+                      {
+                        mode === "reset" ? "Reseting password..." : mode === "signup" ? "Signing up..." : mode === "forgot" ? "Requesting for email..." : "Signing in..."
+                      }{" "}
+                    </span>
+                  
+                </>
+                ) : mode === "reset" ? ("Reset Password") 
+                  : mode === "signup" ? ("Create Account") 
+                  : mode === "forgot" ? ("Sent Reset Email") 
+                  : ("Sign In")
+              }
+            </button>
           </form>
         </div>
       </div>
