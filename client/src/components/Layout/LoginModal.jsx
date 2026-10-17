@@ -156,6 +156,23 @@ const LoginModal = () => {
                 />
               </div>
             )}
+
+             {/* CONFIRM PASSWORD - ONLY VISIBLE FOR RESET MODE */}
+             {mode === "reset" && (
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <input
+                  type="password"
+                  placeholder="Confirm Password"
+                  value={formData.confirmPassword}
+                  onChange={(e) => {
+                    setFormData({ ...formData, confirmPassword: e.target.value });
+                  }}
+                  className="w-full pl-10 pr-4 py-3 bg-secondary border border-border rounded-lg focus:outline-none"
+                  required
+                />
+              </div>
+            )}
           </form>
         </div>
       </div>
