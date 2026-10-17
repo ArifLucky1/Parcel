@@ -96,10 +96,50 @@ const LoginModal = () => {
                     ? "Forgot password"
                     : "Welcome Back"}
             </h2>
-            <button onClick={() => dispatch(toggleAuthPopup())} className="p-2 rounded-lg glass-card hover:glow-on-hover animate-smooth">
+            <button
+              onClick={() => dispatch(toggleAuthPopup())}
+              className="p-2 rounded-lg glass-card hover:glow-on-hover animate-smooth"
+            >
               <X className="w-5 h-5 text-primary" />
             </button>
           </div>
+
+          {/* AUTHENTICATION FORM */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* FULL NAME - ONLY FOR SIGNUP */}
+            {mode === "signup" && (
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  value={formData.name}
+                  onChange={(e) => {
+                    setFormData({ ...formData, name: e.target.value });
+                  }}
+                  className="w-full pl-10 pr-4 py-3 bg-secondary border border-border rounded-lg focus:outline-none"
+                  required
+                />
+              </div>
+            )}
+
+            {/* EMAIL - ALWAYS VISIBLE */}
+             {mode !== "reset" && (
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  value={formData.email}
+                  onChange={(e) => {
+                    setFormData({ ...formData, email: e.target.value });
+                  }}
+                  className="w-full pl-10 pr-4 py-3 bg-secondary border border-border rounded-lg focus:outline-none"
+                  required
+                />
+              </div>
+            )}
+          </form>
         </div>
       </div>
     </>
