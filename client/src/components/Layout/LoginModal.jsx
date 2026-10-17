@@ -123,7 +123,7 @@ const LoginModal = () => {
               </div>
             )}
 
-            {/* EMAIL - ALWAYS VISIBLE */}
+            {/* EMAIL - ALWAYS VISIBLE EXCEPT FOR RESET MODE */}
              {mode !== "reset" && (
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -133,6 +133,23 @@ const LoginModal = () => {
                   value={formData.email}
                   onChange={(e) => {
                     setFormData({ ...formData, email: e.target.value });
+                  }}
+                  className="w-full pl-10 pr-4 py-3 bg-secondary border border-border rounded-lg focus:outline-none"
+                  required
+                />
+              </div>
+            )}
+
+            {/* PASSWORD - ALWAYS VISIBLE EXCEPT FOR FORGOT MODE */}
+             {mode !== "forgot" && (
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={(e) => {
+                    setFormData({ ...formData, password: e.target.value });
                   }}
                   className="w-full pl-10 pr-4 py-3 bg-secondary border border-border rounded-lg focus:outline-none"
                   required
