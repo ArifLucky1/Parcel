@@ -7,7 +7,7 @@ export const register = createAsyncThunk("auth/register", async(data, thunkAPI) 
   try {
     const res = await axiosInstance.post("/auth/register", data);
     toast.success("Registration Successful.");
-    thunkAPI.dispatch(toggleAuthtopup());
+    thunkAPI.dispatch(toggleAuthtpopup());
     return res.data.user;
   } catch (error) {
     toast.error(error.response.data.message);
@@ -18,7 +18,7 @@ export const login = createAsyncThunk("auth/login", async(data, thunkAPI) => {
   try {
     const res = await axiosInstance.post("/auth/login", data);
     toast.success(res.data.message);
-    thunkAPI.dispatch(toggleAuthtopup());
+    thunkAPI.dispatch(toggleAuthtpopup());
     return res.data.user;
   } catch (error) {
     toast.error(error.response.data.message);
