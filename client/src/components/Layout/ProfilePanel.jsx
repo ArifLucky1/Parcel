@@ -46,7 +46,7 @@ const ProfilePanel = () => {
     formData.append("currentPassword", currentPassword);
     formData.append("newPassword", newPassword);
     formData.append("confirmNewPassword", confirmNewPassword);
-    dispatch(updatePassword());
+    dispatch(updatePassword(formData));
   };
 
   if (!isAuthPopupOpen || !authUser) return null;
