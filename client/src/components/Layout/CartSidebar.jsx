@@ -5,7 +5,7 @@ import {
   removeFromCart,
   updateCartQuantity,
 } from "../../store/slices/cartSlice";
-import { toggleCart } from "../../store/slices/popupSlice";
+import { toggleCart, toggleSidebar } from "../../store/slices/popupSlice";
 
 const CartSidebar = () => {
   const dispatch = useDispatch();
@@ -66,7 +66,7 @@ const CartSidebar = () => {
               {/* CART ITEMS */}
               <div className="space-y-4 mb-6">
                 {cart &&
-                  cart.map((irem) => {
+                  cart.map((item) => {
                     return (
                       <div key={item.product.id} className="glass-card p-4">
                         <div className="flex items-center space-x-4">

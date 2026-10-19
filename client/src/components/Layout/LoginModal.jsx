@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { toggleAuthPopup } from "../../store/slices/popupSlice";
 import {
   forgotPassword,
+  login,
   register,
   resetPassword,
 } from "../../store/slices/authSlice";
@@ -218,7 +219,7 @@ const LoginModal = () => {
               {
                 ["signin", "signup"].includes(mode) && (
                   <div className="mt-6 text-center">
-                    <button type="button" onClick={() => {setMode(prev => prev === "signup" ? "signup" : "signup")}} 
+                    <button type="button" onClick={() => {setMode(prev => prev === "signup" ? "signin" : "signup")}} 
                       className="text-primary hover:text-accent animate-smooth">
                       {
                         mode === "signup" ? "Already have an account? Sign in" : "Don't have an account? Sign up"

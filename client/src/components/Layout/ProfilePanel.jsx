@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { X, LogOut, Upload, Eye, EyeOff } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { updatePassword, updateProfile } from "../../store/slices/authSlice";
+import { logout, updatePassword, updateProfile } from "../../store/slices/authSlice";
 import { toggleAuthPopup, toggleSidebar } from "../../store/slices/popupSlice";
 
 const ProfilePanel = () => {
@@ -154,7 +154,7 @@ const ProfilePanel = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Confirm Password"
-                value={newPassword}
+                value={confirmNewPassword}
                 onChange={(e) => setConfirmNewPassword(e.target.value)}
                 className="w-full p-2 rounded border border-border bg-secondary text-foreground"
               />
