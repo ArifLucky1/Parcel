@@ -12,7 +12,23 @@ export const fetchAllProducts = createAsyncThunk(
     search = "",
     page = 1
   }, thunkAPI) => {
-    
+    try {
+      const params = new URLSearchParams();
+      
+      if(category) params.append("category", category);
+      if(price) params.append("price", price);
+      if(search) params.append("search", search);
+      if(ratings) params.append("ratings", ratings);
+      if(availability) params.append("availability", availability);
+      if(page) params.append("page", page);
+
+      const res = await axiosInstance.get(`/product?${params.toString()}`)
+
+      return res.data;
+
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message || "Failed to fetch products.")
+    }
   },
 );
 
