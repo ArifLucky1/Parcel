@@ -68,6 +68,23 @@ export const postReview = createAsyncThunk(
   },
 );
 
+
+export const deleteReview = createAsyncThunk(
+  "product/delete/review",
+  async ({productId, reviewId}, thunkAPI) => {
+    try {
+      const res = await axiosInstance.delete(`/product/delete/review/${productId}`);
+      toast.success(res.data.message);
+      return reviewId
+    } catch (error) {
+      toast.error( error.response.data.message || "Failed to delete review")
+      return thunkAPI.rejectWithValue(
+        error.response.data.message || "Failed to delete review",
+      );
+    }
+  },
+);
+
 const productSlice = createSlice({
   name: "product",
   initialState: {
