@@ -4,43 +4,69 @@ import { toast } from "react-toastify";
 
 export const fetchAllProducts = createAsyncThunk(
   "product/fetchAll",
-  async ({
-    availability = "",
-    price = "0-10000",
-    category = "",
-    ratings = "",
-    search = "",
-    page = 1
-  }, thunkAPI) => {
+  async (
+    {
+      availability = "",
+      price = "0-10000",
+      category = "",
+      ratings = "",
+      search = "",
+      page = 1,
+    },
+    thunkAPI,
+  ) => {
     try {
       const params = new URLSearchParams();
-      
-      if(category) params.append("category", category);
-      if(price) params.append("price", price);
-      if(search) params.append("search", search);
-      if(ratings) params.append("ratings", ratings);
-      if(availability) params.append("availability", availability);
-      if(page) params.append("page", page);
 
-      const res = await axiosInstance.get(`/product?${params.toString()}`)
+      if (category) params.append("category", category);
+      if (price) params.append("price", price);
+      if (search) params.append("search", search);
+      if (ratings) params.append("ratings", ratings);
+      if (availability) params.append("availability", availability);
+      if (page) params.append("page", page);
+
+      const res = await axiosInstance.get(`/product?${params.toString()}`);
 
       return res.data;
-
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.message || "Failed to fetch products.")
+      return thunkAPI.rejectWithValue(
+        error.response.data.message || "Failed to fetch products.",
+      );
     }
   },
 );
 
 
-export const fetchProductDetails = createAsyncThunk("product/singleProduct", async(id, thunkAPI) => {
-  try {
-    const res = await axiosInstance.get(`/product/singleProduct/${id}`)
-    return res.data.product;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.message || "Failed to fetch product details.")
-  }
-});
+export const fetchProductDetails = createAsyncThunk(
+  "product/singleProduct",
+  async (id, thunkAPI) => {
+    try {
+      const res = await axiosInstance.get(`/product/singleProduct/${id}`);
+      return res.data.product;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response.data.message || "Failed to fetch product details.",
+      );
+    }
+  },
+);
+
+
+export const postReview = createAsyncThunk(
+  "product/post-new/review",
+  async ({productId, review}, thunkAPI) => {
+    try {
+      const res = await axiosInstance.put(`/product/post-new/review/${productId}`, review);
+      toast.success(res.data.message)
+      return res.data.review;
+    } catch (error) {
+      toast.error( error.response.data.message || "Failed to post review")
+      return thunkAPI.rejectWithValue(
+        error.response.data.message || "Failed to post review",
+      );
+    }
+  },
+);
 
 const productSlice = createSlice({
   name: "product",
@@ -57,31 +83,33 @@ const productSlice = createSlice({
     productReviews: [],
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchAllProducts.pending, (state) => {
-      state.loading = true;
-    })
-    .addCase(fetchAllProducts.fulfilled, (state, action) => {
-      state.loading = false;
-      state.products = action.payload.products;
-      state.newProducts = action.payload.newProducts;
-      state.topRatedProducts = action.payload.topRatedProducts;
-      state.totalProducts = action.payload.totalProducts;
-    })
-    .addCase(fetchAllProducts.rejected, (state) => {
-      state.loading = false;
-    })
+    builder
+      .addCase(fetchAllProducts.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchAllProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = action.payload.products;
+        state.newProducts = action.payload.newProducts;
+        state.topRatedProducts = action.payload.topRatedProducts;
+        state.totalProducts = action.payload.totalProducts;
+      })
+      .addCase(fetchAllProducts.rejected, (state) => {
+        state.loading = false;
+      });
 
-    builder.addCase(fetchProductDetails.pending, (state) => {
-      state.loading = true;
-    })
-    .addCase(fetchProductDetails.fulfilled, (state, action) => {
-      state.loading = false;
-      state.productDetails = action.payload;
-      state.productDetails = action.payload.reviews;
-    })
-    .addCase(fetchProductDetails.rejected, (state) => {
-      state.loading = false;
-    })
+    builder
+      .addCase(fetchProductDetails.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchProductDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.productDetails = action.payload;
+        state.productDetails = action.payload.reviews;
+      })
+      .addCase(fetchProductDetails.rejected, (state) => {
+        state.loading = false;
+      });
   },
 });
 
