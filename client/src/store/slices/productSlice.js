@@ -46,7 +46,21 @@ const productSlice = createSlice({
     isPostingReview: false,
     productReviews: [],
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchAllProducts.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(fetchAllProducts.fulfilled, (state, action) => {
+      state.loading = false;
+      state.products = action.payload.products;
+      state.newProducts = action.payload.newProducts;
+      state.topRatedProducts = action.payload.topRatedProducts;
+      state.totalProducts = action.payload.totalProducts;
+    })
+    .addCase(fetchAllProducts.rejected, (state) => {
+      state.loading = false;
+    })
+  },
 });
 
 export default productSlice.reducer;
