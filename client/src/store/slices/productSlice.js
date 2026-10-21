@@ -36,7 +36,6 @@ export const fetchAllProducts = createAsyncThunk(
   },
 );
 
-
 export const fetchProductDetails = createAsyncThunk(
   "product/singleProduct",
   async (id, thunkAPI) => {
@@ -51,16 +50,18 @@ export const fetchProductDetails = createAsyncThunk(
   },
 );
 
-
 export const postReview = createAsyncThunk(
   "product/post-new/review",
-  async ({productId, review}, thunkAPI) => {
+  async ({ productId, review }, thunkAPI) => {
     try {
-      const res = await axiosInstance.put(`/product/post-new/review/${productId}`, review);
-      toast.success(res.data.message)
+      const res = await axiosInstance.put(
+        `/product/post-new/review/${productId}`,
+        review,
+      );
+      toast.success(res.data.message);
       return res.data.review;
     } catch (error) {
-      toast.error( error.response.data.message || "Failed to post review")
+      toast.error(error.response.data.message || "Failed to post review");
       return thunkAPI.rejectWithValue(
         error.response.data.message || "Failed to post review",
       );
@@ -68,18 +69,19 @@ export const postReview = createAsyncThunk(
   },
 );
 
-
 export const deleteReview = createAsyncThunk(
   "product/delete/review",
-  async ({productId, reviewId}, thunkAPI) => {
+  async ({ productId, reviewId }, thunkAPI) => {
     try {
-      const res = await axiosInstance.delete(`/product/delete/review/${productId}`);
+      const res = await axiosInstance.delete(
+        `/product/delete/review/${productId}`,
+      );
       toast.success(res.data.message);
-      return reviewId
+      return reviewId;
     } catch (error) {
-      toast.error( error.response.data.message || "Failed to delete review")
+      toast.error(error.response.data.message || "Failed to delete review.");
       return thunkAPI.rejectWithValue(
-        error.response.data.message || "Failed to delete review",
+        error.response.data.message || "Failed to delete review.",
       );
     }
   },
@@ -113,9 +115,8 @@ const productSlice = createSlice({
       })
       .addCase(fetchAllProducts.rejected, (state) => {
         state.loading = false;
-      });
+      })
 
-    builder
       .addCase(fetchProductDetails.pending, (state) => {
         state.loading = true;
       })
@@ -126,6 +127,30 @@ const productSlice = createSlice({
       })
       .addCase(fetchProductDetails.rejected, (state) => {
         state.loading = false;
+      })
+
+      .addCase(postReview.pending, (state) => {
+        state.isPostingReview = true;
+      })
+      .addCase(postReview.fulfilled, (state, action) => {
+        state.isPostingReview = false;
+        state.productReviews = [action.payload, ...state.productReviews];
+      })
+      .addCase(postReview.rejected, (state) => {
+        state.isPostingReview = false;
+      })
+
+      .addCase(deleteReview.pending, (state) => {
+        state.isReviewDeleting = true;
+      })
+      .addCase(deleteReview.fulfilled, (state, action) => {
+        state.isReviewDeleting = false;
+        state.productReviews = state.productReviews.filter(
+          (review) => review.review_id !== action.payload
+        );
+      })
+      .addCase(deleteReview.rejected, (state) => {
+        state.isReviewDeleting = false;
       });
   },
 });
