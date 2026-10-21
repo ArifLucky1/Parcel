@@ -87,6 +87,23 @@ export const deleteReview = createAsyncThunk(
   },
 );
 
+
+export const fetchProductWithAI = createAsyncThunk(
+  "product/ai-search",
+  async (userPrompt, thunkAPI) => {
+    try {
+      const res = await axiosInstance.post(`/product/ai-search`, userPrompt);
+      thunkAPI.dispatch(togglelAIModal());
+      return res.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return thunkAPI.rejectWithValue(
+        error.response.data.message || "Failed to fetch AI filtered products."
+      );
+    }
+  },
+);
+
 const productSlice = createSlice({
   name: "product",
   initialState: {
