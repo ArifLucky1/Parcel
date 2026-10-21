@@ -168,7 +168,20 @@ const productSlice = createSlice({
       })
       .addCase(deleteReview.rejected, (state) => {
         state.isReviewDeleting = false;
-      });
+      })
+
+
+      .addCase(fetchProductWithAI.pending, (state) => {
+        state.aiSearching = true;
+      })
+      .addCase(fetchProductWithAI.fulfilled, (state, action) => {
+        state.aiSearching = false;
+        state.products = action.payload.products;
+        state.totalProducts = action.payload.products.length;
+      })
+      .addCase(fetchProductWithAI.rejected, (state) => {
+        state.aiSearching = false;
+      })
   },
 });
 
