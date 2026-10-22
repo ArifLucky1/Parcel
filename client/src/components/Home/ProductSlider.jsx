@@ -72,14 +72,21 @@ const ProductSlider = ({ title, products }) => {
                         NEW
                       </span>
                     )}
-                    {
-                      product.ratings >= 4.5 && (
-                        <span className="px-2 py-1  bg-gradient-to-r from-yellow-400 to-orange-500 text-white bg-primary text-primary-foreground text-xs font-semibold rounded">
+                    {product.ratings >= 4.5 && (
+                      <span className="px-2 py-1  bg-gradient-to-r from-yellow-400 to-orange-500 text-white bg-primary text-primary-foreground text-xs font-semibold rounded">
                         TOP RATED
                       </span>
-                      )
-                    }
+                    )}
                   </div>
+
+                  {/* QUICK ADD TO CART */}
+                  <button
+                    onClick={(e) => handleAddToCart(product, e)}
+                    className="absolute bottom-3 right-3 p-2 glass-card hover:glow-on-hover animate-smooth opacity-0 group-hover:opacity-100 transition-opacity"
+                    disabled={product.stock === 0}
+                  >
+                    <ShoppingCart className="w-5 h-5 text-primary" />
+                  </button>
                 </div>
               </link>
             );
