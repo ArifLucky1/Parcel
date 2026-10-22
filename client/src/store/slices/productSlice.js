@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../lib/axios";
 import { toast } from "react-toastify";
+import { toggleAIModal } from "./popupSlice";
 
 export const fetchAllProducts = createAsyncThunk(
   "product/fetchAll",
@@ -93,7 +94,7 @@ export const fetchProductWithAI = createAsyncThunk(
   async (userPrompt, thunkAPI) => {
     try {
       const res = await axiosInstance.post(`/product/ai-search`, userPrompt);
-      thunkAPI.dispatch(togglelAIModal());
+      thunkAPI.dispatch(toggleAIModal());
       return res.data;
     } catch (error) {
       toast.error(error.response.data.message);

@@ -8,11 +8,11 @@ const ProductSlider = ({ title, products }) => {
   const scrollRef = useRef(null);
 
   const scroll = (direction) => {
-    if(scrollRef.current){
+    if (scrollRef.current) {
       const scrollAmount = 320;
       scrollRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   };
@@ -24,7 +24,23 @@ const ProductSlider = ({ title, products }) => {
     dispatch(addToCart(product));
   };
 
-  return <></>;
+  return (
+    <>
+      <section className="py-16">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-3xl font-bold text-foreground">{title}</h2>
+          <div className="flex space-x-2">
+            <button onClick={() => scroll("left")} className="p-2 glass-card hover:glow-on-hover animate-smooth">
+              <ChevronLeft className="w-6 h-5 text-primary"/>
+            </button>
+            <button onClick={() => scroll("right")} className="p-2 glass-card hover:glow-on-hover animate-smooth">
+              <ChevronRight className="w-6 h-5 text-primary"/>
+            </button>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 };
 
 export default ProductSlider;
