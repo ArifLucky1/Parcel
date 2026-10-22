@@ -38,6 +38,22 @@ const ProductSlider = ({ title, products }) => {
             </button>
           </div>
         </div>
+
+        <div ref={scrollRef} className="flex space-x-6 overflow-x-auto scrollbar-hide pb-4">
+          {
+            products.map((product) => {
+              return (
+                <link key={product.id} to={`/product/${product.id}`} className="flex-shrink-0 w-80 glass-card hover:glow-on-hover animate-smooth group">
+                  {/* PRODUCT IMAGE */}
+                  
+                </link>
+              )
+            })
+          }
+        </div>
+
+
+
       </section>
     </>
   );
