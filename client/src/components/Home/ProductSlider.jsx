@@ -45,7 +45,9 @@ const ProductSlider = ({ title, products }) => {
               return (
                 <link key={product.id} to={`/product/${product.id}`} className="flex-shrink-0 w-80 glass-card hover:glow-on-hover animate-smooth group">
                   {/* PRODUCT IMAGE */}
-                  
+                  <div className="relative overflow-hidden rounded-lg mb-4">
+                    <img src={product.images[0].url} alt={product.name} />
+                  </div>
                 </link>
               )
             })
