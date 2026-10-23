@@ -106,6 +106,14 @@ const ProductSlider = ({ title, products }) => {
                         />;
                       })}
                     </div>
+                    <span className="text-sm text-muted-foreground">({product.review_count})</span>
+                  </div>
+
+                  {/* PRODUCT PRICE */}
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xl font-bold text-primary">
+                      ${product.price}
+                    </span>
                   </div>
                 </div>
               </link>
