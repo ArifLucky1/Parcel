@@ -88,6 +88,17 @@ const ProductSlider = ({ title, products }) => {
                     <ShoppingCart className="w-5 h-5 text-primary" />
                   </button>
                 </div>
+
+
+                {/* PRODUCT INFO */}
+                <div>
+                  {/* PRODUCT TITLE */}
+                  <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                    {product.name}
+                  </h3>
+
+                  {/*  */}
+                </div>
               </link>
             );
           })}
