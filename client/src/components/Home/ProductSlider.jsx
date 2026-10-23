@@ -89,7 +89,6 @@ const ProductSlider = ({ title, products }) => {
                   </button>
                 </div>
 
-
                 {/* PRODUCT INFO */}
                 <div>
                   {/* PRODUCT TITLE */}
@@ -97,7 +96,17 @@ const ProductSlider = ({ title, products }) => {
                     {product.name}
                   </h3>
 
-                  {/*  */}
+                  {/* PRODUCT RATINGS */}
+                  <div className="flex items-center space-x-2 mb-2">
+                    <div className="flex items-center">
+                      {[...Array(5)].map((_, i) => {
+                        <Star
+                          key={i}
+                          className={`w-4 h-4 ${i < Math.floor(product.ratings) ? "text-yellow-400 fill-current" : "text-gray-300"}`}
+                        />;
+                      })}
+                    </div>
+                  </div>
                 </div>
               </link>
             );
