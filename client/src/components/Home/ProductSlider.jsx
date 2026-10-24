@@ -106,13 +106,34 @@ const ProductSlider = ({ title, products }) => {
                         />;
                       })}
                     </div>
-                    <span className="text-sm text-muted-foreground">({product.review_count})</span>
+                    <span className="text-sm text-muted-foreground">
+                      ({product.review_count})
+                    </span>
                   </div>
 
                   {/* PRODUCT PRICE */}
                   <div className="flex items-center space-x-2">
                     <span className="text-xl font-bold text-primary">
                       ${product.price}
+                    </span>
+                  </div>
+
+                  {/* PRODUCT AVAILABILITY */}
+                  <div>
+                    <span
+                      className={`text-xs px-2 py-1 rounded ${product.stock > 5
+                      ? "bg-green-500/20 text-gray-400" 
+                      : product.stock > 0 
+                      ? "bg-yellow-500/20 text-yellow-400" 
+                      : "bg-red-500/20 text-red-400"}`}
+                    >
+                      {
+                        product.stock > 5 
+                        ? "In Stock" 
+                        : product.stock > 0 
+                        ? "Limited Stock" 
+                        : "Out of Stock"
+                      }
                     </span>
                   </div>
                 </div>
