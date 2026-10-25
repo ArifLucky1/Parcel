@@ -54,7 +54,7 @@ const CartSidebar = () => {
             <div className="text-center py-12">
               <p className="text-muted-foreground">Your cart is empty.</p>
               <Link
-                to={"/product"}
+                to={"/products"}
                 onClick={() => dispatch(toggleCart())}
                 className="inline-block mt-4 px-6 py-2 gradient-primary text-primary-foreground rounded-lg hover:glow-on-hover animate-smooth"
               >
@@ -82,44 +82,44 @@ const CartSidebar = () => {
                             <p className="text-primary font-semibold">
                               ${item.product.price}
                             </p>
-                          </div>
 
-                          {/* Quantity Controls */}
-                          <div className="flex items-center space-x-2 mt-2">
-                            <button
-                              className="p-1 rounded glass-card hover:glow-on-hover animate-smooth"
-                              onClick={() => {
-                                updateQuantity(
-                                  item.product.id,
-                                  item.quantity - 1,
-                                );
-                              }}
-                            >
-                              <Minus className="w-4 h-4" />
-                            </button>
-                            <span className="w-8 text-center font-semibold">
-                              {item.quantity}
-                            </span>
-                            <button
-                              className="p-1 rounded glass-card hover:glow-on-hover animate-smooth"
-                              onClick={() => {
-                                updateQuantity(
-                                  item.product.id,
-                                  item.quantity + 1,
-                                );
-                              }}
-                            >
-                              <Plus className="w-4 h-4" />
-                            </button>
+                            {/* Quantity Controls */}
+                            <div className="flex items-center space-x-2 mt-2">
+                              <button
+                                className="p-1 rounded glass-card hover:glow-on-hover animate-smooth"
+                                onClick={() => {
+                                  updateQuantity(
+                                    item.product.id,
+                                    item.quantity - 1,
+                                  );
+                                }}
+                              >
+                                <Minus className="w-4 h-4" />
+                              </button>
+                              <span className="w-8 text-center font-semibold">
+                                {item.quantity}
+                              </span>
+                              <button
+                                className="p-1 rounded glass-card hover:glow-on-hover animate-smooth"
+                                onClick={() => {
+                                  updateQuantity(
+                                    item.product.id,
+                                    item.quantity + 1,
+                                  );
+                                }}
+                              >
+                                <Plus className="w-4 h-4" />
+                              </button>
 
-                            <button
-                              className="p-1 rounded glass-card hover:glow-on-hover animate-smooth ml-2 text-destructive"
-                              onClick={() => {
-                                dispatch(removeFromCart(item.product.id));
-                              }}
-                            >
-                              <Trash2 className="w-4 h-4 text-destructive-foreground" />
-                            </button>
+                              <button
+                                className="p-1 rounded glass-card hover:glow-on-hover animate-smooth ml-2 text-destructive"
+                                onClick={() => {
+                                  dispatch(removeFromCart(item.product.id));
+                                }}
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
                           </div>
 
                           {/* TOTAL */}
