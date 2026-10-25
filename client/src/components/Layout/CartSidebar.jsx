@@ -34,7 +34,7 @@ const CartSidebar = () => {
       {/* OVERLAY */}
       <div
         className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
-        onClick={() => dispatch(toggleSidebar())}
+        onClick={() => dispatch(toggleCart())}
       />
 
       {/* CART SIDEBAR */}
@@ -69,7 +69,7 @@ const CartSidebar = () => {
                   cart.map((item) => {
                     return (
                       <div key={item.product.id} className="glass-card p-4">
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-start space-x-4">
                           <img
                             src={item.product.image[0].url}
                             alt={item.product.name}
@@ -85,7 +85,7 @@ const CartSidebar = () => {
                           </div>
 
                           {/* Quantity Controls */}
-                          <div className="flex items-center space-x-3 mt-2">
+                          <div className="flex items-center space-x-2 mt-2">
                             <button
                               className="p-1 rounded glass-card hover:glow-on-hover animate-smooth"
                               onClick={() => {
@@ -95,7 +95,7 @@ const CartSidebar = () => {
                                 );
                               }}
                             >
-                              <Minus className="w-4 h-4 text-primary" />
+                              <Minus className="w-4 h-4" />
                             </button>
                             <span className="w-8 text-center font-semibold">
                               {item.quantity}
@@ -109,7 +109,7 @@ const CartSidebar = () => {
                                 );
                               }}
                             >
-                              <Plus className="w-4 h-4 text-primary" />
+                              <Plus className="w-4 h-4" />
                             </button>
 
                             <button
@@ -136,7 +136,7 @@ const CartSidebar = () => {
                             <Link
                               to={"/cart"}
                               onClick={() => dispatch(toggleCart())}
-                              className="w-full block text-center gradient-primary text-primary-foreground rounded-lg hover:glow-on-hover animate-smooth font-semibold"
+                              className="w-full py-3 block text-center gradient-primary text-primary-foreground rounded-lg hover:glow-on-hover animate-smooth font-semibold"
                             >
                               View cart & Checkout
                             </Link>
