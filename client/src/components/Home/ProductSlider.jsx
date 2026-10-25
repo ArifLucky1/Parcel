@@ -21,7 +21,7 @@ const ProductSlider = ({ title, products }) => {
   const handleAddToCart = (product, e) => {
     e.preventDefault();
     e.stopPropagation();
-    dispatch(addToCart(product));
+    dispatch(addToCart({product, quantity: 1}));
   };
 
   return (
@@ -61,7 +61,7 @@ const ProductSlider = ({ title, products }) => {
                   <img
                     src={product.images[0].url}
                     alt={product.name}
-                    className="w-full h-48 object-contain group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
                   />
 
                   {/* BADGES */}
@@ -100,10 +100,12 @@ const ProductSlider = ({ title, products }) => {
                   <div className="flex items-center space-x-2 mb-2">
                     <div className="flex items-center">
                       {[...Array(5)].map((_, i) => {
-                        <Star
+                        return (
+                          <Star
                           key={i}
                           className={`w-4 h-4 ${i < Math.floor(product.ratings) ? "text-yellow-400 fill-current" : "text-gray-300"}`}
-                        />;
+                        />
+                        )
                       })}
                     </div>
                     <span className="text-sm text-muted-foreground">
@@ -122,7 +124,7 @@ const ProductSlider = ({ title, products }) => {
                   <div>
                     <span
                       className={`text-xs px-2 py-1 rounded ${product.stock > 5
-                      ? "bg-green-500/20 text-gray-400" 
+                      ? "bg-green-500/20 text-green-400" 
                       : product.stock > 0 
                       ? "bg-yellow-500/20 text-yellow-400" 
                       : "bg-red-500/20 text-red-400"}`}

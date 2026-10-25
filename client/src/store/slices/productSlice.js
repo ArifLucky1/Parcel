@@ -7,12 +7,12 @@ export const fetchAllProducts = createAsyncThunk(
   "product/fetchAll",
   async (
     {
-      availability = "",
-      price = "0-10000",
-      category = "",
-      ratings = "",
-      search = "",
-      page = 1,
+      // availability = "",
+      // price = "0-10000",
+      // category = "",
+      // ratings = "",
+      // search = "",
+      // page = 1,
     },
     thunkAPI,
   ) => {
