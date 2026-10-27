@@ -46,7 +46,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           onClick={() => onPageChange(currentPage - 1)}
           className="p-2 glass-card hover:glow-on-hover animate-smooth disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <ChevronLeft />
+          <ChevronLeft className="w-5 h-5" />
         </button>
 
         {/* PAGE NUMBERS */}
@@ -62,6 +62,16 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             </button>
           );
         })}
+
+        {/* NEXT BUTTON */}
+        <button
+          disabled={currentPage === totalPages}
+          onClick={() => onPageChange(currentPage + 1)}
+          className="p-2 glass-card hover:glow-on-hover animate-smooth disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+
       </div>
     </>
   );
