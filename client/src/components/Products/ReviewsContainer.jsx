@@ -50,6 +50,21 @@ const ReviewsContainer = ({ product, productReviews }) => {
             </button>
         </form>
       )}
+
+      <h3 className="text-xl font-semibold text-foreground mb-6">Customer Review</h3>
+      {
+        productReviews && productReviews.length > 0 ? (
+          <div className="space-y-6">
+            {
+              productReviews.map(review => {
+                return (
+                  <div key={review.review_id}></div>
+                )
+              })
+            }
+          </div>
+        ) : ("")
+      }
     </>
   );
 };
