@@ -27,17 +27,32 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       } else {
         pages.push(1);
         pages.push("...");
-        for(let i = currentPage - 1; i <= currentPage +1; i++){
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
           pages.push(i);
         }
         pages.push("...");
         pages.push(totalPages);
       }
     }
-    return pages
+    return pages;
   };
 
-  return <></>;
+  return (
+    <>
+      <div className="flex items-center justify-center space-x-2">
+        {/* PREVIOUS BUTTON */}
+        <button
+          disabled={currentPage === 1}
+          onClick={() => onPageChange(currentPage - 1)}
+          className="p-2 glass-card hover:glow-on-hover animate-smooth disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <ChevronLeft />
+        </button>
+
+        {/* PAGE NUMBERS */}
+      </div>
+    </>
+  );
 };
 
 export default Pagination;
