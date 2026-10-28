@@ -40,7 +40,10 @@ const Products = () => {
             page: currentPage
           }),
         );
-  }, [dispatch, selectedCategory, priceRange, searchQuery, selectedRating, availability, currentPage])
+  }, [dispatch, selectedCategory, priceRange, searchQuery, selectedRating, availability, currentPage]);
+
+
+  const totalPages = Math.ceil(totalProducts / 10);
   
 
   return <></>;
