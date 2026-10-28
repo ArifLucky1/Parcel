@@ -64,6 +64,9 @@ const Products = () => {
               <Filter className="w-5 h-5" />
               <span>Filters</span>
             </button>
+
+            {/* SIDEBAR FILTERS */}
+            <div className={`lg:block ${isMobileFilterOpen ? "block" : "hidden"} w-full lg:w-80 space-y-6`}></div>
           </div>
         </div>
       </div>
