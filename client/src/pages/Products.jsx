@@ -12,15 +12,17 @@ const Products = () => {
   const { Products, totalProducts } = useSelector((state) => state.Product);
 
   const useQuery = () => {
-    return new URLSearchParams(useLocation().search)
+    return new URLSearchParams(useLocation().search);
   };
 
-  const query = useQuery()
+  const query = useQuery();
   const searchTerm = query.get("search");
   const searchCategory = query.get("category");
 
   const [searchQuery, setSearchQuery] = useState(searchTerm || "");
-  const [selectedCategory, setSelectedCategory] = useState(searchedCategory || "");
+  const [selectedCategory, setSelectedCategory] = useState(
+    searchedCategory || "",
+  );
   const [priceRange, setPriceRange] = useState([0, 10000]);
   const [selectedRating, setSelectedRating] = useState(0);
   const [availability, setAvailability] = useState("");
@@ -30,22 +32,42 @@ const Products = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-     dispatch(
-          fetchAllProducts({
-            category: selectedCategory,
-            price: `${priceRange[0]}-${priceRange[1]}`,
-            search: searchQuery,
-            ratings: selectedRating,
-            availability: availability,
-            page: currentPage
-          }),
-        );
-  }, [dispatch, selectedCategory, priceRange, searchQuery, selectedRating, availability, currentPage]);
-
+    dispatch(
+      fetchAllProducts({
+        category: selectedCategory,
+        price: `${priceRange[0]}-${priceRange[1]}`,
+        search: searchQuery,
+        ratings: selectedRating,
+        availability: availability,
+        page: currentPage,
+      }),
+    );
+  }, [
+    dispatch,
+    selectedCategory,
+    priceRange,
+    searchQuery,
+    selectedRating,
+    availability,
+    currentPage,
+  ]);
 
   const totalPages = Math.ceil(totalProducts / 10);
-  
 
-  return <></>;
+  return (
+    <>
+      <div className="min-h-screen pt-20">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* MOBILE FILTER TOGGLE */}
+            <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)} className="lg:hidden mb-4 p-3 glass-card hover:glow-on-hover animate-smooth flex items-center space-x-2">
+              <Filter className="w-5 h-5" />
+              <span>Filters</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 export default Products;
