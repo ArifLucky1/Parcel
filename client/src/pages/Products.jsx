@@ -5,8 +5,44 @@ import Pagination from "../components/Products/Pagination";
 import AISearchModal from "../components/Products/AISearchModal";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { fetchAllProducts } from "../store/slices/productSlice";
 
 const Products = () => {
+  const { Products, totalProducts } = useSelector((state) => state.Product);
+
+  const useQuery = () => {
+    return new URLSearchParams(useLocation().search)
+  };
+
+  const query = useQuery()
+  const searchTerm = query.get("search");
+  const searchCategory = query.get("category");
+
+  const [searchQuery, setSearchQuery] = useState(searchTerm || "");
+  const [selectedCategory, setSelectedCategory] = useState(searchedCategory || "");
+  const [priceRange, setPriceRange] = useState([0, 10000]);
+  const [selectedRating, setSelectedRating] = useState(0);
+  const [availability, setAvailability] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+     dispatch(
+          fetchAllProducts({
+            category: selectedCategory,
+            price: `${priceRange}`,
+            search: "",
+            ratings: "",
+            availability: "",
+            page: 1
+          }),
+        );
+  })
+  
+
   return <></>;
 };
 export default Products;
