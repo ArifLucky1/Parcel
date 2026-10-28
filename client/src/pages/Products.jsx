@@ -33,14 +33,14 @@ const Products = () => {
      dispatch(
           fetchAllProducts({
             category: selectedCategory,
-            price: `${priceRange}`,
-            search: "",
-            ratings: "",
-            availability: "",
-            page: 1
+            price: `${priceRange[0]}-${priceRange[1]}`,
+            search: searchQuery,
+            ratings: selectedRating,
+            availability: availability,
+            page: currentPage
           }),
         );
-  })
+  }, [dispatch, selectedCategory, priceRange, searchQuery, selectedRating, availability, currentPage])
   
 
   return <></>;
