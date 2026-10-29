@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { fetchAllProducts } from "../store/slices/productSlice";
 
 const Products = () => {
-  const { Products, totalProducts } = useSelector((state) => state.Product);
+  const { products, totalProducts } = useSelector((state) => state.Product);
 
   const useQuery = () => {
     return new URLSearchParams(useLocation().search);
@@ -60,15 +60,45 @@ const Products = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* MOBILE FILTER TOGGLE */}
-            <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)} className="lg:hidden mb-4 p-3 glass-card hover:glow-on-hover animate-smooth flex items-center space-x-2">
+            <button
+              onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+              className="lg:hidden mb-4 p-3 glass-card hover:glow-on-hover animate-smooth flex items-center space-x-2"
+            >
               <Filter className="w-5 h-5" />
               <span>Filters</span>
             </button>
 
             {/* SIDEBAR FILTERS */}
-            <div className={`lg:block ${isMobileFilterOpen ? "block" : "hidden"} w-full lg:w-80 space-y-6`}>
+            <div
+              className={`lg:block ${isMobileFilterOpen ? "block" : "hidden"} w-full lg:w-80 space-y-6`}
+            >
               <div className="glass-panel">
-                <h2 className="text-xl font-semibold text-foreground mb-6">Filters</h2>
+                <h2 className="text-xl font-semibold text-foreground mb-6">
+                  Filters
+                </h2>
+
+                {/* PRICE RANGE */}
+                <div className="mb-6">
+                  <h3 className="text-lg font-medium text-foreground mb-3">
+                    Price Range
+                  </h3>
+                  <div className="space-y-2">
+                    <input
+                      type="range"
+                      min={0}
+                      max={10000}
+                      value={priceRange[1]}
+                      onChange={(e) =>
+                        setPriceRange([priceRange[0], parseInt(e.target.value)])
+                      }
+                      className="w-full"
+                    />
+                    <div className="flex justify-between text-sm text-muted-foreground">
+                      <span>${priceRange[0]}</span>
+                      <span>${priceRange[1]}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
