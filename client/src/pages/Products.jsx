@@ -66,7 +66,11 @@ const Products = () => {
             </button>
 
             {/* SIDEBAR FILTERS */}
-            <div className={`lg:block ${isMobileFilterOpen ? "block" : "hidden"} w-full lg:w-80 space-y-6`}></div>
+            <div className={`lg:block ${isMobileFilterOpen ? "block" : "hidden"} w-full lg:w-80 space-y-6`}>
+              <div className="glass-panel">
+                <h2 className="text-xl font-semibold text-foreground mb-6">Filters</h2>
+              </div>
+            </div>
           </div>
         </div>
       </div>
