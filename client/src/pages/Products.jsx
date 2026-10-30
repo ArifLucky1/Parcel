@@ -158,6 +158,29 @@ const Products = () => {
                     })}
                   </div>
                 </div>
+
+                {/* CATEGORY */}
+                <div className="mb-6">
+                  <h3 className="text-lg font-medium text-foreground mb-3">
+                    category
+                  </h3>
+                  <div className="space-y-2">
+                    <button onClick={() => setSelectedCategory("")} className={`w-full p-2 text-left rounded ${
+                      !selectedCategory ? "bg-primary/20" : "hover:bg-secondary"
+                    }`}>
+                      All Categories
+                    </button>
+                    {
+                      categories.map((category)=> {
+                        <button key={category.id} onClick={setSelectedCategory(category.name)} className={`w-full p-2 text-left rounded ${
+                      selectedCategory === category.name ? "bg-primary/20" : "hover:bg-secondary"
+                    }`}>
+                          {category.name}
+                        </button>
+                      })
+                    }
+                  </div>
+                </div>
               </div>
             </div>
           </div>
