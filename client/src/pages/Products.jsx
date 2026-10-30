@@ -97,6 +97,28 @@ const Products = () => {
                       <span>${priceRange[0]}</span>
                       <span>${priceRange[1]}</span>
                     </div>
+
+                    {/* RATING */}
+                    <div className="mb-6">
+                      <h3 className="text-lg font-medium text-foreground mb-3">
+                        Rating
+                      </h3>
+                      <div className="space-y-2">
+                        {[4, 3, 2, 1].map((rating) => {
+                          return (
+                            <button
+                              key={rating}
+                              onClick={() =>
+                                setSelectedCategory(
+                                  selectedRating === rating ? 0 : rating,
+                                )
+                              }
+                              className={`flex items-center space-x-2 w-full p-2 rounded ${selectedRating === rating ? "bg-primary/20" : "hover:bg-secondary"}`}
+                            ></button>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
