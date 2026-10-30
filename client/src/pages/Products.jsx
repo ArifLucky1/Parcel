@@ -114,7 +114,16 @@ const Products = () => {
                                 )
                               }
                               className={`flex items-center space-x-2 w-full p-2 rounded ${selectedRating === rating ? "bg-primary/20" : "hover:bg-secondary"}`}
-                            ></button>
+                            >
+                              {[...Array(5)].map((_, i) => {
+                                return (
+                                  <Star
+                                    key={i}
+                                    className={`w-4 h-4 ${i < Math.floor(product.ratings) ? "text-yellow-400 fill-current" : "text-gray-300"}`}
+                                  />
+                                );
+                              })}
+                            </button>
                           );
                         })}
                       </div>
