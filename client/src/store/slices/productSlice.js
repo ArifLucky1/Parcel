@@ -7,12 +7,12 @@ export const fetchAllProducts = createAsyncThunk(
   "product/fetchAll",
   async (
     {
-      // availability = "",
-      // price = "0-10000",
-      // category = "",
-      // ratings = "",
-      // search = "",
-      // page = 1,
+      availability = "",
+      price = "0-10000",
+      category = "",
+      ratings = "",
+      search = "",
+      page = 1,
     },
     thunkAPI,
   ) => {
@@ -30,9 +30,7 @@ export const fetchAllProducts = createAsyncThunk(
 
       return res.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response.data.message || "Failed to fetch products.",
-      );
+      return thunkAPI.rejectWithValue(message);
     }
   },
 );
@@ -141,7 +139,7 @@ const productSlice = createSlice({
       .addCase(fetchProductDetails.fulfilled, (state, action) => {
         state.loading = false;
         state.productDetails = action.payload;
-        state.productDetails = action.payload.reviews;
+        state.productDetails = action.payload.reviews || [];
       })
       .addCase(fetchProductDetails.rejected, (state) => {
         state.loading = false;

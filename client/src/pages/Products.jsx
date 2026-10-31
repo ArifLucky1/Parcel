@@ -9,7 +9,9 @@ import { useEffect, useState } from "react";
 import { fetchAllProducts } from "../store/slices/productSlice";
 
 const Products = () => {
-  const { products, totalProducts } = useSelector((state) => state.Product);
+  const { products, totalProducts, loading } = useSelector(
+    (state) => state.Product,
+  );
 
   const useQuery = () => {
     return new URLSearchParams(useLocation().search);
@@ -21,7 +23,7 @@ const Products = () => {
 
   const [searchQuery, setSearchQuery] = useState(searchTerm || "");
   const [selectedCategory, setSelectedCategory] = useState(
-    searchedCategory || "",
+    searchCategory || "",
   );
   const [priceRange, setPriceRange] = useState([0, 10000]);
   const [selectedRating, setSelectedRating] = useState(0);
@@ -111,7 +113,7 @@ const Products = () => {
                         <button
                           key={rating}
                           onClick={() =>
-                            setSelectedCategory(
+                            setSelectedRating(
                               selectedRating === rating ? 0 : rating,
                             )
                           }
@@ -121,7 +123,7 @@ const Products = () => {
                             return (
                               <Star
                                 key={i}
-                                className={`w-4 h-4 ${i < Math.floor(product.ratings) ? "text-yellow-400 fill-current" : "text-gray-300"}`}
+                                className={`w-4 h-4 ${i < rating ? "text-yellow-400 fill-current" : "text-gray-300"}`}
                               />
                             );
                           })}
@@ -151,8 +153,8 @@ const Products = () => {
                           {status === "in-stock"
                             ? "In Stock"
                             : status === "limited"
-                            ? "Limited Stock"
-                            : "Out of Stock"}
+                              ? "Limited Stock"
+                              : "Out of Stock"}
                         </button>
                       );
                     })}
@@ -165,22 +167,46 @@ const Products = () => {
                     category
                   </h3>
                   <div className="space-y-2">
-                    <button onClick={() => setSelectedCategory("")} className={`w-full p-2 text-left rounded ${
-                      !selectedCategory ? "bg-primary/20" : "hover:bg-secondary"
-                    }`}>
+                    <button
+                      onClick={() => setSelectedCategory("")}
+                      className={`w-full p-2 text-left rounded ${
+                        !selectedCategory
+                          ? "bg-primary/20"
+                          : "hover:bg-secondary"
+                      }`}
+                    >
                       All Categories
                     </button>
-                    {
-                      categories.map((category)=> {
-                        <button key={category.id} onClick={setSelectedCategory(category.name)} className={`w-full p-2 text-left rounded ${
-                      selectedCategory === category.name ? "bg-primary/20" : "hover:bg-secondary"
-                    }`}>
-                          {category.name}
-                        </button>
-                      })
-                    }
+                    {categories.map((category) => (
+                      <button
+                        key={category.id}
+                        onClick={setSelectedCategory(category.name)}
+                        className={`w-full p-2 text-left rounded ${
+                          selectedCategory === category.name
+                            ? "bg-primary/20"
+                            : "hover:bg-secondary"
+                        }`}
+                      >
+                        {category.name}
+                      </button>
+                    ))}
                   </div>
                 </div>
+              </div>
+
+              {/* PRODUCTS GRID */}
+              <div className="flex-1">
+                {loading ? (
+                  <p className="text-center py-10">Loading products...</p>
+                ) : products?.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {products.map((product) => (
+                      <ProductCard key={product.id} product={product} />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-center py-10">No products found.</p>
+                )}
               </div>
             </div>
           </div>

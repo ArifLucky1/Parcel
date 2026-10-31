@@ -49,12 +49,12 @@ const ProductSlider = ({ title, products }) => {
           ref={scrollRef}
           className="flex space-x-6 overflow-x-auto scrollbar-hide pb-4"
         >
-          {products.map((product) => {
-            return (
-              <link
+          {products?.map((product) => (
+            
+              <Link
                 key={product.id}
                 to={`/product/${product.id}`}
-                className="flex-shrink-0 w-80 glass-card hover:glow-on-hover animate-smooth group"
+                className="flex-shrink-0 w-80 glass-card hover:glow-on-hover animate-smooth group block"
               >
                 {/* PRODUCT IMAGE */}
                 <div className="relative overflow-hidden rounded-lg mb-4">
@@ -139,9 +139,9 @@ const ProductSlider = ({ title, products }) => {
                     </span>
                   </div>
                 </div>
-              </link>
-            );
-          })}
+              </Link>
+            )
+          )}
         </div>
       </section>
     </>

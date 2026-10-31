@@ -14,7 +14,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <>
-      <link
+      <Link
         key={product.id}
         to={`/product/${product.id}`}
         className="glass-card hover:glow-on-hover animate-smooth group"
@@ -102,7 +102,7 @@ const ProductCard = ({ product }) => {
             </span>
           </div>
         </div>
-      </link>
+      </Link>
     </>
   );
 };
