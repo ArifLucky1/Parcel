@@ -247,6 +247,15 @@ const Products = () => {
               )}
 
               {/* NO RESULTS */}
+              {
+                products.length === 0 && (
+                  <div className="text-center py-12">
+                    <p className="text-muted-foreground text-lg">
+                      No products found matching your filter.
+                    </p>
+                  </div>
+                )
+              }
             </div>
           </div>
         </div>
