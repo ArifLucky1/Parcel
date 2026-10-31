@@ -209,6 +209,17 @@ const Products = () => {
                 )}
               </div>
             </div>
+
+            {/* MAIN CONTENT */}
+            <div className="flex-1">
+              {/* SEARCH BAR */}
+              <div className="mb-8 flex max-[440px]:flex-col items-center gap-2">
+                <div className="relative w-[-webkit-fill-available]">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground"/>
+                  <input type="text" placeholder="Search Products..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full pl-10 pr-4 py-3 bg-secondary border border-border rounded-lg focus:outline-none text-foreground placeholder-muted-foreground"/>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
