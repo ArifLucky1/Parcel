@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchAllProducts } from "../store/slices/productSlice";
+import { toggleAIModal } from "../store/slices/popupSlice";
 
 const Products = () => {
   const { products, totalProducts, loading } = useSelector(
@@ -193,21 +194,6 @@ const Products = () => {
                   </div>
                 </div>
               </div>
-
-              {/* PRODUCTS GRID */}
-              <div className="flex-1">
-                {loading ? (
-                  <p className="text-center py-10">Loading products...</p>
-                ) : products?.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {products.map((product) => (
-                      <ProductCard key={product.id} product={product} />
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-center py-10">No products found.</p>
-                )}
-              </div>
             </div>
 
             {/* MAIN CONTENT */}
@@ -243,6 +229,23 @@ const Products = () => {
                   </span>
                 </button>
               </div>
+
+              {/* PRODUCTS GRID */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                {products.map((product) => {
+                  <ProductCard key={product.id} product={product} />;
+                })}
+              </div>
+
+              {/* PAGINATION */}
+              {
+                totalPages > 1 && (
+                  <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+                )
+              }
+
+              {/* NO RESULTS */}
+              
             </div>
           </div>
         </div>
