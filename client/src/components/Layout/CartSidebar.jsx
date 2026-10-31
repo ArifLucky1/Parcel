@@ -71,7 +71,7 @@ const CartSidebar = () => {
                       <div key={item.product.id} className="glass-card p-4">
                         <div className="flex items-start space-x-4">
                           <img
-                            src={item.product.image[0].url}
+                            src={item.product.images[0].url}
                             alt={item.product.name}
                             className="w-16 h-16 object-cover rounded-lg"
                           />

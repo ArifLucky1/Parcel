@@ -11,7 +11,7 @@ import { toggleAIModal } from "../store/slices/popupSlice";
 
 const Products = () => {
   const { products, totalProducts, loading } = useSelector(
-    (state) => state.Product,
+    (state) => state.product
   );
 
   const useQuery = () => {
@@ -181,7 +181,7 @@ const Products = () => {
                     {categories.map((category) => (
                       <button
                         key={category.id}
-                        onClick={setSelectedCategory(category.name)}
+                        onClick={() => setSelectedCategory(category.name)}
                         className={`w-full p-2 text-left rounded ${
                           selectedCategory === category.name
                             ? "bg-primary/20"
@@ -232,9 +232,9 @@ const Products = () => {
 
               {/* PRODUCTS GRID */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-                {products.map((product) => {
-                  <ProductCard key={product.id} product={product} />;
-                })}
+                {products.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
               </div>
 
               {/* PAGINATION */}
@@ -259,6 +259,9 @@ const Products = () => {
             </div>
           </div>
         </div>
+
+        {/* AI SEARCH MODAL */}
+        <AISearchModal />
       </div>
     </>
   );
