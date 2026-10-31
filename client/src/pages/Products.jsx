@@ -238,14 +238,15 @@ const Products = () => {
               </div>
 
               {/* PAGINATION */}
-              {
-                totalPages > 1 && (
-                  <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
-                )
-              }
+              {totalPages > 1 && (
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                />
+              )}
 
               {/* NO RESULTS */}
-              
             </div>
           </div>
         </div>
