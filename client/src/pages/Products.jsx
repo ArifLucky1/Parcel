@@ -178,7 +178,8 @@ const Products = () => {
                     >
                       All Categories
                     </button>
-                    {categories.map((category) => (
+                    {categories.map((category) => {
+                      return(
                       <button
                         key={category.id}
                         onClick={() => setSelectedCategory(category.name)}
@@ -189,8 +190,8 @@ const Products = () => {
                         }`}
                       >
                         {category.name}
-                      </button>
-                    ))}
+                      </button>)
+})}
                   </div>
                 </div>
               </div>
