@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ReviewsContainer from "../components/Products/ReviewsContainer";
 
 const ProductDetail = () => {
+  const { id } = useParams();
   return <></>;
 };
 
