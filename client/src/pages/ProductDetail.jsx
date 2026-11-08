@@ -14,6 +14,8 @@ import ReviewsContainer from "../components/Products/ReviewsContainer";
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const product = useSelector(State => state.product?.ProductDetails)
   return <></>;
 };
 
