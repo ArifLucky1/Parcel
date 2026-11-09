@@ -24,12 +24,23 @@ const ProductDetail = () => {
   const [activeTab, setActiveTab] = useState("description");
 
   const handleAddToCart = () => {
-    dispatch(addToCart({product, quantity}))
+    dispatch(addToCart({ product, quantity }));
   };
 
   useEffect(() => {
-    dispatch(fetchProductDetails(id))
-  }, [dispatch, id])
+    dispatch(fetchProductDetails(id));
+  }, [dispatch, id]);
+
+  if(!product){
+    return (
+      <div className="min-h-screen pt-20 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-foreground mb-4">Product Not Found</h1>
+          <p className="text-muted-foreground">The product you're looking for does not exist</p>
+        </div>
+      </div>
+    )
+  }
   return <></>;
 };
 
