@@ -15,7 +15,8 @@ import ReviewsContainer from "../components/Products/ReviewsContainer";
 const ProductDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const product = useSelector(State => state.product?.ProductDetails)
+  const product = useSelector((State) => state.product?.ProductDetails);
+  const { loading, productReviews } = useSelector((state) => state.product);
   return <></>;
 };
 
