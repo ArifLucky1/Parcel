@@ -49,7 +49,11 @@ const ProductDetail = () => {
       </div>
     )
   }
-  return <></>;
+  return (<>
+    <div className="min-h-screen pt-20">
+      
+    </div>
+  </>);
 };
 
 export default ProductDetail;
