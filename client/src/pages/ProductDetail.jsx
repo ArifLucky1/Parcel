@@ -52,6 +52,18 @@ const ProductDetail = () => {
   return (<>
     <div className="min-h-screen pt-20">
       <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+          <div className="">
+            <div className="glass-card p-4 mb-4">
+              {
+                product.images ? ( <img src={product.images[selectedImage]?.url} alt={product.name} className="w-full h-96 object-contain rounded-lg" />) : (<div className="glass-card min-h-[418px] p-4 mb-4 animate-pulse" />)
+              }
+            </div>
+            <div>
+              
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
