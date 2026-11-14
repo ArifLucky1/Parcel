@@ -36,7 +36,7 @@ const ProductDetail = () => {
       <div className="min-h-screen pt-20 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-foreground mb-4">Product Not Found</h1>
-          <p className="text-muted-foreground">The product you're looking for does not exist</p>
+          <p className="text-muted-foreground">The product you're looking for does not exist</p> dsfds
         </div>
       </div>
     )
