@@ -71,6 +71,29 @@ const ProductDetail = () => {
               }
             </div>
           </div>
+        
+        <div>
+          <div className="mb-4">
+            <div className="flex space-x-2 mb-4">
+              {new Date() - new Date(product.created_at) <
+              30 * 24 * 60 * 60 * 1000 && (
+              <span className="px-2 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded">
+                NEW
+              </span>
+            )}
+            {product.ratings >= 4.5 && (
+              <span className="px-2 py-1  bg-gradient-to-r from-yellow-400 to-orange-500 text-white bg-primary text-primary-foreground text-xs font-semibold rounded">
+                TOP RATED
+              </span>
+            )}
+            </div>
+            <h1 className="text-3xl font-bold text-foreground mb-2">{product.name}</h1>
+            <div className="flex items-center space-x-4 mb-4">
+              <div className="flex items-center space-x-1"></div>
+            </div>
+          </div>
+        </div>
+
         </div>
 
       </div>
