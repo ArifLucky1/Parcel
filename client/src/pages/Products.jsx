@@ -38,7 +38,7 @@ const Products = () => {
     dispatch(
       fetchAllProducts({
         category: selectedCategory,
-        price: `${priceRange[0]}-${priceRange[1]}`,
+        price: `₹{priceRange[0]}-₹{priceRange[1]}`,
         search: searchQuery,
         ratings: selectedRating,
         availability: availability,
@@ -97,8 +97,8 @@ const Products = () => {
                       className="w-full"
                     />
                     <div className="flex justify-between text-sm text-muted-foreground">
-                      <span>${priceRange[0]}</span>
-                      <span>${priceRange[1]}</span>
+                      <span>₹{priceRange[0]}</span>
+                      <span>₹{priceRange[1]}</span>
                     </div>
                   </div>
                 </div>

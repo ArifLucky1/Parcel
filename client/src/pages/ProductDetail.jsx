@@ -129,23 +129,27 @@ const ProductDetail = () => {
 
                 <div className="flex items-center space-x-4 mb-6">
                   <span className="text-2xl font-bold text-primary">
-                    ${product.price}
+                    ₹{product.price}
                   </span>
                 </div>
                 <div className="flex items-center space-x-4 mb-6">
                   <span className="text-muted-foreground">
                     Category: {product.category}
                   </span>
-                  <span className={`px-3 py-1 rounded text-sm ${
-                product.stock > 5
-                  ? "bg-green-500/20 text-green-400"
-                  : product.stock > 0
-                    ? "bg-yellow-500/20 text-yellow-400"
-                    : "bg-red-500/20 text-red-400"
-              }`}>
-                    {
-                      product.stock > 5 ? "In Stock" : product.stock > 0 ? "Limited Stock" : "Out of Stock"
-                    }
+                  <span
+                    className={`px-3 py-1 rounded text-sm ${
+                      product.stock > 5
+                        ? "bg-green-500/20 text-green-400"
+                        : product.stock > 0
+                          ? "bg-yellow-500/20 text-yellow-400"
+                          : "bg-red-500/20 text-red-400"
+                    }`}
+                  >
+                    {product.stock > 5
+                      ? "In Stock"
+                      : product.stock > 0
+                        ? "Limited Stock"
+                        : "Out of Stock"}
                   </span>
                 </div>
               </div>
