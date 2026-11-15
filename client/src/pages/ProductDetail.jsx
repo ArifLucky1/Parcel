@@ -31,83 +31,130 @@ const ProductDetail = () => {
     dispatch(fetchProductDetails(id));
   }, [dispatch, id]);
 
-  if(!product){
+  if (!product) {
     return (
       <div className="min-h-screen pt-20 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">Product Not Found</h1>
-          <p className="text-muted-foreground">The product you're looking for does not exist</p>
+          <h1 className="text-2xl font-bold text-foreground mb-4">
+            Product Not Found
+          </h1>
+          <p className="text-muted-foreground">
+            The product you're looking for does not exist
+          </p>
         </div>
       </div>
-    )
+    );
   }
 
-  if(loading){
+  if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <Loader className="size-10 animate-spin"/>
+        <Loader className="size-10 animate-spin" />
       </div>
-    )
+    );
   }
-  return (<>
-    <div className="min-h-screen pt-20">
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          <div>
-            <div className="glass-card p-4 mb-4">
-              {
-                product.images ? ( <img src={product.images[selectedImage]?.url} alt={product.name} className="w-full h-96 object-contain rounded-lg" />) : (<div className="glass-card min-h-[418px] p-4 mb-4 animate-pulse" />)
-              }
+  return (
+    <>
+      <div className="min-h-screen pt-20">
+        <div className="container mx-auto px-4 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+            <div>
+              <div className="glass-card p-4 mb-4">
+                {product.images ? (
+                  <img
+                    src={product.images[selectedImage]?.url}
+                    alt={product.name}
+                    className="w-full h-96 object-contain rounded-lg"
+                  />
+                ) : (
+                  <div className="glass-card min-h-[418px] p-4 mb-4 animate-pulse" />
+                )}
+              </div>
+              <div className="flex space-x-2">
+                {product.images &&
+                  product?.images.map((image, index) => {
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => setSelectedImage(index)}
+                        className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${selectedImage === index ? "border-primary" : "border-transparent"}`}
+                      >
+                        <img
+                          src={image?.url}
+                          alt={`${product.title} &{index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </button>
+                    );
+                  })}
+              </div>
             </div>
-            <div className="flex space-x-2">
-              {
-                product.images && product?.images.map((image, index) => {
-                  return(
-                    <button key={index} onClick={() => setSelectedImage(index)} className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${selectedImage === index ? "border-primary" : "border-transparent"}`}>
-                      <img src={image?.url} alt={`${product.title} &{index + 1}`} className="w-full h-full object-cover"/>
-                    </button>
-                  )
-                })
-              }
-            </div>
-          </div>
-        
-        <div>
-          <div className="mb-4">
-            <div className="flex space-x-2 mb-4">
-              {new Date() - new Date(product.created_at) <
-              30 * 24 * 60 * 60 * 1000 && (
-              <span className="px-2 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded">
-                NEW
-              </span>
-            )}
-            {product.ratings >= 4.5 && (
-              <span className="px-2 py-1  bg-gradient-to-r from-yellow-400 to-orange-500 text-white bg-primary text-primary-foreground text-xs font-semibold rounded">
-                TOP RATED
-              </span>
-            )}
-            </div>
-            <h1 className="text-3xl font-bold text-foreground mb-2">{product.name}</h1>
-            <div className="flex items-center space-x-4 mb-4">
-              <div className="flex items-center space-x-1">
-                {[...Array(5)].map((_, i) => {
-                                return (
-                                  <Star
-                                    key={i}
-                                    className={`w-4 h-4 ${i < Math.floor(product.ratings) ? "text-yellow-400 fill-current" : "text-gray-300"}`}
-                                  />
-                                );
-                              })}
+
+            <div>
+              <div className="mb-4">
+                <div className="flex space-x-2 mb-4">
+                  {new Date() - new Date(product.created_at) <
+                    30 * 24 * 60 * 60 * 1000 && (
+                    <span className="px-2 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded">
+                      NEW
+                    </span>
+                  )}
+                  {product.ratings >= 4.5 && (
+                    <span className="px-2 py-1  bg-gradient-to-r from-yellow-400 to-orange-500 text-white bg-primary text-primary-foreground text-xs font-semibold rounded">
+                      TOP RATED
+                    </span>
+                  )}
+                </div>
+                <h1 className="text-3xl font-bold text-foreground mb-2">
+                  {product.name}
+                </h1>
+                <div className="flex items-center space-x-4 mb-4">
+                  <div className="flex items-center space-x-1">
+                    {[...Array(5)].map((_, i) => {
+                      return (
+                        <Star
+                          key={i}
+                          className={`w-4 h-4 ${i < Math.floor(product.ratings) ? "text-yellow-400 fill-current" : "text-gray-300"}`}
+                        />
+                      );
+                    })}
+                  </div>
+                  <span className="text-foreground font-medium">
+                    {product.ratings}
+                  </span>
+                  <span className="text-muted-foreground">
+                    ({productReviews?.length}) reviews
+                  </span>
+                </div>
+
+                <div className="flex items-center space-x-4 mb-6">
+                  <span className="text-2xl font-bold text-primary">
+                    ${product.price}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-4 mb-6">
+                  <span className="text-muted-foreground">
+                    Category: {product.category}
+                  </span>
+                  <span className={`px-3 py-1 rounded text-sm ${
+                product.stock > 5
+                  ? "bg-green-500/20 text-green-400"
+                  : product.stock > 0
+                    ? "bg-yellow-500/20 text-yellow-400"
+                    : "bg-red-500/20 text-red-400"
+              }`}>
+                    {
+                      product.stock > 5 ? "In Stock" : product.stock > 0 ? "Limited Stock" : "Out of Stock"
+                    }
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        </div>
-
       </div>
-    </div>
-  </>);
+    </>
+  );
 };
 
 export default ProductDetail;
