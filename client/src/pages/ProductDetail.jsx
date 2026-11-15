@@ -89,7 +89,16 @@ const ProductDetail = () => {
             </div>
             <h1 className="text-3xl font-bold text-foreground mb-2">{product.name}</h1>
             <div className="flex items-center space-x-4 mb-4">
-              <div className="flex items-center space-x-1"></div>
+              <div className="flex items-center space-x-1">
+                {[...Array(5)].map((_, i) => {
+                                return (
+                                  <Star
+                                    key={i}
+                                    className={`w-4 h-4 ${i < Math.floor(product.ratings) ? "text-yellow-400 fill-current" : "text-gray-300"}`}
+                                  />
+                                );
+                              })}
+              </div>
             </div>
           </div>
         </div>
