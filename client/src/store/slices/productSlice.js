@@ -137,9 +137,10 @@ const productSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchProductDetails.fulfilled, (state, action) => {
+        console.log("API Response:", action.payload);
         state.loading = false;
         state.productDetails = action.payload;
-        state.productDetails = action.payload.reviews || [];
+        state.productReviews = action.payload.reviews || [];
       })
       .addCase(fetchProductDetails.rejected, (state) => {
         state.loading = false;

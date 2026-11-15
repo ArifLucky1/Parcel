@@ -17,7 +17,7 @@ import { addToCart } from "../store/slices/cartSlice";
 const ProductDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const product = useSelector((State) => state.product?.ProductDetails);
+  const product = useSelector((state) => state.product?.productDetails);
   const { loading, productReviews } = useSelector((state) => state.product);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
