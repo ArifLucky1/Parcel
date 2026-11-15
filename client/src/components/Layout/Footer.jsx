@@ -167,7 +167,7 @@ const Footer = () => {
 
           <div className="text-center md:text-right">
             <p className="text-muted-foreground text-sm">
-              © 2024 Parcel . All rights reserved.
+              © 2026 Parcel . All rights reserved.
             </p>
             <p className="text-muted-foreground text-xs mt-1">
               Developed By Arif
