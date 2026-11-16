@@ -172,6 +172,7 @@ const ProductDetail = () => {
                     activeTab === "description" && (
                       <div>
                         <h3 className="text-xl font-semibold text-foreground mb-4">Product Description</h3>
+                        <p className="text-muted-foreground loading-relaxed">{product.description}</p>
                       </div>
                     )
                   }
