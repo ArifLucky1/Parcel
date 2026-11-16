@@ -154,6 +154,12 @@ const ProductDetail = () => {
                 </div>
               </div>
             </div>
+
+            <div className="glass-panel">
+              <div className="flex border-b border-[hsla(var(--glass-border))]">
+                {}
+              </div>
+            </div>
           </div>
         </div>
       </div>
