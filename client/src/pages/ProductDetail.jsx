@@ -160,7 +160,9 @@ const ProductDetail = () => {
                 {
                 ["description", "review"].map((tab) => {
                   return(
-                    <button key={tab} onClick={() => setActiveTab(tab)} className={`px-6 py-4 font-medium capitalize transition-all ${activeTab === tab ? "text-primary border-b-2 border-primary" : "text-muted-foreground hover:text-foreground"}`}></button>
+                    <button key={tab} onClick={() => setActiveTab(tab)} className={`px-6 py-4 font-medium capitalize transition-all ${activeTab === tab ? "text-primary border-b-2 border-primary" : "text-muted-foreground hover:text-foreground"}`}>
+                      {tab}
+                    </button>
                   )
                 })
                 }
