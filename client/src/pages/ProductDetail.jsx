@@ -153,19 +153,23 @@ const ProductDetail = () => {
                   </span>
                 </div>
               </div>
-            </div>
-
-            <div className="glass-panel">
-              <div className="flex border-b border-[hsla(var(--glass-border))]">
-                {
-                ["description", "review"].map((tab) => {
-                  return(
-                    <button key={tab} onClick={() => setActiveTab(tab)} className={`px-6 py-4 font-medium capitalize transition-all ${activeTab === tab ? "text-primary border-b-2 border-primary" : "text-muted-foreground hover:text-foreground"}`}>
-                      {tab}
-                    </button>
-                  )
-                })
-                }
+              <div className="glass-panel">
+                <div className="flex border-b border-[hsla(var(--glass-border))]">
+                  {["description", "review"].map((tab) => {
+                    return (
+                      <button
+                        key={tab}
+                        onClick={() => setActiveTab(tab)}
+                        className={`px-6 py-4 font-medium capitalize transition-all ${activeTab === tab ? "text-primary border-b-2 border-primary" : "text-muted-foreground hover:text-foreground"}`}
+                      >
+                        {tab}
+                      </button>
+                    );
+                  })}
+                </div>
+                <div>
+                  
+                </div>
               </div>
             </div>
           </div>
