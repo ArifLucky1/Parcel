@@ -167,8 +167,14 @@ const ProductDetail = () => {
                     );
                   })}
                 </div>
-                <div>
-                  
+                <div className="p-6">
+                  {
+                    activeTab === "description" && (
+                      <div>
+                        <h3 className="text-xl font-semibold text-foreground mb-4">Product Description</h3>
+                      </div>
+                    )
+                  }
                 </div>
               </div>
             </div>
