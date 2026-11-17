@@ -157,7 +157,7 @@ const ProductDetail = () => {
 
             <div className="glass-panel">
                 <div className="flex border-b border-[hsla(var(--glass-border))]">
-                  {["description", "review"].map((tab) => {
+                  {["description", "reviews"].map((tab) => {
                     return (
                       <button
                         key={tab}
