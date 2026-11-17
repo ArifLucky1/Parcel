@@ -39,7 +39,7 @@ const ProductDetail = () => {
             Product Not Found
           </h1>
           <p className="text-muted-foreground">
-            The product you're looking for does not exist
+            The product you're looking for does not exist.
           </p>
         </div>
       </div>
@@ -81,7 +81,7 @@ const ProductDetail = () => {
                       >
                         <img
                           src={image?.url}
-                          alt={`${product.title} &{index + 1}`}
+                          alt={`${product.title} ${index + 1}`}
                           className="w-full h-full object-cover"
                         />
                       </button>
