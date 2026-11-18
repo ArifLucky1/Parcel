@@ -155,7 +155,10 @@ const ProductDetail = () => {
               </div>
             </div>
 
-            <div className="glass-panel">
+            
+          </div>
+
+          <div className="glass-panel w-full">
                 <div className="flex border-b border-[hsla(var(--glass-border))]">
                   {["description", "reviews"].map((tab) => {
                     return (
@@ -190,7 +193,6 @@ const ProductDetail = () => {
                   )}
                 </div>
               </div>
-          </div>
         </div>
       </div>
     </>
