@@ -360,7 +360,7 @@ export const postProductReview = catchAsyncErrors(async (req, res, next) => {
     success: true,
     message: "Review posted",
     review: review.rows[0],
-    product: updateProduct.rows[0],
+    product: updatedProduct.rows[0],
   });
 });
 
@@ -493,41 +493,43 @@ export const fetchAIFilteredProducts = catchAsyncErrors(
         .map((word) => `%${word}%`);
     };
 
-    const keywords = filterKeywords(userPrompt)
+    const keywords = filterKeywords(userPrompt);
 
     // Step 1: Basic SQL Filtering
 
-    const result = await database.query(`
+    const result = await database.query(
+      `
       SELECT * FROM products
       WHERE name ILIKE ANY($1)
       OR description ILIKE ANY($1)
       OR category ILIKE ANY($1)
       LIMIT 200
       `,
-    [keywords])
+      [keywords],
+    );
 
     const filteredProducts = result.rows;
 
-    if(filteredProducts.length === 0){
+    if (filteredProducts.length === 0) {
       return res.status(200).json({
         success: true,
         message: "No products found matching your prompt.",
-        products: []
-      })
+        products: [],
+      });
     }
 
     // STEP 2: AI Filtering
 
     const output = await getAIRecommendation(userPrompt, filteredProducts);
 
-if (!output.success) {
-  return next(new ErrorHandler(output.message, 500));
-}
+    if (!output.success) {
+      return next(new ErrorHandler(output.message, 500));
+    }
 
-return res.status(200).json({
-  success: true,
-  message: "AI filtered products.",
-  products: output.products,
-});
+    return res.status(200).json({
+      success: true,
+      message: "AI filtered products.",
+      products: output.products,
+    });
   },
 );

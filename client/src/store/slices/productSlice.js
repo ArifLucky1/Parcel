@@ -86,7 +86,6 @@ export const deleteReview = createAsyncThunk(
   },
 );
 
-
 export const fetchProductWithAI = createAsyncThunk(
   "product/ai-search",
   async (userPrompt, thunkAPI) => {
@@ -97,7 +96,7 @@ export const fetchProductWithAI = createAsyncThunk(
     } catch (error) {
       toast.error(error.response.data.message);
       return thunkAPI.rejectWithValue(
-        error.response.data.message || "Failed to fetch AI filtered products."
+        error.response.data.message || "Failed to fetch AI filtered products.",
       );
     }
   },
@@ -162,13 +161,12 @@ const productSlice = createSlice({
       .addCase(deleteReview.fulfilled, (state, action) => {
         state.isReviewDeleting = false;
         state.productReviews = state.productReviews.filter(
-          (review) => review.review_id !== action.payload
+          (review) => review.review_id !== action.payload,
         );
       })
       .addCase(deleteReview.rejected, (state) => {
         state.isReviewDeleting = false;
       })
-
 
       .addCase(fetchProductWithAI.pending, (state) => {
         state.aiSearching = true;
@@ -180,7 +178,7 @@ const productSlice = createSlice({
       })
       .addCase(fetchProductWithAI.rejected, (state) => {
         state.aiSearching = false;
-      })
+      });
   },
 });
 
