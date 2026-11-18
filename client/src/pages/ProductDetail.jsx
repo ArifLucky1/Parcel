@@ -152,6 +152,55 @@ const ProductDetail = () => {
                         : "Out of Stock"}
                   </span>
                 </div>
+                <div className="glass-card p-6 mb-6">
+                <div className="flex items-center space-x-4 mb-6">
+                  <span className="text-lg font-medium">Quantity:</span>
+                  <div className="flex items-center space-x-3">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="p-2 glass-card hover:glow-on-hover animate-smooth"
+                    >
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <span className="w-12 text-center font-semibold text-lg">
+                      {quantity}
+                    </span>
+                    <button
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="p-2 glass-card hover:glow-on-hover animate-smooth"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <button
+                    onClick={handleAddToCart}
+                    disabled={product.stock === 0}
+                    className="flex items-center justify-center space-x-2 py-3 gradient-primary text-primary-foreground rounded-lg hover:glow-on-hover animate-smooth font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <ShoppingCart className="w-5 h-5" />
+                    <span>Add to Cart</span>
+                  </button>
+                  <button
+                    disabled={product.stock === 0}
+                    className="py-3 bg-secondary text-foreground border border-border rounded-lg hover:bg-accent animate-smooth font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Buy Now
+                  </button>
+                </div>
+                <div className="flex items-center space-x-4 mt-4">
+                  <button className="flex items-center space-x-2 text-muted-foreground hover:text-primary animate-smooth">
+                    <Heart className="w-5 h-5" />
+                    <span>Add to Wishlist</span>
+                  </button>
+                  <button className="flex items-center space-x-2 text-muted-foreground hover:text-primary animate-smooth">
+                    <Share2 className="w-5 h-5" />
+                    <span>Share</span>
+                  </button>
+                </div>
+              </div>
+
               </div>
             </div>
 
