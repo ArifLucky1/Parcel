@@ -61,6 +61,24 @@ const Cart = () => {
               {cartItemCount} item{cartItemCount !== 1 ? "s" : ""} in your cart
             </p>
           </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-4">
+              {
+                cart.map(item => {
+                  return(
+                    <div key={item.product.id} className="glass-card p-6">
+                      <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-6 ">
+                        <Link to={`/product/${item.product.id}`} className="flex-shrink-0">
+                          <img src={item.product.images[0].url} alt={item.product.name} className="w-24 h-24 object-cover rounded-lg hover:scale-105 transition-transform"/>
+                        </Link>
+                      </div>
+                    </div>
+                  )
+                })
+              }
+            </div>
+          </div>
         </div>
       </div>
     </>
