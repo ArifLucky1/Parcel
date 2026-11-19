@@ -122,7 +122,13 @@ const CartSidebar = () => {
                             </div>
                           </div>
 
-                          {/* TOTAL */}
+                          
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+              {/* TOTAL */}
                           <div className="border-t border-[hsla(var(--glass-border))] pt-4">
                             <div className="flex justify-between items-center mb-4">
                               <span className="text-lg font-semibold">
@@ -141,11 +147,6 @@ const CartSidebar = () => {
                               View cart & Checkout
                             </Link>
                           </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-              </div>
             </>
           )}
         </div>
