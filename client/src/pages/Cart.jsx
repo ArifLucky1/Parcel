@@ -25,7 +25,7 @@ const Cart = () => {
 
   let cartItemCount = 0;
   if (cart) {
-    cartItemCount = cart.reduce((total, sum) => total + item.quantity, 0);
+    cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
   }
 
   if (cart.length === 0) {
@@ -72,6 +72,12 @@ const Cart = () => {
                         <Link to={`/product/${item.product.id}`} className="flex-shrink-0">
                           <img src={item.product.images[0].url} alt={item.product.name} className="w-24 h-24 object-cover rounded-lg hover:scale-105 transition-transform"/>
                         </Link>
+
+                        <div className="flex-1 min-w-0">
+                          <Link to={`/product/${item.product.id}`} className="block hover:text-primary transition-colors">
+                          <h3 className="text-lg font-semibold text-foreground mb-1">{item.product.name}</h3>
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   )
