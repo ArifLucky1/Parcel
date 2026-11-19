@@ -27,6 +27,24 @@ const Cart = () => {
   if (cart) {
     cartItemCount = cart.reduce((total, sum) => total + item.quantity, 0);
   }
+
+  if (cart.length === 0) {
+    return (
+      <div className="min-h-screen pt-20 flex items-center justify-center">
+        <div className="text-center glass-panel max-w-md">
+          <h1 className="text-3xl font-bold text-foreground mb-4">Your Cart is Empty.</h1>
+          <p className="text-muted-foreground mb-8">Looks like you have not added any items to your cart yet.</p>
+          <Link
+            to={"/products"}
+            className="inline-flex items-center space-x-2 px-6 py-3 rounded-lg text-primary-foreground gradient-primary hover:glow-on-hover animate-smooth font-semibold"
+          >
+            <span>Continue Shopping</span>
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+        </div>
+      </div>
+    );
+  }
   return <></>;
 };
 
