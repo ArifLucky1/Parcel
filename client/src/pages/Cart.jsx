@@ -19,8 +19,13 @@ const Cart = () => {
   if (cart) {
     total = cart.reduce(
       (sum, item) => sum + item.product.price * item.quantity,
-      0
+      0,
     );
+  }
+
+  let cartItemCount = 0;
+  if (cart) {
+    cartItemCount = cart.reduce((total, sum) => total + item.quantity, 0);
   }
   return <></>;
 };
