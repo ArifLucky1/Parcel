@@ -131,6 +131,12 @@ const Cart = () => {
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
+
+                      <div className="text-right">
+                        <p className="text-lg font-bold text-foreground">
+                          ₹{(item.product.price * item.quantity).toFixed(2)}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 );
