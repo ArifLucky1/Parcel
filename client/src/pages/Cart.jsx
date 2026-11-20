@@ -84,6 +84,14 @@ const Cart = () => {
                             <span className="text-xl font-bold text-primary"> ${item.product.price}</span>
                           </div>
                         </div>
+
+                        <div className="flex items-center space-x-4">
+                          <div className="flex items-center space-x-2">
+                            <button onClick={() => updateQuantity(item.product.id, item.quantity - 1)} className="p-2 glass-card hover:glow-on-hover animate-smooth">
+                              <Minus className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )
