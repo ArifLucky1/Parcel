@@ -166,6 +166,13 @@ const Cart = () => {
                     ₹{(total * 0.18).toFixed(2)}
                   </span>
                 </div>
+
+                <div className="border-t border-[hsla(var(--glass-border))] pt-4">
+                  <div className="flex justify-between">
+                    <span className="text-lg font-semibold"></span>
+                    <span>₹{(total + total * 0.18).toFixed(2)}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
