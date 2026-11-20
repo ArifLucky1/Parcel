@@ -80,6 +80,9 @@ const Cart = () => {
                           <p className="text-muted-foreground text-sm mb-2">
                             category: {item.product.category}
                           </p>
+                          <div className="flex items-center space-x-2">
+                            <span className="text-xl font-bold text-primary"> ${item.product.price}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
