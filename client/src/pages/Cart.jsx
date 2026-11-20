@@ -90,6 +90,10 @@ const Cart = () => {
                             <button onClick={() => updateQuantity(item.product.id, item.quantity - 1)} className="p-2 glass-card hover:glow-on-hover animate-smooth">
                               <Minus className="w-4 h-4" />
                             </button>
+                            <span className="w-12 text-center font-semibold text-lg">{item.quantity}</span>
+                            <button onClick={() => updateQuantity(item.product.id, item.quantity + 1)} className="p-2 glass-card hover:glow-on-hover animate-smooth">
+                              <Plus className="w-4 h-4" />
+                            </button>
                           </div>
                         </div>
                       </div>
