@@ -47,7 +47,7 @@ const Cart = () => {
           </Link>
         </div>
       </div>
-    );
+    ); 
   }
   return (
     <>
@@ -77,6 +77,9 @@ const Cart = () => {
                           <Link to={`/product/${item.product.id}`} className="block hover:text-primary transition-colors">
                           <h3 className="text-lg font-semibold text-foreground mb-1">{item.product.name}</h3>
                           </Link>
+                          <p className="text-muted-foreground text-sm mb-2">
+                            category: {item.product.category}
+                          </p>
                         </div>
                       </div>
                     </div>
