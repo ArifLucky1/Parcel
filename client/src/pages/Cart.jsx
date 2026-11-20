@@ -143,6 +143,33 @@ const Cart = () => {
                 );
               })}
             </div>
+
+
+          <div className="lg:col-span-1">
+            <div className="glass-panel sticky top-24">
+              <h2 className="text-xl font-semibold text-foreground mb-6">Order Summary</h2>
+
+              <div className="space-y-4 mb-6">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Subtotal ({cartItemCount} items)</span>
+                  <span className="font-semibold">₹{total.toFixed(2)}</span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Shipping</span>
+                  <span className="font-semibold text-green-500">{total >= 50 ? "Free" : "₹2"}</span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Tax</span>
+                  <span className="font-semibold">
+                    ₹{(total * 0.18).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           </div>
         </div>
       </div>
