@@ -11,7 +11,7 @@ const Cart = () => {
     if (quantity <= 0) {
       dispatch(removeFromCart(id));
     } else {
-      updateCartQuantity({ id, quantity });
+      dispatch(updateCartQuantity({ id, quantity }));
     }
   };
 
@@ -102,6 +102,7 @@ const Cart = () => {
                       <div className="flex items-center space-x-4">
                         <div className="flex items-center space-x-2">
                           <button
+                            disabled={item.quantity === 1}
                             onClick={() =>
                               updateQuantity(item.product.id, item.quantity - 1)
                             }

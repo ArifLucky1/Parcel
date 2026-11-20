@@ -87,6 +87,7 @@ const CartSidebar = () => {
                             <div className="flex items-center space-x-2 mt-2">
                               <button
                                 className="p-1 rounded glass-card hover:glow-on-hover animate-smooth"
+                                disabled={item.quantity === 1}
                                 onClick={() => {
                                   updateQuantity(
                                     item.product.id,
@@ -121,32 +122,28 @@ const CartSidebar = () => {
                               </button>
                             </div>
                           </div>
-
-                          
                         </div>
                       </div>
                     );
                   })}
               </div>
               {/* TOTAL */}
-                          <div className="border-t border-[hsla(var(--glass-border))] pt-4">
-                            <div className="flex justify-between items-center mb-4">
-                              <span className="text-lg font-semibold">
-                                Total:
-                              </span>
-                              <span className="text-xl font-bold text-primary">
-                                ₹{total.toFixed(2)}
-                              </span>
-                            </div>
+              <div className="border-t border-[hsla(var(--glass-border))] pt-4">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-lg font-semibold">Total:</span>
+                  <span className="text-xl font-bold text-primary">
+                    ₹{total.toFixed(2)}
+                  </span>
+                </div>
 
-                            <Link
-                              to={"/cart"}
-                              onClick={() => dispatch(toggleCart())}
-                              className="w-full py-3 block text-center gradient-primary text-primary-foreground rounded-lg hover:glow-on-hover animate-smooth font-semibold"
-                            >
-                              View cart & Checkout
-                            </Link>
-                          </div>
+                <Link
+                  to={"/cart"}
+                  onClick={() => dispatch(toggleCart())}
+                  className="w-full py-3 block text-center gradient-primary text-primary-foreground rounded-lg hover:glow-on-hover animate-smooth font-semibold"
+                >
+                  View cart & Checkout
+                </Link>
+              </div>
             </>
           )}
         </div>
