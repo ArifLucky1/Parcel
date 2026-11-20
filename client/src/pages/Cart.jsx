@@ -47,7 +47,7 @@ const Cart = () => {
           </Link>
         </div>
       </div>
-    ); 
+    );
   }
   return (
     <>
@@ -64,43 +64,77 @@ const Cart = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-4">
-              {
-                cart.map(item => {
-                  return(
-                    <div key={item.product.id} className="glass-card p-6">
-                      <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-6 ">
-                        <Link to={`/product/${item.product.id}`} className="flex-shrink-0">
-                          <img src={item.product.images[0].url} alt={item.product.name} className="w-24 h-24 object-cover rounded-lg hover:scale-105 transition-transform"/>
+              {cart.map((item) => {
+                return (
+                  <div key={item.product.id} className="glass-card p-6">
+                    <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-6 ">
+                      <Link
+                        to={`/product/${item.product.id}`}
+                        className="flex-shrink-0"
+                      >
+                        <img
+                          src={item.product.images[0].url}
+                          alt={item.product.name}
+                          className="w-24 h-24 object-cover rounded-lg hover:scale-105 transition-transform"
+                        />
+                      </Link>
+
+                      <div className="flex-1 min-w-0">
+                        <Link
+                          to={`/product/${item.product.id}`}
+                          className="block hover:text-primary transition-colors"
+                        >
+                          <h3 className="text-lg font-semibold text-foreground mb-1">
+                            {item.product.name}
+                          </h3>
                         </Link>
-
-                        <div className="flex-1 min-w-0">
-                          <Link to={`/product/${item.product.id}`} className="block hover:text-primary transition-colors">
-                          <h3 className="text-lg font-semibold text-foreground mb-1">{item.product.name}</h3>
-                          </Link>
-                          <p className="text-muted-foreground text-sm mb-2">
-                            category: {item.product.category}
-                          </p>
-                          <div className="flex items-center space-x-2">
-                            <span className="text-xl font-bold text-primary"> ${item.product.price}</span>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center space-x-4">
-                          <div className="flex items-center space-x-2">
-                            <button onClick={() => updateQuantity(item.product.id, item.quantity - 1)} className="p-2 glass-card hover:glow-on-hover animate-smooth">
-                              <Minus className="w-4 h-4" />
-                            </button>
-                            <span className="w-12 text-center font-semibold text-lg">{item.quantity}</span>
-                            <button onClick={() => updateQuantity(item.product.id, item.quantity + 1)} className="p-2 glass-card hover:glow-on-hover animate-smooth">
-                              <Plus className="w-4 h-4" />
-                            </button>
-                          </div>
+                        <p className="text-muted-foreground text-sm mb-2">
+                          category: {item.product.category}
+                        </p>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-xl font-bold text-primary">
+                            {" "}
+                            ${item.product.price}
+                          </span>
                         </div>
                       </div>
+
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-2">
+                          <button
+                            onClick={() =>
+                              updateQuantity(item.product.id, item.quantity - 1)
+                            }
+                            className="p-2 glass-card hover:glow-on-hover animate-smooth"
+                          >
+                            <Minus className="w-4 h-4" />
+                          </button>
+                          <span className="w-12 text-center font-semibold text-lg">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() =>
+                              updateQuantity(item.product.id, item.quantity + 1)
+                            }
+                            className="p-2 glass-card hover:glow-on-hover animate-smooth"
+                          >
+                            <Plus className="w-4 h-4" />
+                          </button>
+                        </div>
+
+                        <button
+                          onClick={() =>
+                            dispatch(removeFromCart(item.product.id))
+                          }
+                          className="p-2 glass-card hover:glow-on-hover animate-smooth text-destructive"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
-                  )
-                })
-              }
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
