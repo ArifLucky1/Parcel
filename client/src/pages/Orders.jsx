@@ -13,48 +13,52 @@ const Orders = () => {
   }, [dispatch]);
 
   const filterOrders = myOrders.filter(
-    (order) => statusFilter === "all" || order.order_status === statusFilter
+    (order) => statusFilter === "all" || order.order_status === statusFilter,
   );
 
   const getStatusIcon = (status) => {
     switch (status) {
       case "Processing":
-        return <Package className="w-5 h-5 text-yellow-500"/>
+        return <Package className="w-5 h-5 text-yellow-500" />;
         break;
       case "Shipped":
-        return <Truck className="w-5 h-5 text-blue-500"/>
+        return <Truck className="w-5 h-5 text-blue-500" />;
         break;
       case "Delivered":
-        return <CheckCircle className="w-5 h-5 text-green-500"/>
+        return <CheckCircle className="w-5 h-5 text-green-500" />;
         break;
       case "Cancelled":
-        return <XCircle className="w-5 h-5 text-red-500"/>
+        return <XCircle className="w-5 h-5 text-red-500" />;
         break;
-    
+
       default:
-        return <Package className="w-5 h-5 text-yellow-500"/>
+        return <Package className="w-5 h-5 text-yellow-500" />;
     }
-  }
+  };
 
   const getStatusColor = (status) => {
     switch (status) {
       case "Processing":
-        return "bg-yellow-500/20 text-yellow-400"
+        return "bg-yellow-500/20 text-yellow-400";
         break;
       case "Shipped":
-        return "bg-blue-500/20 text-blue-400"
+        return "bg-blue-500/20 text-blue-400";
         break;
       case "Delivered":
-        return "bg-green-500/20 text-green-400"
+        return "bg-green-500/20 text-green-400";
         break;
       case "Cancelled":
-        return "bg-red-500/20 text-red-400"
+        return "bg-red-500/20 text-red-400";
         break;
-    
+
       default:
-        return "bg-gray-500/20 text-gray-400"
+        return "bg-gray-500/20 text-gray-400";
     }
-  }
+  };
+
+  const { authUser } = useSelector((state) => state.auth);
+  const navigateTo = useNavigate()
+  if(!authUser) return navigateTo("/products")
   return <></>;
 };
 
