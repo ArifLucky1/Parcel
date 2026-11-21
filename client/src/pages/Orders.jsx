@@ -181,6 +181,24 @@ const Orders = () => {
                     </div>
 
                     {/* ORDER ACTIONS */}
+                    <div className="flex flex-wrap gap-3 mt-6 pt-6 border-t border-[hsla(var(--glass-border))]">
+                      <button className="px-4 py-2 glass-card hover:glow-on-hover animate-smooth text-sm">
+                        View Details
+                      </button>
+                      <button className="px-4 py-2 glass-card hover:glow-on-hover animate-smooth text-sm">
+                        Track Order
+                      </button>
+                      {order.status === "Delivered" && (
+                        <>
+                          <button className="px-4 py-2 glass-card hover:glow-on-hover animate-smooth text-sm">
+                            Write Review
+                          </button>
+                          <button className="px-4 py-2 glass-card hover:glow-on-hover animate-smooth text-sm">
+                            Reorder
+                          </button>
+                        </>
+                      )}
+                    </div>
                   </div>
                 );
               })}
