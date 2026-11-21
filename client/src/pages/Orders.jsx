@@ -158,11 +158,29 @@ const Orders = () => {
                           key={item.product_id}
                           className="flex items-center space-x-4 p-4 bg-secondary/50 rounded-lg"
                         >
-                          <img src={item.image} alt={item.title} className="w-16 h-16 object-cover rounded-lg"/>
-                          
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                            className="w-16 h-16 object-cover rounded-lg"
+                          />
+                          <div className="flex min-w-0">
+                            <h4 className="font-medium text-foreground truncate">
+                              {item.title}
+                            </h4>
+                            <p className="text-sm text-muted-foreground">
+                              Quantity: {item.quantity}
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-semibold text-foreground">
+                              ₹{item.price}
+                            </p>
+                          </div>
                         </div>;
                       })}
                     </div>
+
+                    {/* ORDER ACTIONS */}
                   </div>
                 );
               })}
