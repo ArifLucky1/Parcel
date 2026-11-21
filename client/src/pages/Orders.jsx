@@ -16,7 +16,25 @@ const Orders = () => {
     (order) => statusFilter === "all" || order.order_status === statusFilter
   );
 
-  
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case "Processing":
+        return <Package className="w-5 h-5 text-yellow-500"/>
+        break;
+      case "Shipped":
+        return <Truck className="w-5 h-5 text-blue-500"/>
+        break;
+      case "Delivered":
+        return <CheckCircle className="w-5 h-5 text-green-500"/>
+        break;
+      case "Cancelled":
+        return <XCircle className="w-5 h-5 text-red-500"/>
+        break;
+    
+      default:
+        return <Package className="w-5 h-5 text-yellow-500"/>
+    }
+  }
   return <></>;
 };
 
