@@ -10,7 +10,13 @@ const Orders = () => {
 
   useEffect(() => {
     // dispatch()
-  }, [dispatch])
+  }, [dispatch]);
+
+  const filterOrders = myOrders.filter(
+    (order) => statusFilter === "all" || order.order_status === statusFilter
+  );
+
+  
   return <></>;
 };
 
