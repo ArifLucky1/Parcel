@@ -103,6 +103,27 @@ const Orders = () => {
               </div>
             </div>
           </div>
+
+          {/* ORDERS LIST */}
+          {filterOrders.length === 0 ? (
+            <div className="text-center glass-panel max-w-md mx-auto ">
+              <Package className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+              <h2 className="text-xl font-semibold text-foreground mb-2">
+                No Orders Found
+              </h2>
+              <p className="text-muted-foreground">
+                {statusFilter === "All"
+                  ? "You haven't placed any orders yet."
+                  : `No orders with status "${statusFilter}" found.`}
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-6">{filterOrders.map((order) => {
+              return <div key={order.id} className="glass-card p-6">
+                
+              </div>
+            })}</div>
+          )}
         </div>
       </div>
     </>
