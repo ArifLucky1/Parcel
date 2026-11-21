@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("All");
   const { myOrders } = useSelector((state) => state.order);
   const dispatch = useDispatch();
 
@@ -13,7 +13,7 @@ const Orders = () => {
   }, [dispatch]);
 
   const filterOrders = myOrders.filter(
-    (order) => statusFilter === "all" || order.order_status === statusFilter,
+    (order) => statusFilter === "All" || order.order_status === statusFilter,
   );
 
   const getStatusIcon = (status) => {
@@ -56,6 +56,14 @@ const Orders = () => {
     }
   };
 
+  const statusArray = [
+    "All",
+    "Processing",
+    "Shipped",
+    "Delivered",
+    "Cancelled",
+  ];
+
   const { authUser } = useSelector((state) => state.auth);
   const navigateTo = useNavigate();
   if (!authUser) return navigateTo("/products");
@@ -71,6 +79,29 @@ const Orders = () => {
             <p className="text-muted-foreground">
               Track and manage your order history.
             </p>
+          </div>
+
+          {/* STATUS FILTER */}
+          <div className="glass-card p-4 mb-8">
+            <div className="flex items-center space-x-4 flex-wrap">
+              <div className="flex items-center space-x-2">
+                <Filter className="w-5 h-5 text-primary" />
+                <span className="font-medium">Filter by status: </span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {statusArray.map((status) => {
+                  return (
+                    <button
+                      key={status}
+                      onClick={() => setStatusFilter(status)}
+                      className={`px-4 py-2 rounded-lg font-medium transition-all capitalize ${statusFilter === status ? "gradient-primary text-primary-foreground" : "glass-card hover:glow-on-hover text-foreground"}`}
+                    >
+                      {status}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
