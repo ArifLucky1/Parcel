@@ -57,9 +57,25 @@ const Orders = () => {
   };
 
   const { authUser } = useSelector((state) => state.auth);
-  const navigateTo = useNavigate()
-  if(!authUser) return navigateTo("/products")
-  return <></>;
+  const navigateTo = useNavigate();
+  if (!authUser) return navigateTo("/products");
+
+  return (
+    <>
+      <div className="min-h-screen pt-20">
+        <div className="container mx-auto px-4 py-8">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-foreground mb-2">
+              My Orders
+            </h1>
+            <p className="text-muted-foreground">
+              Track and manage your order history.
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Orders;
