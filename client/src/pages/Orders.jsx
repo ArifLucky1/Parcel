@@ -150,6 +150,19 @@ const Orders = () => {
                         </div>
                       </div>
                     </div>
+
+                    {/* ORDER ITEMS */}
+                    <div className="space-y-4">
+                      {order?.order_items.map((item) => {
+                        <div
+                          key={item.product_id}
+                          className="flex items-center space-x-4 p-4 bg-secondary/50 rounded-lg"
+                        >
+                          <img src={item.image} alt={item.title} className="w-16 h-16 object-cover rounded-lg"/>
+                          
+                        </div>;
+                      })}
+                    </div>
                   </div>
                 );
               })}
