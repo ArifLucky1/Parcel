@@ -35,6 +35,26 @@ const Orders = () => {
         return <Package className="w-5 h-5 text-yellow-500"/>
     }
   }
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Processing":
+        return "bg-yellow-500/20 text-yellow-400"
+        break;
+      case "Shipped":
+        return "bg-blue-500/20 text-blue-400"
+        break;
+      case "Delivered":
+        return "bg-green-500/20 text-green-400"
+        break;
+      case "Cancelled":
+        return "bg-red-500/20 text-red-400"
+        break;
+    
+      default:
+        return "bg-gray-500/20 text-gray-400"
+    }
+  }
   return <></>;
 };
 
