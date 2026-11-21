@@ -120,7 +120,16 @@ const Orders = () => {
           ) : (
             <div className="space-y-6">{filterOrders.map((order) => {
               return <div key={order.id} className="glass-card p-6">
-                
+                {/* ORDER HEADER */}
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 space-y-4 md:space-y-0">
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-1">Orders #{order.id}</h3>
+                    <p className="text-muted-foreground">
+                      Placed on{" "}
+                      {new Date(order.created_at).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
               </div>
             })}</div>
           )}
