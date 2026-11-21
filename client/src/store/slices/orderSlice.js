@@ -11,6 +11,16 @@ export const fetchMyOrders = createAsyncThunk("order/orders/me", async(_, thunkA
   }
 })
 
+export const placeOrder = createAsyncThunk("order/new", async(data, thunkAPI) => {
+  try {
+    const res = await axiosInstance.post("/order/new", data);
+    toast.success(res.data.message)
+    return res.data;
+  } catch (error) {
+    toast.error(error.reponse.data.message || "Failed to place order, try again.")
+    return thunkAPI.rejectWithValue(error.res.data.message)
+  }
+})
 
 const orderSlice = createSlice({
   name: "order",
