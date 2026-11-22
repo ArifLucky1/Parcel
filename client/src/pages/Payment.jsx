@@ -59,6 +59,28 @@ const Payment = () => {
 
     dispatch(placeOrder(formData));
   };
+
+  if (cart.length === 0) {
+    return (
+      <div className="min-h-screen pt-20 flex items-center justify-center">
+        <div className="text-center glass-panel max-w-md">
+          <h1 className="text-3xl font-bold text-foreground mb-4">
+            No Items in Cart.
+          </h1>
+          <p className="text-muted-foreground mb-8">
+            Add some items to your cart before processing to checkout.
+          </p>
+          <Link
+            to={"/products"}
+            className="inline-flex items-center space-x-2 px-6 py-3 rounded-lg text-primary-foreground gradient-primary hover:glow-on-hover animate-smooth font-semibold"
+          >
+            Browse Products
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return <></>;
 };
 
