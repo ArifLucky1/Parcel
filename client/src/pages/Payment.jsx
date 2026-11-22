@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, Check } from "lucide-react";
+import { ArrowLeft, Check, Phone } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Elements } from "@stripe/react-stripe-js";
@@ -19,6 +19,24 @@ const Payment = () => {
       .then((stripe) => setStripePromise(stripe))
       .catch((err) => console.log(err));
   }, []);
+
+  const dispatch = useDispatch();
+  const { cart } = useSelector((state) => state.cart);
+  const { orderStep } = useSelector((state) => state.order);
+  const [shippingDetails, setShippingDetails] = useState({
+    fullName: "",
+    state: "Delhi",
+    Phone: "",
+    address: "",
+    city: "",
+    zipCode: "",
+    country: "India",
+  });
+
+  const total = cart.reduce(
+    (sum, item) => sum + item.product.price * item.quantity,
+    0
+  );
   return <></>;
 };
 
