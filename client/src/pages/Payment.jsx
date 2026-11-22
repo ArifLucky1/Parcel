@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Elements } from "@stripe/react-stripe-js";
 import PaymentForm from "../components/PaymentForm";
 import { loadStripe } from "@stripe/stripe-js";
+import { placeOrder } from "../store/slices/orderSlice";
 
 const Payment = () => {
   const { authUser } = useSelector((state) => state.auth);
@@ -54,7 +55,9 @@ const Payment = () => {
     formData.append("address", shippingDetails.address);
     formData.append("pincode", shippingDetails.zipCode);
     formData.append("phone", shippingDetails.phone);
-    // formData.append("", shippingDetails.fullName)
+    formData.append("orderedItems", JSON.stringify(cart));
+
+    dispatch(placeOrder(formData));
   };
   return <></>;
 };
