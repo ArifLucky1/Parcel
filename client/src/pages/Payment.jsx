@@ -35,14 +35,27 @@ const Payment = () => {
 
   const total = cart.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
-    0
+    0,
   );
 
   let totalWithTax = total + total * 0.18;
 
-  if(total > 50){
-    totalWithTax += 2
+  if (total > 50) {
+    totalWithTax += 2;
   }
+
+  const handlePlaceOrder = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("full_name", shippingDetails.fullName);
+    formData.append("state", shippingDetails.state);
+    formData.append("city", shippingDetails.city);
+    formData.append("country", shippingDetails.country);
+    formData.append("address", shippingDetails.address);
+    formData.append("pincode", shippingDetails.zipCode);
+    formData.append("phone", shippingDetails.phone);
+    // formData.append("", shippingDetails.fullName)
+  };
   return <></>;
 };
 
