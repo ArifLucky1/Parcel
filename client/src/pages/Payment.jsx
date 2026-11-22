@@ -37,6 +37,12 @@ const Payment = () => {
     (sum, item) => sum + item.product.price * item.quantity,
     0
   );
+
+  let totalWithTax = total + total * 0.18;
+
+  if(total > 50){
+    totalWithTax += 2
+  }
   return <></>;
 };
 
