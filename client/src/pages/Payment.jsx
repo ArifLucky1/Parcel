@@ -87,6 +87,14 @@ const Payment = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
             {/* HEADER */}
+            <div className="flex items-center space-x-4 mb-8">
+              <Link
+                to={"/cart"}
+                className="p-2 glass-card hover:glow-on-hover animate-smooth"
+              >
+                <ArrowLeft className="w-5 h-5 text-primary" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
