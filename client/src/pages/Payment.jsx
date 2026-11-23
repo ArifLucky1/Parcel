@@ -95,6 +95,23 @@ const Payment = () => {
                 <ArrowLeft className="w-5 h-5 text-primary" />
               </Link>
             </div>
+
+            {/* PROGRESS STEPS */}
+            <div className="flex items-center justify-center mb-12">
+              <div className="flex items-center space-x-4">
+                {/* STEP - 1 */}
+                <div
+                  className={`flex items-center space-x-2 ${orderStep >= 1 ? "text-primary" : "text-muted-foreground"}`}
+                >
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center ${orderStep >= 1 ? "gradient-primary text-primary-foreground" : "bg-secondary"}`}
+                  >
+                    {orderStep > 1 ? <Check className="w-5 h-5"/> : "1"}
+                  </div>
+                  <span className="font-medium">Details</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
