@@ -110,6 +110,8 @@ const Payment = () => {
                   </div>
                   <span className="font-medium">Details</span>
                 </div>
+
+                <div className={`w-12 h-0 ${orderStep >= 2 ? "bg-primary" : "bg-border"}`}></div>
               </div>
             </div>
           </div>
