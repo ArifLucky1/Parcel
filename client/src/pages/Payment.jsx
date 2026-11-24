@@ -120,9 +120,9 @@ const Payment = () => {
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center ${orderStep >= 1 ? "gradient-primary text-primary-foreground" : "bg-secondary"}`}
                   >
-                    {orderStep > 1 ? <Check className="w-5 h-5"/> : "1"}
+                    {orderStep > 2 ? <Check className="w-5 h-5"/> : "1"}
                   </div>
-                  <span className="font-medium">Details</span>
+                  <span className="font-medium">Payment</span>
                 </div>
                 </div>
               </div>
