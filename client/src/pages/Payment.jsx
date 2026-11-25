@@ -125,6 +125,44 @@ const Payment = () => {
                     </div>
                     <span className="font-medium">Payment</span>
                   </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* FROM SECTION */}
+                    <div className="lg:col-span-2">
+                      {orderStep === 1 ? (
+                        // STEP - 1: USER DETAILS
+                        <form
+                          onSubmit={handlePlaceOrder}
+                          className="glass-panel"
+                        >
+                          <h2 className="text-xl font-semibold text-foreground mb-6">
+                            Shipping Information
+                          </h2>
+                          <div className="mb-6">
+                            <div>
+                              <label className="block text-sm font-medium text-foreground mb-2">
+                                Full Name *
+                              </label>
+                              <input
+                                type="text"
+                                required
+                                value={shippingDetails.fullName}
+                                onChange={(e) => {
+                                  setShippingDetails({
+                                    ...shippingDetails,
+                                    fullName: e.target.value,
+                                  });
+                                }}
+                                className="w-full px-4 py-3 bg-secondary border border-border rounded-lg text-foreground"
+                              />
+                            </div>
+                          </div>
+                        </form>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
