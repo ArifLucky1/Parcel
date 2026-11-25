@@ -106,24 +106,25 @@ const Payment = () => {
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center ${orderStep >= 1 ? "gradient-primary text-primary-foreground" : "bg-secondary"}`}
                   >
-                    {orderStep > 1 ? <Check className="w-5 h-5"/> : "1"}
+                    {orderStep > 1 ? <Check className="w-5 h-5" /> : "1"}
                   </div>
                   <span className="font-medium">Details</span>
                 </div>
 
-                <div className={`w-12 h-0 ${orderStep >= 2 ? "bg-primary" : "bg-border"}`}>
-
+                <div
+                  className={`w-12 h-0 ${orderStep >= 2 ? "bg-primary" : "bg-border"}`}
+                >
                   {/* STEP 2 */}
                   <div
-                  className={`flex items-center space-x-2 ${orderStep >= 1 ? "text-primary" : "text-muted-foreground"}`}
-                >
-                  <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center ${orderStep >= 1 ? "gradient-primary text-primary-foreground" : "bg-secondary"}`}
+                    className={`flex items-center space-x-2 ${orderStep >= 1 ? "text-primary" : "text-muted-foreground"}`}
                   >
-                    {orderStep > 2 ? <Check className="w-5 h-5"/> : "1"}
+                    <div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center ${orderStep >= 1 ? "gradient-primary text-primary-foreground" : "bg-secondary"}`}
+                    >
+                      2
+                    </div>
+                    <span className="font-medium">Payment</span>
                   </div>
-                  <span className="font-medium">Payment</span>
-                </div>
                 </div>
               </div>
             </div>
