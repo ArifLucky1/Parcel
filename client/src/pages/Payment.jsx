@@ -158,13 +158,23 @@ const Payment = () => {
                             </div>
                           </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                  <div>
-                                    <label className="block text-sm font-medium text-foreground mb-2">
-                                      State *
-                                    </label>
-                                  </div>
-                                </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                              <label className="block text-sm font-medium text-foreground mb-2">
+                                State *
+                              </label>
+                              <select
+                                value={shippingDetails.state}
+                                onChange={(e) => {
+                                  setShippingDetails({
+                                    ...shippingDetails,
+                                    state: e.target.value,
+                                  });
+                                }}
+                                className="w-full px-4 py-3 bg-secondary border border-border rounded-lg text-foreground"
+                              ></select>
+                            </div>
+                          </div>
                         </form>
                       ) : (
                         ""
