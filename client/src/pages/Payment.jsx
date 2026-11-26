@@ -172,7 +172,20 @@ const Payment = () => {
                                   });
                                 }}
                                 className="w-full px-4 py-3 bg-secondary border border-border rounded-lg text-foreground"
-                              ></select>
+                              >
+                                <option value="Delhi">Delhi</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                <option value="Rajasthan">Rajasthan</option>
+                                <option value="Odisha">Odisha</option>
+                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Kerala">Kerala</option>
+                                <option value="Maharastra">Maharastra</option>
+                                <option value="Gujrat">Gujrat</option>
+                                <option value="Punjab">Punjab</option>
+                                <option value="Jammu Kashmir">Jammu Kashmir</option>
+                              </select>
                             </div>
                           </div>
                         </form>
