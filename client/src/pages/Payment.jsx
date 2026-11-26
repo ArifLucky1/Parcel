@@ -160,7 +160,9 @@ const Payment = () => {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                   <div>
-                                    <label ></label>
+                                    <label className="block text-sm font-medium text-foreground mb-2">
+                                      State *
+                                    </label>
                                   </div>
                                 </div>
                         </form>
