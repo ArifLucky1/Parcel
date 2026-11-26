@@ -184,7 +184,10 @@ const Payment = () => {
                                 <option value="Maharastra">Maharastra</option>
                                 <option value="Gujrat">Gujrat</option>
                                 <option value="Punjab">Punjab</option>
-                                <option value="Jammu Kashmir">Jammu Kashmir</option>
+                                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                <option value="Uttrakhand">Uttrakhand</option>
+                                <option value="Haryana">Haryana</option>
+                                <option value="West Bengal">West Bengal</option>
                               </select>
                             </div>
                           </div>
