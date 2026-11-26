@@ -174,8 +174,8 @@ const Payment = () => {
                                 className="w-full px-4 py-3 bg-secondary border border-border rounded-lg text-foreground"
                               >
                                 <option value="Delhi">Delhi</option>
-                                <option value="Uttar Pradesh">Uttar Pradesh</option>
-                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh (U.P)</option>
+                                <option value="Madhya Pradesh">Madhya Pradesh (M.P)</option>
                                 <option value="Rajasthan">Rajasthan</option>
                                 <option value="Odisha">Odisha</option>
                                 <option value="Tamil Nadu">Tamil Nadu</option>
@@ -184,10 +184,10 @@ const Payment = () => {
                                 <option value="Maharastra">Maharastra</option>
                                 <option value="Gujrat">Gujrat</option>
                                 <option value="Punjab">Punjab</option>
-                                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                <option value="Himachal Pradesh">Himachal Pradesh (H.P)</option>
                                 <option value="Uttrakhand">Uttrakhand</option>
                                 <option value="Haryana">Haryana</option>
-                                <option value="West Bengal">West Bengal</option>
+                                <option value="West Bengal">West Bengal (W.B)</option>
                               </select>
                             </div>
                           </div>
