@@ -174,8 +174,12 @@ const Payment = () => {
                                 className="w-full px-4 py-3 bg-secondary border border-border rounded-lg text-foreground"
                               >
                                 <option value="Delhi">Delhi</option>
-                                <option value="Uttar Pradesh">Uttar Pradesh (U.P)</option>
-                                <option value="Madhya Pradesh">Madhya Pradesh (M.P)</option>
+                                <option value="Uttar Pradesh">
+                                  Uttar Pradesh (U.P)
+                                </option>
+                                <option value="Madhya Pradesh">
+                                  Madhya Pradesh (M.P)
+                                </option>
                                 <option value="Rajasthan">Rajasthan</option>
                                 <option value="Odisha">Odisha</option>
                                 <option value="Tamil Nadu">Tamil Nadu</option>
@@ -184,10 +188,14 @@ const Payment = () => {
                                 <option value="Maharastra">Maharastra</option>
                                 <option value="Gujrat">Gujrat</option>
                                 <option value="Punjab">Punjab</option>
-                                <option value="Himachal Pradesh">Himachal Pradesh (H.P)</option>
+                                <option value="Himachal Pradesh">
+                                  Himachal Pradesh (H.P)
+                                </option>
                                 <option value="Uttrakhand">Uttrakhand</option>
                                 <option value="Haryana">Haryana</option>
-                                <option value="West Bengal">West Bengal (W.B)</option>
+                                <option value="West Bengal">
+                                  West Bengal (W.B)
+                                </option>
                               </select>
                             </div>
 
@@ -227,6 +235,61 @@ const Payment = () => {
                                 }}
                                 className="w-full px-4 py-3 bg-secondary border border-border rounded-lg text-foreground"
                               />
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div>
+                              <label className="block text-sm font-medium text-foreground mb-2">
+                                City *
+                              </label>
+                              <input
+                                type="text"
+                                required
+                                value={shippingDetails.city}
+                                onChange={(e) => {
+                                  setShippingDetails({
+                                    ...shippingDetails,
+                                    city: e.target.value,
+                                  });
+                                }}
+                                className="w-full px-4 py-3 bg-secondary border border-border rounded-lg text-foreground"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-sm font-medium text-foreground mb-2">
+                                Zip Code *
+                              </label>
+                              <input
+                                type="text"
+                                required
+                                value={shippingDetails.zipCode}
+                                onChange={(e) => {
+                                  setShippingDetails({
+                                    ...shippingDetails,
+                                    zipCode: e.target.value,
+                                  });
+                                }}
+                                className="w-full px-4 py-3 bg-secondary border border-border rounded-lg text-foreground"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-foreground mb-2">
+                                Country *
+                              </label>
+                              <select
+                                value={shippingDetails.country}
+                                onChange={(e) => {
+                                  setShippingDetails({
+                                    ...shippingDetails,
+                                    country: e.target.value,
+                                  });
+                                }}
+                                className="w-full px-4 py-3 bg-secondary border border-border rounded-lg text-foreground"
+                              >
+                                <option value="India">India</option>
+                              </select>
                             </div>
                           </div>
                         </form>
