@@ -209,6 +209,26 @@ const Payment = () => {
                               />
                             </div>
                           </div>
+
+                          <div className="mb-4">
+                            <div>
+                              <label className="block text-sm font-medium text-foreground mb-2">
+                                Address *
+                              </label>
+                              <input
+                                type="text"
+                                required
+                                value={shippingDetails.address}
+                                onChange={(e) => {
+                                  setShippingDetails({
+                                    ...shippingDetails,
+                                    address: e.target.value,
+                                  });
+                                }}
+                                className="w-full px-4 py-3 bg-secondary border border-border rounded-lg text-foreground"
+                              />
+                            </div>
+                          </div>
                         </form>
                       ) : (
                         ""
