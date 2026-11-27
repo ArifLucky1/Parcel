@@ -190,6 +190,24 @@ const Payment = () => {
                                 <option value="West Bengal">West Bengal (W.B)</option>
                               </select>
                             </div>
+
+                            <div>
+                              <label className="block text-sm font-medium text-foreground mb-2">
+                                Phone *
+                              </label>
+                              <input
+                                type="tel"
+                                required
+                                value={shippingDetails.phone}
+                                onChange={(e) => {
+                                  setShippingDetails({
+                                    ...shippingDetails,
+                                    phone: e.target.value,
+                                  });
+                                }}
+                                className="w-full px-4 py-3 bg-secondary border border-border rounded-lg text-foreground"
+                              />
+                            </div>
                           </div>
                         </form>
                       ) : (
