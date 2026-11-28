@@ -349,12 +349,24 @@ const Payment = () => {
                             </span>
                             <span>₹{total.toFixed(2)}</span>
                           </div>
+
+
                           <div className="flex justify-between">
                             <span className="text-muted-foreground">
                               Shipping
                             </span>
-                            <span className="text-green-500">{totalWithTax >= 50 ? "Free" : "₹2"}</span>
+                            <span className="text-green-500">
+                              {totalWithTax >= 50 ? "Free" : "₹2"}
+                            </span>
                           </div>
+
+
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Tax</span>
+                            <span>{total * (0.18).toFixed(2)}</span>
+                          </div>
+
+                          
                         </div>
                       </div>
                     </div>
