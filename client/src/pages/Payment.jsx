@@ -292,6 +292,10 @@ const Payment = () => {
                               </select>
                             </div>
                           </div>
+
+                          <button type="submit" className="w-full py-3 gradient-primary text-primary-foreground rounded-lg hover:glow-on-hover animate-smooth font-semibold">
+                            Continue to Payment
+                          </button>
                         </form>
                       ) : (
                         ""
