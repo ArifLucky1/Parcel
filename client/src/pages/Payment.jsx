@@ -341,6 +341,14 @@ const Payment = () => {
                             </div>;
                           })}
                         </div>
+
+                        <div className="space-y-2 border-t border-[hsla(var(--glass-border))] pt-4">
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Subtotal</span>
+                            <span>₹{total.toFixed(2)}</span>
+                          </div>
+                          
+                        </div>
                       </div>
                     </div>
                   </div>
