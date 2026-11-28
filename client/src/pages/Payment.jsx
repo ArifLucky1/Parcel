@@ -344,10 +344,17 @@ const Payment = () => {
 
                         <div className="space-y-2 border-t border-[hsla(var(--glass-border))] pt-4">
                           <div className="flex justify-between">
-                            <span className="text-muted-foreground">Subtotal</span>
+                            <span className="text-muted-foreground">
+                              Subtotal
+                            </span>
                             <span>₹{total.toFixed(2)}</span>
                           </div>
-                          
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">
+                              Shipping
+                            </span>
+                            <span className="text-green-500">{totalWithTax >= 50 ? "Free" : "₹2"}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
