@@ -305,6 +305,13 @@ const Payment = () => {
                         </>
                       )}
                     </div>
+
+                    {/* ORDER SUMMARY */}
+                    <div className="lg:col-span-1">
+                      <div className="glass-panel sticky top-24">
+                        <h2 className="text-xl font-semibold text-foreground">Order Summary</h2>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
