@@ -298,7 +298,11 @@ const Payment = () => {
                           </button>
                         </form>
                       ) : (
-                        ""
+                        <>
+                          <Elements stripe={stripePromise}>
+                            <PaymentForm />
+                          </Elements>
+                        </>
                       )}
                     </div>
                   </div>
