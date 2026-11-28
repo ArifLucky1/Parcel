@@ -310,6 +310,16 @@ const Payment = () => {
                     <div className="lg:col-span-1">
                       <div className="glass-panel sticky top-24">
                         <h2 className="text-xl font-semibold text-foreground">Order Summary</h2>
+
+                        <div className="space-y-4 mb-6">
+                          {
+                            cart.map((item) => {
+                              <div key={item.product.id} className="flex items-center space-x-3">
+                                <img src={item.product.images[0].url} alt={item.product.name} className="w-12 h-12 object-cover rounded" />
+                              </div>
+                            })
+                          }
+                        </div>
                       </div>
                     </div>
                   </div>
