@@ -293,7 +293,10 @@ const Payment = () => {
                             </div>
                           </div>
 
-                          <button type="submit" className="w-full py-3 gradient-primary text-primary-foreground rounded-lg hover:glow-on-hover animate-smooth font-semibold">
+                          <button
+                            type="submit"
+                            className="w-full py-3 gradient-primary text-primary-foreground rounded-lg hover:glow-on-hover animate-smooth font-semibold"
+                          >
                             Continue to Payment
                           </button>
                         </form>
@@ -309,16 +312,34 @@ const Payment = () => {
                     {/* ORDER SUMMARY */}
                     <div className="lg:col-span-1">
                       <div className="glass-panel sticky top-24">
-                        <h2 className="text-xl font-semibold text-foreground">Order Summary</h2>
+                        <h2 className="text-xl font-semibold text-foreground">
+                          Order Summary
+                        </h2>
 
                         <div className="space-y-4 mb-6">
-                          {
-                            cart.map((item) => {
-                              <div key={item.product.id} className="flex items-center space-x-3">
-                                <img src={item.product.images[0].url} alt={item.product.name} className="w-12 h-12 object-cover rounded" />
+                          {cart.map((item) => {
+                            <div
+                              key={item.product.id}
+                              className="flex items-center space-x-3"
+                            >
+                              <img
+                                src={item.product.images[0].url}
+                                alt={item.product.name}
+                                className="w-12 h-12 object-cover rounded"
+                              />
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-foreground truncate">
+                                  {item.product.name}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  Qty: {item.quantity}
+                                </p>
                               </div>
-                            })
-                          }
+                              <p className="text-sm font-semibold">
+                                ₹{Number(item.product.price) * item.quantity}
+                              </p>
+                            </div>;
+                          })}
                         </div>
                       </div>
                     </div>
